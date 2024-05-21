@@ -19,7 +19,7 @@ static char	*set_command(char *input)
 	return (NULL);
 }
 
-static size_t	count_args(char *input, int lenght)
+/*static size_t	count_args(char *input, int lenght)
 {
 	size_t i;
 
@@ -38,7 +38,7 @@ static size_t	count_args(char *input, int lenght)
 			lenght++;
 	}
 	return (i);
-}
+}*/
 /*
 static char	**convert_argv(char *input, int lenght)
 {
@@ -62,14 +62,10 @@ int parse_in_struct(t_glob *glob, char *input)
 	glob->command.command = set_command(input);
 	//command->argv = set_argv(input, ft_strlen(input));
 	//command->args = set_args(input, ft_strlen((input)));
-	printf("NUMBER = %ld\n", count_args(input, ft_strlen(input)));
+	//printf("NUMBER = %ld\n", count_args(input, ft_strlen(input)));
 	printf("command = %s\n", input);
 	printf("command = %s\n", glob->command.command);
-	if (ft_strncmp(input, "pwd", 3) == 0)
-	{
-		ft_pwd(&glob->build);
-		printf("%s\n", glob->build.pwd);
-	}
-	ft_free_all(glob);
+	ft_pwd_call(glob, input);
+	//ft_free_all(glob);
 	return (1);
 }

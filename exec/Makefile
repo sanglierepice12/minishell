@@ -30,6 +30,7 @@ SRCS =	main.c \
 		parsing/check_command.c		\
 		parsing/parse_in_struct.c	\
 		exec/pwd.c					\
+		exec/built_in_calls.c		\
 		free/free.c					\
 		utils/copy.c				\
 		utils/ft_calloc.c

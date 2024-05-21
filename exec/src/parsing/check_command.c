@@ -17,15 +17,18 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 
 static int	check_input(char *input, int letter)
 {
-	if (input[letter] == ' ' || input[letter] == 0)
+	(void)input;
+	(void)letter;
+	return (1);
+/*	if (input[letter] == ' ' || input[letter] == 0)
 		return (1);
-	return (0);
+	return (0);*/
 }
 
 int	check_command(char *input)
 {
 	if (ft_strncmp(input, "pwd", 3) == 0)
-		return (check_input(input, (ft_strlen("pwd") + 1)));
+		return (check_input(input, 3));
 	else if (ft_strncmp(input, "echo", 4) == 0)
 		return (check_input(input, 4));
 	else if (ft_strncmp(input, "cd", 2) == 0)

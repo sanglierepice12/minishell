@@ -31,15 +31,20 @@ int 	parse_in_struct(t_glob *glob, char *input);
 
 /*********UTILS*********/
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
-size_t	ft_strlen(const char *str);
 char	*ft_str_dup(char *src);
 
 /*********EXEC*********/
 void	ft_pwd(t_build *build);
 
+/*********BUILT_INS_CALLS*********/
+void	ft_pwd_call(t_glob *glob, char *dup);
+
 /*********ALLOC*********/
 void	ft_bzero(void *s, size_t n);
 void	*ft_cal_loc(size_t nmemb, size_t size);
 void	ft_free_all(t_glob *glob);
+
+/*********PRINTING*********/
+size_t	ft_strlen(const char *str);
 
 #endif
