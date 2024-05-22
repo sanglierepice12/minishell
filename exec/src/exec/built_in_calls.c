@@ -61,22 +61,13 @@ void	ft_pwd_call(t_glob *glob, char *dup)
 void	ft_cd_call(char *dup)
 {
 	if (dup[3] == '-' && dup[4] == '-')
-	{
 		chdir("~");
-		return ;
-	}
-	if ((dup[3] == '~' && !dup[4])|| !dup[3])
-	{
-		chdir("/home/gsuter");
-		return ;
-	}
-	if (dup[3] == '-' && dup[4] != '-')
-	{
+	else if (!dup[2] || (dup[3] == '~' && !dup[4]))
+		chdir("/valgrind");
+	else if (dup[3] == '-' && dup[4] != '-')
 		dprintf(2, "bash: cd: %c%c: invalid option\n"
 				   "cd: usage: [-L|[-P [-e]] [-@]] [dir]\n", dup[3], dup[4]);
-		return;
-	}
-	if (chdir(dup + 3) != 0)
+	else if (chdir(dup + 3) != 0)
 		dprintf(2, "bash: cd: %s: No such file or directory\n", dup + 3);
 }
 
