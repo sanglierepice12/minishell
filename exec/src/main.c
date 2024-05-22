@@ -23,12 +23,12 @@ int main()
 			free(input);
 			break;
 		}
-		if (ft_strlen(input) > 0)
+		if (rl_on_new_line() == 0)
 		{
 			if (check_command(input) == 1)
 				parse_in_struct(&glob, input);
-			else
-				printf("Error\n");
+			/*else
+				printf("Error\n");*/
 		}
 		free(input);
 		free(wiam);
