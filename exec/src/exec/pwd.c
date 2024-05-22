@@ -19,6 +19,6 @@ void	ft_pwd(t_build *build)
 	path = getcwd(NULL, 0);
 	if (!path)
 		perror("getcwd : error\n");
-	build->pwd = ft_str_dup(path);
+	build->pwd = ft_str_dup(path, NULL);
 	free(path);
 }

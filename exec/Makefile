@@ -30,6 +30,7 @@ SRCS =	main.c \
 		parsing/check_command.c		\
 		parsing/parse_in_struct.c	\
 		exec/pwd.c					\
+		exec/ls.c					\
 		exec/built_in_calls.c		\
 		free/free.c					\
 		utils/copy.c				\
@@ -60,6 +61,7 @@ $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)/exec $(DEP_DIR)/exec
 	@mkdir -p $(OBJ_DIR)/free $(DEP_DIR)/free
 	@mkdir -p $(OBJ_DIR)/utils $(DEP_DIR)/utils
+	@mkdir -p $(OBJ_DIR)/utils/printf $(DEP_DIR)/utils/printf
 	$(CC) $(CFLAGS) -MMD -MP -MF $(DEP_DIR)/$*.d -c $< -o $@
 	@echo "$(GREEN)Compilation of $< completed!$(NC)"
 

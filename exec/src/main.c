@@ -1,14 +1,17 @@
 #include "../include/minishell.h"
 
-int main(void)
+int main()
 {
-	char *input;
+	char	*input;
+	char	*wiam;
 	t_glob	glob;
 	//t_input command;
 
 	while (1)
 	{
-		input = readline("command >");
+		ft_pwd(&glob.build);
+		wiam = ft_str_dup(glob.build.pwd, "$ ");
+		input = readline(wiam);
 		if (input == NULL)
 		{
 			printf("\n");
@@ -27,6 +30,7 @@ int main(void)
 				printf("Error\n");
 		}
 		free(input);
+		free(wiam);
 	}
 	return (0);
 }

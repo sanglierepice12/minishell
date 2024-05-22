@@ -63,9 +63,9 @@ int parse_in_struct(t_glob *glob, char *input)
 	//command->argv = set_argv(input, ft_strlen(input));
 	//command->args = set_args(input, ft_strlen((input)));
 	//printf("NUMBER = %ld\n", count_args(input, ft_strlen(input)));
-	printf("command = %s\n", input);
-	printf("command = %s\n", glob->command.command);
-	ft_pwd_call(glob, input);
+	//printf("command = %s\n", input);
+	//printf("command = %s\n", glob->command.command);
+	ft_call(glob, input);
 	//ft_free_all(glob);
 	return (1);
 }

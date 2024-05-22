@@ -12,19 +12,40 @@
 
 #include "../../include/minishell.h"
 
-char	*ft_str_dup(char *src)
+size_t	ft_strlen(const char *str)
+{
+	size_t	len;
+
+	len = 0;
+	while (str[len])
+		len++;
+	return (len);
+}
+
+char	*ft_str_dup(char *src, char *msg)
 {
 	char	*dup;
-	size_t	i;
+	ssize_t	i;
+	ssize_t	j;
+	size_t	len;
 
-	dup = ft_cal_loc(ft_strlen(src) + 1, sizeof(char));
+	if (!src)
+		return (NULL);
+	if (msg)
+		len = ft_strlen(src) + ft_strlen(msg);
+	else
+		len = ft_strlen(src);
+	dup = ft_cal_loc(len + 1, sizeof(char));
 	if (!dup)
 		return (NULL);
-	i = 0;
-	while (src[i])
-	{
+	i = -1;
+	j = -1;
+	while (++i, src[i])
 		dup[i] = src[i];
-		i++;
+	if (msg)
+	{
+		while (++j, msg[j])
+			dup[i++] = msg[j];
 	}
 	return (dup);
 }
