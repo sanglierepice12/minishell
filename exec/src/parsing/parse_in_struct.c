@@ -14,8 +14,8 @@ static char	*set_command(char *input)
 		return ("unset");
 	else if (ft_strncmp(input, "env", 3) == 0)
 		return ("env");
-	else if (ft_strncmp(input, "exit", 4) == 0)
-		return ("exit");
+	/*else if (ft_strncmp(input, "exit", 4) == 0)
+		return ("exit");*/
 	return (NULL);
 }
 

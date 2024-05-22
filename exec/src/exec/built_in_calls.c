@@ -12,6 +12,34 @@
 
 #include "../../include/minishell.h"
 
+void	ft_echo(char *dup)
+{
+	size_t	i;
+
+	if (dup[0] && dup[0] != ' ')
+	{
+		dprintf(2, "Command : %s not found, did you mean: echo ?\n", dup + 1);
+		return;
+	}
+	if (dup[1] == '-' && dup[2] == 'n' && dup[3])
+	{
+		i = 3;
+		while (++i, dup[i] && dup[3] != ' ')
+		{
+			if (dup[i] != 'n')
+				return((printf("%s\n", dup + 1), (void)0));
+		}
+		if (!dup[i])
+			return ;
+		else
+			printf("%s", dup + 4);
+	}
+	else if (dup[1] == '-' && dup[2] == 'n' && !dup[3])
+		return ;
+	else
+		printf("%s\n", dup + 1);
+}
+
 void	ft_pwd_call(t_glob *glob, char *dup)
 {
 	if (dup[4] && dup[4] == '-' && dup[5])
@@ -22,7 +50,7 @@ void	ft_pwd_call(t_glob *glob, char *dup)
 	}
 	if (dup[3] && dup[3] != ' ')
 	{
-		dprintf(2, "Command : %s not found, did you mean: pwd ?", dup);
+		dprintf(2, "Command : %s not found, did you mean: pwd ?\n", dup);
 		return;
 	}
 	ft_pwd(&glob->build);
@@ -60,4 +88,6 @@ void	ft_call(t_glob *glob, char *input)
 		ft_cd_call(input);
 	if (ft_strncmp(input, "ls", 2) == 0)
 		ft_ls();
+	if (ft_strncmp(input, "echo", 4) == 0)
+		ft_echo(input + 4);
 }
