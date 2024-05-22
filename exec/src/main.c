@@ -12,6 +12,7 @@ int main()
 		ft_pwd(&glob.build);
 		wiam = ft_str_dup(glob.build.pwd, "$ ");
 		input = readline(wiam);
+		add_history(input);
 		if (input == NULL)
 		{
 			printf("\n");
