@@ -31,10 +31,14 @@ SRCS =	main.c \
 		parsing/parse_in_struct.c	\
 		exec/pwd.c					\
 		exec/ls.c					\
+		exec/cd.c					\
+		exec/echo.c					\
+		exec/env.c					\
 		exec/built_in_calls.c		\
 		free/free.c					\
 		utils/copy.c				\
-		utils/ft_calloc.c
+		utils/ft_calloc.c			\
+		utils/linked_list.c
 
 # Objet files
 OBJS =	$(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))

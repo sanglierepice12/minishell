@@ -10,19 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include <stdio.h>
-# include <stdbool.h>
-# include <stdlib.h>
-# include <string.h>
-
-typedef struct s_env
-{
-	char	*value;
-	char	*path;
-	bool	flag;
-	struct s_env	*next;
-	struct s_env	*prev;
-}				t_env;
+#include "../../include/minishell.h"
 
 void    print_lst(t_env **head)
 {
@@ -55,9 +43,7 @@ void    print_lst(t_env **head)
 	while (*lst)
 	{
 		temp = (*lst)->next;
-		(*lst)->value = NULL;
-		(*lst)->path = NULL;
-		(*lst).flag = NULL;
+		(*lst)->content = 0;
 		free(*lst);
 		*lst = temp;
 	}
@@ -68,7 +54,7 @@ t_env	*ft_lst_last(t_env **lst)
 {
 	t_env	*temp;
 
-	if (!*lst)
+	if (*lst)
 		return (*lst);
 	temp = *lst;
 	while (temp->next)
@@ -78,8 +64,8 @@ t_env	*ft_lst_last(t_env **lst)
 
 void	ft_lst_add_front(t_env **lst, t_env *new)
 {
-	new->next = *lst;
-	*lst = new;
+		new->next = *lst;
+		*lst = new;
 }
 
 void	ft_lst_add_back(t_env **head, t_env *new)
@@ -100,32 +86,13 @@ t_env	*ft_new_node(char *value, char *path, bool flag)
 {
 	t_env	*env;
 
-	env = calloc(1, sizeof(t_env));
+	env = ft_cal_loc(1, sizeof(t_env));
 	if (!env)
 		return (NULL);
-	env->value = strdup(value);
-	env->path = strdup(path);
+	env->value = ft_str_dup(value, NULL);
+	env->path = ft_str_dup(path, NULL);
 	env->flag = flag;
 	env->next = NULL;
 	env->prev = NULL;
 	return (env);
-}
-
-int	main(int arc, char **argv, char **environnement)
-{
-	if (arc)
-		printf("ok, next\n");
-	t_env	*env;
-	int i;
-
-	i = 1;
-	while (argv[i])
-	{
-		env = ft_lst_add_back(environnement[i], ft_new_node(env, argv[i], 0));
-		if (!env)
-			return (printf("crash\n"), 0);
-		i++;
-	}
-	print_lst(&env);
-	return (0);
 }

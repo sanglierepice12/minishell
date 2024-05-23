@@ -43,5 +43,7 @@ int	check_command(char *input)
 		return (check_input(input, 4));*/
 	else if (ft_strncmp(input, "ls", 2) == 0)
 		return (check_input(input, 2));
+	else if (ft_strncmp(input, "clear", 5) == 0)
+		return (check_input(input, 5));
 	return (0);
 }

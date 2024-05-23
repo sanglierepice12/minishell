@@ -12,6 +12,21 @@
 
 #include "../../include/minishell.h"
 
+char	*ft_str_copy_n(char *str, int n)
+{
+	char	*dup;
+	int		i;
+
+
+	i = 0;
+	while (str[i] && i < n)
+	{
+		dup = ft_str_dup(str[i], NULL);
+		i++;
+	}
+	return (dup);
+}
+
 size_t	ft_strlen(const char *str)
 {
 	size_t	len;
