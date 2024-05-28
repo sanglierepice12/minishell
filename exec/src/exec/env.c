@@ -12,13 +12,38 @@
 
 #include "../../include/minishell.h"
 
-void	ft_filter_env(char **env, t_env *the_env)
+static void	ft_get_first_node(t_glob *glob, char **env)
 {
 	char	*value;
 	char	*path;
-	int	i;
-	int j;
+	int	j;
 
+	j = 0;
+	while (env[0][j])
+	{
+		if (env[0][j] == '=')
+		{
+			path = ft_dup(env[0] + j + 1);
+			value = ft_str_copy_n(env[0], j);
+			glob->env = ft_new_node(value, path, 0);
+			/*	if (!env)
+					exit(0);*/
+			free(path);
+			free(value);
+			break;
+		}
+		j++;
+	}
+}
+
+void	ft_get_env(t_glob *glob, char **env)
+{
+	int		i;
+	int		j;
+	char	*value;
+	char	*path;
+
+	ft_get_first_node(glob, env);
 	i = 0;
 	while (env[i])
 	{
@@ -27,24 +52,17 @@ void	ft_filter_env(char **env, t_env *the_env)
 		{
 			if (env[i][j] == '=')
 			{
-				path = ft_str_dup(env[i] + j + 1, NULL);
-				value = ft_str_copy_n(env[i], j)
+				path = ft_dup(env[i] + j + 1);
+				value = ft_str_copy_n(env[i], j);
+				ft_lst_add_back(&glob->env, ft_new_node(value, path, 0));
+			/*	if (!env)
+					exit(0);*/
+				free(path);
+				free(value);
+				break ;
 			}
 			j++;
 		}
 		i++;
 	}
-}
-
-void	ft_get_env(t_glob *glob, char **env)
-{
-	ft_filter_env(env, glob->env);
-	/*t_env	*the_env;
-	int	i;
-
-	i = 0;
-	while (env[i])
-	{
-		ft_lst_add_back(&the_env, ft_new_node())
-	}*/
 }

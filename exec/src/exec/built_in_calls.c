@@ -39,6 +39,6 @@ void	ft_call(t_glob *glob, char *input)
 		ft_echo(input + 4);
 	if (ft_strncmp(input, "clear", 5) == 0)
 		printf("\033[2J\033[H");
-	/*else if (ft_strncmp(input, "env", 3) == 0)
-		ft_get_env(input + 4);*/
+	else if (ft_strncmp(input, "env", 3) == 0)
+		print_lst(&glob->env);
 }

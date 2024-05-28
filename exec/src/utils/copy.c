@@ -17,11 +17,13 @@ char	*ft_str_copy_n(char *str, int n)
 	char	*dup;
 	int		i;
 
-
+	dup = ft_cal_loc(n, sizeof(char));
+	if (!dup)
+		return (NULL);
 	i = 0;
 	while (str[i] && i < n)
 	{
-		dup = ft_str_dup(str[i], NULL);
+		dup[i] = str[i];
 		i++;
 	}
 	return (dup);
@@ -37,7 +39,7 @@ size_t	ft_strlen(const char *str)
 	return (len);
 }
 
-char	*ft_str_dup(char *src, char *msg)
+char	*ft_super_dup(char *src, char *msg)
 {
 	char	*dup;
 	ssize_t	i;

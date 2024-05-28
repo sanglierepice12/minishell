@@ -12,9 +12,9 @@
 
 #include "../../include/minishell.h"
 
-void    print_lst(t_env **head)
+void	print_lst(t_env **head)
 {
-	t_env        *temp;
+	t_env	*temp;
 	size_t  i;
 
 	i = 0;
@@ -23,7 +23,7 @@ void    print_lst(t_env **head)
 		temp = *head;
 		while (temp->next)
 		{
-			printf("Elem n'%zu: %s \npath : %s\n"
+			printf("Elem n'%zu\nvalue = %s\npath : %s\n"
 				   "flag : %d\n", i, temp->value, temp->path, temp->flag);
 			temp = temp->next;
 			i++;
@@ -36,27 +36,48 @@ void    print_lst(t_env **head)
 	//free_lst(head);
 }
 
-/*t_env	ft_free_lst(t_env *lst)
+/*t_env	ft_free_lst(t_env **lst)
 {
 	t_env	*temp;
 
 	while (*lst)
 	{
 		temp = (*lst)->next;
-		(*lst)->content = 0;
+		(*lst).flag = 0;
+		if (lst->path)
+			free(lst->path);
+		if (*lst->value)
+			free(*lst->value);
 		free(*lst);
 		*lst = temp;
 	}
 
 }*/
 
-t_env	*ft_lst_last(t_env **lst)
+char	*ft_dup(const char *s)
+{
+	size_t	i;
+	char	*new;
+
+	if (!s)
+		return (NULL);
+	new = malloc(sizeof(char) * (ft_strlen(s) + 1));
+	if (!new)
+		return (NULL);
+	i = -1;
+	while (s[++i])
+		new[i] = s[i];
+	new[i] = '\0';
+	return (new);
+}
+
+t_env	*ft_lst_last(t_env *lst)
 {
 	t_env	*temp;
 
-	if (*lst)
-		return (*lst);
-	temp = *lst;
+	if (!lst)
+		return (0);
+	temp = lst;
 	while (temp->next)
 		temp = temp->next;
 	return (temp);
@@ -74,7 +95,7 @@ void	ft_lst_add_back(t_env **head, t_env *new)
 
 	if (*head)
 	{
-		last = ft_lst_last(head);
+		last = ft_lst_last(*head);
 		last->next = new;
 		new->prev = last;
 	}
@@ -89,8 +110,8 @@ t_env	*ft_new_node(char *value, char *path, bool flag)
 	env = ft_cal_loc(1, sizeof(t_env));
 	if (!env)
 		return (NULL);
-	env->value = ft_str_dup(value, NULL);
-	env->path = ft_str_dup(path, NULL);
+	env->value = ft_dup(value);
+	env->path = ft_dup(path);
 	env->flag = flag;
 	env->next = NULL;
 	env->prev = NULL;
