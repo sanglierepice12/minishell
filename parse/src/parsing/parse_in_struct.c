@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_in_struct.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: arbenois <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/29 03:30:09 by arbenois          #+#    #+#             */
+/*   Updated: 2024/05/29 03:30:10 by arbenois         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/minishell.h"
 
 static char	*set_command(char *input)
@@ -21,49 +33,78 @@ static char	*set_command(char *input)
 
 static size_t	count_args(char *input, int lenght)
 {
-	size_t i;
+	size_t	i;
+	int		quote;
 
 	i = 0;
-	lenght = 3;
 	while (input[lenght])
 	{
-		printf("LETTRE = %c\n", input[lenght]);
 		if (input[lenght] != ' ')
 		{
 			i++;
-			while (input[lenght] != ' ' || input[lenght] != 0)
-				lenght++;
+			lenght += ft_strlen_quote(input, lenght, &quote);
 		}
 		if (input[lenght] == ' ')
 			lenght++;
 	}
 	return (i);
 }
-/*
-static char	**convert_argv(char *input, int lenght)
-{
-	//char **argv;
-	//size_t i;
 
-	printf("%ld", count_args(input, lenght));
-	return (NULL);
+static char	*copy_word(char *input, int *i)
+{
+	int		lenght;
+	char	*tab;
+	int		temp;
+	int		skip;
+
+	temp = 0;
+	lenght = ft_strlen_quote(input, *i, &temp);
+	if (temp >= 1)
+		lenght -= temp * 2;
+	tab = malloc(lenght + 1 * sizeof(char));
+	tab[lenght] = 0;
+	temp = 0;
+	skip = 0;
+	while (temp != lenght)
+	{
+		if (input[*i + temp + skip] == 39 || input[*i + temp + skip] == 34)
+			skip++;
+		else
+		{
+			tab[temp] = input[*i + temp + skip];
+			temp++;
+		}
+	}
+	*i += ft_strlen_quote(input, *i, &temp);
+	return (tab);
 }
 
-static char	**set_argv(char *input, int lenght)
+static char	**set_argv(char *input, t_input *command)
 {
-	char **argv;
+	char	**argv;
+	int		i;
+	int		lenght;
 
-	argv = convert_argv(input, lenght);
-	return (NULL);
-}*/
+	argv = malloc(command->args * sizeof(char *));
+	lenght = 0;
+	i = ft_strlen(command->command);
+	while (input[i])
+	{
+		if (input[i] != ' ')
+		{
+			argv[lenght] = copy_word(input, &i);
+			lenght++;
+		}
+		if (input[i] == ' ')
+			i++;
+	}
+	return (argv);
+}
 
-int parse_in_struct(t_input *command, char *input)
+int	parse_in_struct(t_input *command, char *input)
 {
 	command->command = set_command(input);
-	//command->argv = set_argv(input, ft_strlen(input));
-	//command->args = set_args(input, ft_strlen((input)));
-	printf("NUMBER = %ld\n", count_args(input, ft_strlen(input)));
-	printf("command = %s\n", input);
-	printf("command = %s\n", command->command);
+	command->args = count_args(input, ft_strlen(command->command));
+	command->argv = set_argv(input, command);
 	return (1);
 }

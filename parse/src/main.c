@@ -1,4 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: arbenois <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/29 03:29:57 by arbenois          #+#    #+#             */
+/*   Updated: 2024/05/29 03:29:58 by arbenois         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
+
+void	show_struct(t_input *command)
+{
+	int	i;
+
+	printf("ARGS = %d\n", command->args);
+	printf("command = %s\n", command->command);
+	i = 0;
+	while (i != command->args)
+	{
+		printf("ARGV = %s\n", command->argv[i]);
+		i++;
+	}
+}
 
 size_t	ft_strlen(const char *str)
 {
@@ -10,10 +36,10 @@ size_t	ft_strlen(const char *str)
 	return (len);
 }
 
-int main(void)
+int	main(void)
 {
-	char *input;
-	t_input command;
+	char	*input;
+	t_input	command;
 
 	while (1)
 	{
@@ -32,6 +58,7 @@ int main(void)
 			else
 				printf("Error\n");
 		}
+		show_struct(&command);
 		free(input);
 	}
 	return (0);

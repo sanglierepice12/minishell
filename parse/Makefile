@@ -28,7 +28,8 @@ DEP_DIR = ./dep
 # Source files
 SRCS =	main.c \
 		parsing/check_command.c \
-		parsing/parse_in_struct.c
+		parsing/parse_in_struct.c \
+		parsing/check_quote.c
 
 # Objet files
 OBJS =	$(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
@@ -46,13 +47,13 @@ all: $(NAME)
 -include $(DEPS)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LDFLAGS)
+	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LDFLAGS)
 	@echo "$(GREEN)Linking completed!$(NC)"
 
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR) $(DEP_DIR)
 	@mkdir -p $(OBJ_DIR)/parsing $(DEP_DIR)/parsing
-	$(CC) $(CFLAGS) -MMD -MP -MF $(DEP_DIR)/$*.d -c $< -o $@
+	@$(CC) $(CFLAGS) -MMD -MP -MF $(DEP_DIR)/$*.d -c $< -o $@
 	@echo "$(GREEN)Compilation of $< completed!$(NC)"
 
 clean:
