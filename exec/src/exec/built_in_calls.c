@@ -16,7 +16,7 @@ void	ft_pwd_call(t_glob *glob, char *dup)
 {
 	if (dup[4] && dup[4] == '-' && dup[5])
 		dprintf(2, "bash: pwd: %c%c: invalid option\n"
-				   "pwd: usage: pwd [-LP]\n", dup[4], dup[5]);
+			"pwd: usage: pwd [-LP]\n", dup[4], dup[5]);
 	else if (dup[3] && dup[3] != ' ')
 		dprintf(2, "Command : '%s' not found, did you mean: pwd ?\n", dup);
 	else

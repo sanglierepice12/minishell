@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gsuter <gsuter@student.42lyon.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/28 16:22:28 by gsuter            #+#    #+#             */
+/*   Updated: 2024/05/28 16:22:28 by gsuter           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 
-int main(int arc, char **argv, char **env)
+int	main(int arc, char **argv, char **env)
 {
-	char	*input;
-	char	*wiam;
-	t_glob	glob;
+	char		*input;
+	char		*wiam;
+	t_glob		glob;
 
 	if (arc)
 		(void)argv;
@@ -23,7 +35,7 @@ int main(int arc, char **argv, char **env)
 		if (ft_strncmp(input, "exit", 4) == 0)
 		{
 			free(input);
-			break;
+			break ;
 		}
 		if (rl_on_new_line() == 0)
 		{

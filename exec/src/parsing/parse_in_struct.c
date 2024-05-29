@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_in_struct.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gsuter <gsuter@student.42lyon.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/29 12:48:05 by gsuter            #+#    #+#             */
+/*   Updated: 2024/05/29 12:48:05 by gsuter           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/minishell.h"
 
 static char	*set_command(char *input)
@@ -57,7 +69,7 @@ static char	**set_argv(char *input, int lenght)
 	return (NULL);
 }*/
 
-int parse_in_struct(t_glob *glob, char *input)
+int	parse_in_struct(t_glob *glob, char *input)
 {
 	glob->command.command = set_command(input);
 	//command->argv = set_argv(input, ft_strlen(input));

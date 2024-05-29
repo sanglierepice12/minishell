@@ -19,7 +19,7 @@ void	ft_echo(char *dup)
 	if (dup[0] && dup[0] != ' ')
 	{
 		dprintf(2, "echo%s: command not found\n", dup);
-		return;
+		return ;
 	}
 	if (dup[1] == '-' && dup[2] == 'n' && dup[3])
 	{
@@ -27,7 +27,7 @@ void	ft_echo(char *dup)
 		while (++i, dup[i] && dup[3] != ' ')
 		{
 			if (dup[i] != 'n')
-				return((printf("%s\n", dup + 1), (void)0));
+				return ((printf("%s\n", dup + 1), (void)0));
 		}
 		if (!dup[i])
 			return ;

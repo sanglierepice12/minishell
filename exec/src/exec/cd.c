@@ -20,7 +20,7 @@ void	ft_cd(char *dup)
 		chdir("/valgrind");
 	else if (dup[3] == '-' && dup[4] != '-')
 		dprintf(2, "bash: cd: %c%c: invalid option\n"
-				   "cd: usage: [-L|[-P [-e]] [-@]] [dir]\n", dup[3], dup[4]);
+			"cd: usage: [-L|[-P [-e]] [-@]] [dir]\n", dup[3], dup[4]);
 	else if (chdir(dup + 3) != 0)
 	{
 		perror("bash: cd");

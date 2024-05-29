@@ -16,7 +16,7 @@ static void	ft_get_first_node(t_glob *glob, char **env)
 {
 	char	*value;
 	char	*path;
-	int	j;
+	int		j;
 
 	j = 0;
 	while (env[0][j])
@@ -30,7 +30,7 @@ static void	ft_get_first_node(t_glob *glob, char **env)
 					exit(0);*/
 			free(path);
 			free(value);
-			break;
+			break ;
 		}
 		j++;
 	}
@@ -38,10 +38,10 @@ static void	ft_get_first_node(t_glob *glob, char **env)
 
 void	ft_get_env(t_glob *glob, char **env)
 {
-	int		i;
-	int		j;
-	char	*value;
-	char	*path;
+	int			i;
+	int			j;
+	char		*value;
+	char		*path;
 
 	ft_get_first_node(glob, env);
 	i = 0;

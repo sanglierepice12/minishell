@@ -15,7 +15,7 @@
 void	print_lst(t_env **head)
 {
 	t_env	*temp;
-	size_t  i;
+	size_t	i;
 
 	i = 0;
 	if (*head)
@@ -24,12 +24,12 @@ void	print_lst(t_env **head)
 		while (temp->next)
 		{
 			printf("Elem n'%zu\nvalue = %s\npath : %s\n"
-				   "flag : %d\n", i, temp->value, temp->path, temp->flag);
+				"flag : %d\n", i, temp->value, temp->path, temp->flag);
 			temp = temp->next;
 			i++;
 		}
 		printf("Elem n'%zu: %s \npath : %s\n"
-			   "flag : %d\n", i, temp->value, temp->path, temp->flag);
+			"flag : %d\n", i, temp->value, temp->path, temp->flag);
 	}
 	else
 		printf("empty list\n");
@@ -85,8 +85,8 @@ t_env	*ft_lst_last(t_env *lst)
 
 void	ft_lst_add_front(t_env **lst, t_env *new)
 {
-		new->next = *lst;
-		*lst = new;
+	new->next = *lst;
+	*lst = new;
 }
 
 void	ft_lst_add_back(t_env **head, t_env *new)

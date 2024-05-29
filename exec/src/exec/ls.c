@@ -14,16 +14,14 @@
 
 void	ft_ls()
 {
-	struct dirent *de; // Pointer for directory entry
-	DIR *dr = opendir(".");
+	struct dirent *de;
 
-	if (dr == NULL)  // opendir returns NULL if couldn't open directory
+	DIR *dr = opendir(".");
+	if (dr == NULL)
 	{
 		printf("Could not open current directory");
 		return ;
 	}
-
-// Referencing readdir() inside the loop
 	while ((de = readdir(dr)) != NULL)
 		printf("%s ", de->d_name);
 	printf("\n");
