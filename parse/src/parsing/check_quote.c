@@ -14,13 +14,23 @@
 
 static int	check_quote(char *str, int len, int *checkquote, char c)
 {
-	if (str[len] == c && (*checkquote == 1 || *checkquote == 0))
+	if (str[len] == c && (*checkquote == 1 || *checkquote == 0) && c == 34)
 	{
 		if (*checkquote == 1)
 			*checkquote = 0;
 		else
 		{
 			*checkquote = 1;
+			return (1);
+		}
+	}
+	if (str[len] == c && (*checkquote == 2 || *checkquote == 0) && c == 39)
+	{
+		if (*checkquote == 2)
+			*checkquote = 0;
+		else
+		{
+			*checkquote = 2;
 			return (1);
 		}
 	}
@@ -44,5 +54,7 @@ int	ft_strlen_quote(char *str, int len, int *quote)
 			break ;
 		i++;
 	}
+	if (checkquote == 1 || checkquote == 2)
+		return (-1);
 	return (i);
 }

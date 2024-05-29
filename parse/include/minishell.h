@@ -29,5 +29,6 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		parse_in_struct(t_input *command, char *input);
 size_t	ft_strlen(const char *str);
 int		ft_strlen_quote(char *str, int len, int *quote);
+void	free_tab(char **tab, int lenght);
 
 #endif

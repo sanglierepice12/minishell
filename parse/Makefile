@@ -17,7 +17,7 @@ NC = \033[0m
 
 # Compiler and flags
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g3
 LDFLAGS = -lreadline
 
 # Source and objet directories
@@ -27,6 +27,7 @@ DEP_DIR = ./dep
 
 # Source files
 SRCS =	main.c \
+		ft_lib.c \
 		parsing/check_command.c \
 		parsing/parse_in_struct.c \
 		parsing/check_quote.c

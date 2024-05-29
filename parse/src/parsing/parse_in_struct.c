@@ -31,10 +31,11 @@ static char	*set_command(char *input)
 	return (NULL);
 }
 
-static size_t	count_args(char *input, int lenght)
+static ssize_t	count_args(char *input, int lenght)
 {
 	size_t	i;
 	int		quote;
+	int		temp;
 
 	i = 0;
 	while (input[lenght])
@@ -42,7 +43,10 @@ static size_t	count_args(char *input, int lenght)
 		if (input[lenght] != ' ')
 		{
 			i++;
-			lenght += ft_strlen_quote(input, lenght, &quote);
+			temp = ft_strlen_quote(input, lenght, &quote);
+			if (temp == -1)
+				return (-1);
+			lenght += temp;
 		}
 		if (input[lenght] == ' ')
 			lenght++;
@@ -56,19 +60,44 @@ static char	*copy_word(char *input, int *i)
 	char	*tab;
 	int		temp;
 	int		skip;
+	int		checkquote;
 
 	temp = 0;
 	lenght = ft_strlen_quote(input, *i, &temp);
+	printf("%d\n", lenght);
+	if (lenght == -1)
+		return (NULL);
 	if (temp >= 1)
 		lenght -= temp * 2;
 	tab = malloc(lenght + 1 * sizeof(char));
+	if (tab == NULL)
+		return (NULL);
 	tab[lenght] = 0;
 	temp = 0;
 	skip = 0;
+	checkquote = 0;
 	while (temp != lenght)
 	{
-		if (input[*i + temp + skip] == 39 || input[*i + temp + skip] == 34)
+		if (input[*i + temp + skip] == 39 && checkquote == 0)
+		{
+			checkquote = 1;
 			skip++;
+		}
+		else if (input[*i + temp + skip] == 34 && checkquote == 0)
+		{
+			checkquote = 2;
+			skip++;
+		}
+		else if (input[*i + temp + skip] == 39 && checkquote == 1)
+		{
+			checkquote = 0;
+			skip++;
+		}
+		else if (input[*i + temp + skip] == 34 && checkquote == 2)
+		{
+			checkquote = 0;
+			skip++;
+		}
 		else
 		{
 			tab[temp] = input[*i + temp + skip];
@@ -86,6 +115,8 @@ static char	**set_argv(char *input, t_input *command)
 	int		lenght;
 
 	argv = malloc(command->args * sizeof(char *));
+	if (argv == NULL)
+		return (0);
 	lenght = 0;
 	i = ft_strlen(command->command);
 	while (input[i])
@@ -93,6 +124,11 @@ static char	**set_argv(char *input, t_input *command)
 		if (input[i] != ' ')
 		{
 			argv[lenght] = copy_word(input, &i);
+			if (argv[lenght] == NULL)
+			{
+				free_tab(argv, lenght - 1);
+				return (0);
+			}
 			lenght++;
 		}
 		if (input[i] == ' ')
@@ -105,6 +141,10 @@ int	parse_in_struct(t_input *command, char *input)
 {
 	command->command = set_command(input);
 	command->args = count_args(input, ft_strlen(command->command));
+	if (command->args == -1)
+		return (0);
 	command->argv = set_argv(input, command);
+	if (command->argv == 0)
+		return (0);
 	return (1);
 }

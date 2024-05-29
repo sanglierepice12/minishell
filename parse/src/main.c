@@ -22,8 +22,10 @@ void	show_struct(t_input *command)
 	while (i != command->args)
 	{
 		printf("ARGV = %s\n", command->argv[i]);
+		free(command->argv[i]);
 		i++;
 	}
+	free(command->argv);
 }
 
 size_t	ft_strlen(const char *str)
@@ -54,7 +56,10 @@ int	main(void)
 		if (ft_strlen(input) > 0)
 		{
 			if (check_command(input) == 1)
-				parse_in_struct(&command, input);
+			{
+				if (parse_in_struct(&command, input) == 0)
+					printf("Error\n");
+			}
 			else
 				printf("Error\n");
 		}
