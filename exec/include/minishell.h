@@ -58,6 +58,7 @@ void	ft_cd(char *input);
 void	ft_echo(char *dup);
 void	ft_ls();
 void	ft_get_env(t_glob *glob, char **env);
+void	ft_unset(t_glob *glob, char *input);
 
 /*********ALLOC*********/
 void	ft_bzero(void *s, size_t n);
@@ -73,5 +74,6 @@ t_env	*ft_lst_last(t_env *lst);
 void	ft_lst_add_front(t_env **lst, t_env *new);
 void	ft_lst_add_back(t_env **head, t_env *new);
 t_env	*ft_new_node(char *value, char *path, bool flag);
+void	ft_free_lst(t_env **lst);
 
 #endif

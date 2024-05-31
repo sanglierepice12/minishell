@@ -15,44 +15,40 @@
 void	print_lst(t_env **head)
 {
 	t_env	*temp;
-	size_t	i;
 
-	i = 0;
 	if (*head)
 	{
 		temp = *head;
 		while (temp->next)
 		{
-			printf("Elem n'%zu\nvalue = %s\npath : %s\n"
-				"flag : %d\n", i, temp->value, temp->path, temp->flag);
+			if (temp->flag == 0)
+				printf("%s = %s\n", temp->value, temp->path);
 			temp = temp->next;
-			i++;
 		}
-		printf("Elem n'%zu: %s \npath : %s\n"
-			"flag : %d\n", i, temp->value, temp->path, temp->flag);
+		if (temp->flag == 0)
+			printf("%s = %s\n", temp->value, temp->path);
 	}
 	else
 		printf("empty list\n");
-	//free_lst(head);
 }
 
-/*t_env	ft_free_lst(t_env **lst)
+void	ft_free_lst(t_env **lst)
 {
 	t_env	*temp;
 
 	while (*lst)
 	{
 		temp = (*lst)->next;
-		(*lst).flag = 0;
-		if (lst->path)
-			free(lst->path);
-		if (*lst->value)
-			free(*lst->value);
+		(*lst)->flag = 0;
+		if ((*lst)->path)
+			free((*lst)->path);
+		if ((*lst)->value)
+			free((*lst)->value);
 		free(*lst);
 		*lst = temp;
 	}
-
-}*/
+	free(*lst);
+}
 
 char	*ft_dup(const char *s)
 {

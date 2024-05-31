@@ -21,6 +21,8 @@ int	main(int arc, char **argv, char **env)
 	if (arc)
 		(void)argv;
 	ft_get_env(&glob, env);
+	if (!env)
+		dprintf(2, "Malloc crash, no env\n");
 	while (1)
 	{
 		ft_pwd(&glob.build);

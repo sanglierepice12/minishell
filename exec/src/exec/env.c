@@ -26,8 +26,6 @@ static void	ft_get_first_node(t_glob *glob, char **env)
 			path = ft_dup(env[0] + j + 1);
 			value = ft_str_copy_n(env[0], j);
 			glob->env = ft_new_node(value, path, 0);
-			/*	if (!env)
-					exit(0);*/
 			free(path);
 			free(value);
 			break ;
@@ -44,7 +42,9 @@ void	ft_get_env(t_glob *glob, char **env)
 	char		*path;
 
 	ft_get_first_node(glob, env);
-	i = 0;
+	if (!env)
+		return (dprintf(2, "No env\n"), (void)0);
+	i = 1;
 	while (env[i])
 	{
 		j = 0;
@@ -55,8 +55,6 @@ void	ft_get_env(t_glob *glob, char **env)
 				path = ft_dup(env[i] + j + 1);
 				value = ft_str_copy_n(env[i], j);
 				ft_lst_add_back(&glob->env, ft_new_node(value, path, 0));
-			/*	if (!env)
-					exit(0);*/
 				free(path);
 				free(value);
 				break ;
