@@ -59,6 +59,7 @@ void	ft_echo(char *dup);
 void	ft_ls();
 void	ft_get_env(t_glob *glob, char **env);
 void	ft_unset(t_glob *glob, char *input);
+void	ft_export(t_env **env, char *input);
 
 /*********ALLOC*********/
 void	ft_bzero(void *s, size_t n);
@@ -69,7 +70,7 @@ void	ft_free_all(t_glob *glob);
 size_t	ft_strlen(const char *str);
 
 /*********LINKED_LIST*********/
-void    print_lst(t_env **head);
+void	print_env(t_env **head, int env);
 t_env	*ft_lst_last(t_env *lst);
 void	ft_lst_add_front(t_env **lst, t_env *new);
 void	ft_lst_add_back(t_env **head, t_env *new);

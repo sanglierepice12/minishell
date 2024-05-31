@@ -35,6 +35,7 @@ SRCS =	main.c \
 		exec/echo.c					\
 		exec/env.c					\
 		exec/unset.c				\
+		exec/export.c				\
 		exec/built_in_calls.c		\
 		free/free.c					\
 		utils/copy.c				\

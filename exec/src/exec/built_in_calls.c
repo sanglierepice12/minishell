@@ -40,9 +40,9 @@ void	ft_call(t_glob *glob, char *input)
 	if (ft_strncmp(input, "clear", 5) == 0)
 		printf("\033[2J\033[H");
 	if (ft_strncmp(input, "env", 3) == 0)
-		print_lst(&glob->env);
+		print_env(&glob->env, 0);
 	if (ft_strncmp(input, "unset", 5) == 0)
-	{
 		ft_unset(glob, input);
-	}
+	if (ft_strncmp(input, "export", 6) == 0)
+		ft_export(&glob->env, input);
 }

@@ -12,20 +12,29 @@
 
 #include "../../include/minishell.h"
 
-void	print_lst(t_env **head)
+void	print_env(t_env **head, int env)
 {
 	t_env	*temp;
-
 	if (*head)
 	{
 		temp = *head;
 		while (temp->next)
 		{
-			if (temp->flag == 0)
+			if (env == 0)
+			{
+				if (temp->flag == 0)
+					printf("%s = %s\n", temp->value, temp->path);
+			}
+			else
 				printf("%s = %s\n", temp->value, temp->path);
 			temp = temp->next;
 		}
-		if (temp->flag == 0)
+		if (env == 0)
+		{
+			if (temp->flag == 0)
+				printf("%s = %s\n", temp->value, temp->path);
+		}
+		else
 			printf("%s = %s\n", temp->value, temp->path);
 	}
 	else
