@@ -17,7 +17,7 @@ void	ft_cd(char *dup)
 	if (dup[3] == '-' && dup[4] == '-')
 		chdir("~");
 	else if (!dup[2] || (dup[3] == '~' && !dup[4]))
-		chdir("/valgrind");
+		chdir("/");
 	else if (dup[3] == '-' && dup[4] != '-')
 		dprintf(2, "bash: cd: %c%c: invalid option\n"
 			"cd: usage: [-L|[-P [-e]] [-@]] [dir]\n", dup[3], dup[4]);

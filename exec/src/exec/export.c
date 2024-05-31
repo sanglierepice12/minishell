@@ -14,7 +14,6 @@
 
 void	ft_export(t_env **env, char *input)
 {
-	printf("$%s$\n", input + 7);
 	if (!input[8])
 		print_env(env, 1);
 	else

@@ -38,7 +38,7 @@ void	print_env(t_env **head, int env)
 			printf("%s = %s\n", temp->value, temp->path);
 	}
 	else
-		printf("empty list\n");
+		printf("\n");
 }
 
 void	ft_free_lst(t_env **lst)
