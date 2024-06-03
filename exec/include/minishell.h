@@ -44,9 +44,13 @@ int 	parse_in_struct(t_glob *glob, char *input);
 
 /*********UTILS*********/
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
+int		ft_comp_str(char *src, char *str);
 char	*ft_super_dup(char *src, char *msg);
 char	*ft_dup(const char *s);
 char	*ft_str_copy_n(char *str, int n);
+t_env	*ft_find_thing_in_env(t_env **env, char *value);
+void	ft_dell_node(t_env **temp, t_env **head);
+void	ft_free_this_node(t_env *head);
 
 /*********BUILT_INS_CALLS*********/
 void	ft_call(t_glob *glob, char *input);
@@ -54,8 +58,8 @@ void	ft_pwd_call(t_glob *glob, char *dup);
 
 /*********EXEC*********/
 void	ft_pwd(t_build *build);
-void	ft_cd(char *input);
-void	ft_echo(char *dup);
+void	ft_cd(t_glob *glob, char *input);
+void	ft_echo(char *input);
 void	ft_ls();
 void	ft_get_env(t_glob *glob, char **env);
 void	ft_unset(t_glob *glob, char *input);

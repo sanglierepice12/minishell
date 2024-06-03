@@ -29,10 +29,12 @@ void	ft_pwd_call(t_glob *glob, char *dup)
 
 void	ft_call(t_glob *glob, char *input)
 {
+	if (!input)
+		return ;
 	if (ft_strncmp(input, "pwd", 3) == 0)
 		ft_pwd_call(glob, input);
 	if (ft_strncmp(input, "cd", 2) == 0)
-		ft_cd(input);
+		ft_cd(glob, input);
 	if (ft_strncmp(input, "ls", 2) == 0)
 		ft_ls();
 	if (ft_strncmp(input, "echo", 4) == 0)

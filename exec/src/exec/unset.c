@@ -22,7 +22,7 @@ void	ft_free_this_node(t_env *head)
 	free(head);
 }
 
-void	dell_node(t_env **temp, t_env **head)
+void	ft_dell_node(t_env **temp, t_env **head)
 {
 	t_env	*temp_two;
 
@@ -50,13 +50,13 @@ static void	unset_variable(t_env **head, char *input)
 	{
 		if (ft_strlen(temp->value) == len && ft_strncmp(temp->value, input, len) == 0)
 		{
-			dell_node(&temp, head);
+			ft_dell_node(&temp, head);
 			return ;
 		}
 		temp = temp->next;
 	}
 	if (ft_strlen(temp->value) == len && ft_strncmp(temp->value, input, len) == 0)
-		dell_node(&temp, head);
+		ft_dell_node(&temp, head);
 }
 
 void	ft_unset(t_glob *glob, char *input)

@@ -2,47 +2,31 @@
 #include <string.h>
 #include <stdlib.h>
 
-char	*ft_str_copy_n(char *str, int n)
+int	ft_comp_str(char *src, char *str)
 {
-	char	*dup;
-	int		i;
+	size_t	i;
 
-	dup = calloc(n, sizeof(char));
-	if (!dup)
-		return (NULL);
+	if (!str || !src)
+		return (0);
 	i = 0;
-	while (str[i] && i < n)
+	while (src[i])
 	{
-		dup[i] = str[i];
-		i++;
+		if (src[i] == str[i])
+			i++;
+		else
+			return (0);
 	}
-	return (dup);
+	if (src[i] || str[i])
+		return (0);
+	return (1);
 }
 
 int	main(int arc, char **argv)
 {
 	(void)arc;
-	int	i;
-	int	j;
-	char	*str;
+	size_t	j;
 
-	i = 1;
-	while (argv[i] && i < arc)
-	{
-		j = 0;
-		while (argv[i][j])
-		{
-			if (argv[i][j] == '=')
-			{
-				printf("%d\n", j);
-				printf("arg = $%s$\n", argv[i] + j + 1);
-				str = ft_str_copy_n(argv[i], j);
-				printf("debut = $%s$\n", str);
-				free(str);
-				break;
-			}
-			j++;
-		}
-		i++;
-	}
+	j = ft_comp_str(argv[1], argv[2]);
+	printf("%zu", j);
+	return (0);
 }

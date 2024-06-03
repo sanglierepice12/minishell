@@ -40,6 +40,7 @@ SRCS =	main.c \
 		free/free.c					\
 		utils/copy.c				\
 		utils/ft_calloc.c			\
+		utils/compare.c				\
 		utils/linked_list.c
 
 # Objet files

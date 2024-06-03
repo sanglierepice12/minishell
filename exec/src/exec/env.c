@@ -12,6 +12,22 @@
 
 #include "../../include/minishell.h"
 
+t_env	*ft_find_thing_in_env(t_env **env, char *value)
+{
+	t_env	*temp;
+
+	if (!env)
+		return (NULL);
+	temp = *env;
+	while (temp)
+	{
+		if (temp->value == value)
+			return (temp);
+		temp = temp->next;
+	}
+	return (NULL);
+}
+
 static void	ft_get_first_node(t_glob *glob, char **env)
 {
 	char	*value;

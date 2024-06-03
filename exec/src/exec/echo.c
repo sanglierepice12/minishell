@@ -12,30 +12,30 @@
 
 #include "../../include/minishell.h"
 
-void	ft_echo(char *dup)
+void	ft_echo(char *input)
 {
 	size_t	i;
 
-	if (dup[0] && dup[0] != ' ')
+	if (input && input[0] && input[0] != ' ')
 	{
-		dprintf(2, "echo%s: command not found\n", dup);
+		dprintf(2, "echo%s: command not found\n", input);
 		return ;
 	}
-	if (dup[1] == '-' && dup[2] == 'n' && dup[3])
+	if (input && input[1] == '-' && input[2] == 'n' && input[3])
 	{
 		i = 3;
-		while (++i, dup[i] && dup[3] != ' ')
+		while (++i, input[i] && input[3] != ' ')
 		{
-			if (dup[i] != 'n')
-				return ((printf("%s\n", dup + 1), (void)0));
+			if (input[i] != 'n')
+				return ((printf("%s\n", input + 1), (void)0));
 		}
-		if (!dup[i])
+		if (!input[i])
 			return ;
 		else
-			printf("%s", dup + 4);
+			printf("%s", input + 4);
 	}
-	else if (dup[1] == '-' && dup[2] == 'n' && !dup[3])
+	else if (input[1] == '-' && input[2] == 'n' && !input[3])
 		return ;
 	else
-		printf("%s\n", dup + 1);
+		printf("%s\n", input + 1);
 }
