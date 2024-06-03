@@ -12,7 +12,7 @@
 
 #include "../../include/minishell.h"
 
-void	print_env(t_env **head, int env)
+void	print_env(t_env **head, int flag)
 {
 	t_env	*temp;
 	if (*head)
@@ -20,22 +20,32 @@ void	print_env(t_env **head, int env)
 		temp = *head;
 		while (temp->next)
 		{
-			if (env == 0)
+			if (flag == 0)
 			{
 				if (temp->flag == 0)
-					printf("%s = %s\n", temp->value, temp->path);
+					printf("%s=%s\n", temp->value, temp->path);
 			}
 			else
-				printf("%s = %s\n", temp->value, temp->path);
+			{
+				if (temp->flag == 1 && !temp->path)
+					printf("declare -x %s\n", temp->value);
+				else
+					printf("declare -x %s=\"%s\"\n", temp->value, temp->path);
+			}
 			temp = temp->next;
 		}
-		if (env == 0)
+		if (flag == 0)
 		{
 			if (temp->flag == 0)
-				printf("%s = %s\n", temp->value, temp->path);
+				printf("%s=%s\n", temp->value, temp->path);
 		}
 		else
-			printf("%s = %s\n", temp->value, temp->path);
+		{
+			if (temp->flag == 1 && !temp->path)
+				printf("declare -x %s\n", temp->value);
+			else
+				printf("declare -x %s=\"%s\"\n", temp->value, temp->path);
+		}
 	}
 	else
 		printf("\n");
@@ -115,9 +125,12 @@ t_env	*ft_new_node(char *value, char *path, bool flag)
 	env = ft_cal_loc(1, sizeof(t_env));
 	if (!env)
 		return (NULL);
-	env->value = ft_dup(value);
-	env->path = ft_dup(path);
-	env->flag = flag;
+	if (value)
+		env->value = ft_dup(value);
+	if (path)
+		env->path = ft_dup(path);
+	if (flag)
+		env->flag = flag;
 	env->next = NULL;
 	env->prev = NULL;
 	return (env);

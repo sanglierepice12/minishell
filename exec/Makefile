@@ -17,7 +17,7 @@ NC = \033[0m
 
 # Compiler and flags
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g3
 LDFLAGS = -lreadline
 
 # Source and objet directories
