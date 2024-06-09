@@ -44,6 +44,12 @@ int	ft_strlen_quote(char *str, int len, int *quote)
 
 	checkquote = 0;
 	i = 0;
+	if (str[len + i] == '>')
+		return (1);
+	if (str[len + i] == '<')
+		return (1);
+	if (str[len + i] == '|')
+		return (1);
 	while (str[len + i])
 	{
 		if (check_quote(str, len + i, &checkquote, 34) == 1)
@@ -52,9 +58,37 @@ int	ft_strlen_quote(char *str, int len, int *quote)
 			(*quote)++;
 		if (str[len + i] == ' ' && checkquote == 0)
 			break ;
+		if (str[len + i] == '>' && checkquote == 0)
+			break ;
+		if (str[len + i] == '<' && checkquote == 0)
+			break ;
+		if (str[len + i] == '|' && checkquote == 0)
+			break ;
 		i++;
 	}
 	if (checkquote == 1 || checkquote == 2)
 		return (-1);
 	return (i);
+}
+
+int	if_in_quote(char *str, int i)
+{
+	int lenght;
+	int quote;
+
+	lenght = 0;
+	quote = 0;
+	while (str[lenght])
+	{
+		if (str[lenght] == 34 && quote == 0)
+			quote = 1;
+		else if (str[lenght] == 39 && quote == 0)
+			quote = 2;
+		if (lenght == i && quote > 0)
+			return (0);
+		else if (lenght == i && quote == 0)
+			return (1);
+		lenght++;
+	}
+	return (2);
 }
