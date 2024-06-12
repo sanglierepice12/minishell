@@ -39,6 +39,16 @@ size_t	ft_strlen(const char *str)
 	return (len);
 }
 
+size_t	ft_strlen_double(char **str)
+{
+	size_t	len;
+
+	len = 0;
+	while (str[len])
+		len++;
+	return (len);
+}
+
 char	*ft_super_dup(char *src, char *msg)
 {
 	char	*dup;

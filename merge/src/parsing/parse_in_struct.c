@@ -28,6 +28,10 @@ static char	*set_command(char *input)
 		return ("env");
 	else if (ft_strncmp(input, "exit", 4) == 0)
 		return ("exit");
+	else if (ft_strncmp(input, "ls", 2) == 0)
+		return ("ls");
+	else if (ft_strncmp(input, "clear", 5) == 0)
+		return ("clear");
 	return (NULL);
 }
 
@@ -161,6 +165,7 @@ int	parse_in_struct(t_glob *glob, char *input)
 	glob->command.argv = set_argv(input, &glob->command);
 	if (glob->command.argv == 0)
 		return (0);
+	ft_call(glob, input);
 	show_struct(&glob->command);
 	return (1);
 }

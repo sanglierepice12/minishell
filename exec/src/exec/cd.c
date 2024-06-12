@@ -59,19 +59,19 @@ void	ft_update_pwd(t_env **env, char *value, char *path)
 	}
 }
 
-void	ft_cd(t_glob *glob, char *input)
+void	ft_cd(t_glob *glob, t_input *cmd)
 {
-	if (input[3] == '-' && input[4] == '-')
+	if (cmd->argv[1][3] == '-' && cmd->argv[1][4] == '-')
 		chdir("~");
-	else if (!input[2] || (input[3] == '~' && !input[4]))
+	else if (!cmd->argv[1][2] || (cmd->argv[1][3] == '~' && !cmd->argv[1][4]))
 		chdir("/");
-	else if (input[3] == '-' && input[4] != '-')
+	else if (cmd->argv[1][3] == '-' && cmd->argv[1][4] != '-')
 		dprintf(2, "bash: cd: %c%c: invalid option\n"
-			"cd: usage: [-L|[-P [-e]] [-@]] [dir]\n", input[3], input[4]);
-	else if (chdir(input + 3) != 0)
+			"cd: usage: [-L|[-P [-e]] [-@]] [dir]\n", cmd->argv[1][3], cmd->argv[1][4]);
+	else if (chdir(cmd->argv[1]) != 0)
 	{
 		perror("bash: cd");
-		dprintf(2, "bash: cd: %s: No such file or directory\n", input + 3);
+		dprintf(2, "bash: cd: %s: No such file or directory\n", cmd->argv[1] + 3);
 	}
 	ft_update_pwd(&glob->env, "PWD", getcwd(NULL, 0));
 }

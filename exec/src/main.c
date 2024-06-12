@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsuter <gsuter@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: arbenois <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/28 16:22:28 by gsuter            #+#    #+#             */
-/*   Updated: 2024/05/28 16:22:28 by gsuter           ###   ########.fr       */
+/*   Created: 2024/05/29 03:29:57 by arbenois          #+#    #+#             */
+/*   Updated: 2024/05/29 09:53:42 by gsuter           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,10 @@ int	main(int arc, char **argv, char **env)
 		if (rl_on_new_line() == 0)
 		{
 			if (check_command(input) == 1)
-				parse_in_struct(&glob, input);
+			{
+				if(parse_in_struct(&glob, input) == 0)
+					printf("Error\n");
+			}
 			/*else
 				printf("Error\n");*/
 		}

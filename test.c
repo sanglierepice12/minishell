@@ -2,31 +2,20 @@
 #include <string.h>
 #include <stdlib.h>
 
-int	ft_comp_str(char *src, char *str)
+size_t	ft_strlen_double(char **str)
 {
-	size_t	i;
+	size_t	len;
 
-	if (!str || !src)
-		return (0);
-	i = 0;
-	while (src[i])
-	{
-		if (src[i] == str[i])
-			i++;
-		else
-			return (0);
-	}
-	if (src[i] || str[i])
-		return (0);
-	return (1);
+	len = 0;
+	while (str[len])
+		len++;
+	return (len);
 }
 
 int	main(int arc, char **argv)
 {
-	(void)arc;
-	size_t	j;
+	printf("arc = %d\n", arc -1);
+	printf("len = %zu\n", ft_strlen_double(argv) - 1);
 
-	j = ft_comp_str(argv[1], argv[2]);
-	printf("%zu", j);
 	return (0);
 }

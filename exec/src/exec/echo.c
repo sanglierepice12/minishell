@@ -12,30 +12,41 @@
 
 #include "../../include/minishell.h"
 
-void	ft_echo(char *input)
+static void	ft_print_echo(t_input *cmd, int flag)
 {
 	size_t	i;
 
-	if (input && input[0] && input[0] != ' ')
+	i = 0;
+	while (++i, cmd->argv[i])
+		printf("%s", cmd->argv[i]);
+	if (!flag)
+		printf("\n");
+}
+
+void	ft_echo(t_input *cmd)
+{
+	size_t	i;
+
+	if (cmd->argv && cmd->argv[1][0] && cmd->argv[1][0] != ' ')
 	{
-		dprintf(2, "echo%s: command not found\n", input);
+		dprintf(2, "echo%s: command not found\n", cmd->argv[0]);
 		return ;
 	}
-	if (input && input[1] == '-' && input[2] == 'n' && input[3])
+	if (cmd->argv && cmd->argv[1][0] == '-' && cmd->argv[1][1] == 'n' && cmd->argv[1][2])
 	{
-		i = 3;
-		while (++i, input[i] && input[3] != ' ')
+		i = 2;
+		while (++i, cmd->argv[1][i] && cmd->argv[1][2] != ' ')
 		{
-			if (input[i] != 'n')
-				return ((printf("%s\n", input + 1), (void)0));
+			if (cmd->argv[1][i] != 'n')
+				return (ft_print_echo(cmd, 0), (void)0);
 		}
-		if (!input[i])
+		if (!cmd->argv[1][i])
 			return ;
 		else
-			printf("%s", input + 4);
+			ft_print_echo(cmd, 1);
 	}
-	else if (input[1] == '-' && input[2] == 'n' && !input[3])
+	else if (cmd->argv[1][0] == '-' && cmd->argv[1][1] == 'n' && !cmd->argv[1][2])
 		return ;
 	else
-		printf("%s\n", input + 1);
+		ft_print_echo(cmd, 0);
 }

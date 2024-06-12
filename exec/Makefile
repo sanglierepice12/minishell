@@ -26,9 +26,11 @@ OBJ_DIR = ./obj
 DEP_DIR = ./dep
 
 # Source files
-SRCS =	main.c \
+SRCS =	main.c 						\
+		ft_lib.c					\
 		parsing/check_command.c		\
 		parsing/parse_in_struct.c	\
+		parsing/check_quote.c		\
 		exec/pwd.c					\
 		exec/ls.c					\
 		exec/cd.c					\
@@ -59,7 +61,7 @@ all: $(NAME)
 -include $(DEPS)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LDFLAGS)
+	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LDFLAGS)
 	@echo "$(GREEN)Linking completed!$(NC)"
 
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
@@ -69,7 +71,7 @@ $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)/free $(DEP_DIR)/free
 	@mkdir -p $(OBJ_DIR)/utils $(DEP_DIR)/utils
 	@mkdir -p $(OBJ_DIR)/utils/printf $(DEP_DIR)/utils/printf
-	$(CC) $(CFLAGS) -MMD -MP -MF $(DEP_DIR)/$*.d -c $< -o $@
+	@$(CC) $(CFLAGS) -MMD -MP -MF $(DEP_DIR)/$*.d -c $< -o $@
 	@echo "$(GREEN)Compilation of $< completed!$(NC)"
 
 clean:

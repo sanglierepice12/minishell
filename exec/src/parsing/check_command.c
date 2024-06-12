@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_command.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsuter <gsuter@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: arbenois <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/23 17:14:27 by gsuter            #+#    #+#             */
-/*   Updated: 2024/05/23 17:14:27 by gsuter           ###   ########.fr       */
+/*   Created: 2024/05/29 03:30:04 by arbenois          #+#    #+#             */
+/*   Updated: 2024/05/29 03:30:06 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,9 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 
 static int	check_input(char *input, int letter)
 {
-	(void)input;
-	(void)letter;
-	return (1);
-/*	if (input[letter] == ' ' || input[letter] == 0)
+	if (input[letter] == ' ' || input[letter] == 0)
 		return (1);
-	return (0);*/
+	return (0);
 }
 
 int	check_command(char *input)
@@ -51,8 +48,8 @@ int	check_command(char *input)
 		return (check_input(input, 5));
 	else if (ft_strncmp(input, "env", 3) == 0)
 		return (check_input(input, 3));
-	/*else if (ft_strncmp(input, "exit", 4) == 0)
-		return (check_input(input, 4));*/
+	else if (ft_strncmp(input, "exit", 4) == 0)
+		return (check_input(input, 4));
 	else if (ft_strncmp(input, "ls", 2) == 0)
 		return (check_input(input, 2));
 	else if (ft_strncmp(input, "clear", 5) == 0)
