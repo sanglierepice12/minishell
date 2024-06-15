@@ -31,6 +31,8 @@ SRCS =	main.c 						\
 		parsing/check_command.c		\
 		parsing/parse_in_struct.c	\
 		parsing/check_quote.c		\
+		parsing/parse_quote.c		\
+		parsing/parse_argv.c		\
 		exec/pwd.c					\
 		exec/ls.c					\
 		exec/cd.c					\

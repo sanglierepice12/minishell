@@ -12,183 +12,115 @@
 
 #include "../../include/minishell.h"
 
-static char	*set_command(char *input)
+int	get_lenght_num(char *input, int number)
 {
-	if (ft_strncmp(input, "pwd", 3) == 0)
-		return ("pwd");
-	else if (ft_strncmp(input, "echo", 4) == 0)
-		return ("echo");
-	else if (ft_strncmp(input, "cd", 2) == 0)
-		return ("cd");
-	else if (ft_strncmp(input, "export", 6) == 0)
-		return ("export");
-	else if (ft_strncmp(input, "unset", 5) == 0)
-		return ("unset");
-	else if (ft_strncmp(input, "env", 3) == 0)
-		return ("env");
-	else if (ft_strncmp(input, "exit", 4) == 0)
-		return ("exit");
-	return (NULL);
-}
+	int	num_args;
+	int	i;
 
-static ssize_t	count_args(char *input, int lenght)
-{
-	size_t	i;
-	int		quote;
-	int		temp;
-
+	num_args = 0;
 	i = 0;
-	while (input[lenght])
+	while (input[i])
 	{
-		if (input[lenght] != ' ')
+		if (input[i] == '|')
 		{
-			i++;
-			temp = ft_strlen_quote(input, lenght, &quote);
-			if (temp == -1)
-				return (-1);
-			lenght += temp;
+			if (input[i - 1] == ' ' && input[i + 1] == ' ')
+				num_args++;
 		}
-		if (input[lenght] == ' ')
-			lenght++;
+		i++;
+		if (num_args == number)
+			break ;
 	}
 	return (i);
 }
 
-static char	*delete_quote(char *tab, char *input, int i)
+static char	*set_command(char *input, int num_com)
 {
-	char	*newtab;
-	int		skip;
-	int		checkquote;
-	int		lenght;
-	int		temp;
-
-	temp = 0;
-	lenght = ft_strlen_quote(input, i, &temp);
-	if (lenght == -1)
-		return (NULL);
-	if (temp >= 1)
-		lenght -= temp * 2;
-	newtab = malloc(lenght + 1 * sizeof(char));
-	if (newtab == NULL)
-		return (NULL);
-	newtab[lenght] = 0;
-	temp = 0;
-	skip = 0;
-	checkquote = 0;
-	while (temp != lenght)
-	{
-		if (tab[temp + skip] == 39 && checkquote == 0)
-		{
-			checkquote = 1;
-			skip++;
-		}
-		else if (tab[temp + skip] == 34 && checkquote == 0)
-		{
-			checkquote = 2;
-			skip++;
-		}
-		else if (tab[temp + skip] == 39 && checkquote == 1)
-		{
-			checkquote = 0;
-			skip++;
-		}
-		else if (tab[temp + skip] == 34 && checkquote == 2)
-		{
-			checkquote = 0;
-			skip++;
-		}
-		else
-		{
-			newtab[temp] = tab[temp + skip];
-			temp++;
-		}
-	}
-	free(tab);
-	return (newtab);
-}
-
-static char	*copy_word(char *input, int *i)
-{
+	int 	i;
+	int 	lenght;
 	char	*tab;
-	int		lenght;
-	int		temp;
-	int		y;
 
-	temp = 0;
-	lenght = ft_strlen_quote(input, *i, &temp);
-	if (lenght == -1)
-		return (NULL);
-	tab = malloc(lenght + 1 * sizeof(char));
-	tab[lenght] = 0;
-	y = 0;
-	while (lenght != y)
+	i = 0;
+	if (num_com != 0)
+		lenght = get_lenght_num(input, num_com);
+	else
+		lenght = 0;
+	while (input[i + lenght] == ' ')
+		lenght++;
+	while (input[i + lenght])
 	{
-		tab[y] = input[*i + y];
-		y++;
+		if (input[i + lenght] == ' ' || input[i + lenght] == 0)
+			break ;
+		i++;
+	}
+	tab = malloc((i + 1) * sizeof(char));
+	tab[i] = 0;
+	i = 0;
+	while (input[i + lenght])
+	{
+		if (input[i + lenght] == ' ' || input[i + lenght] == 0)
+			break ;
+		tab[i] = input[i + lenght];
+		i++;
 	}
 	return (tab);
 }
 
-static void parse_word(char **argv, char *input, int *i, int *lenght)
+static int get_num_args(char *input)
 {
-	int temp;
-	char *word;
-
-	temp = 0;
-	word = copy_word(input, i);
-	if (word == NULL)
-	{
-		free_tab(argv, (*lenght) - 1);
-		*lenght = -1;
-		return ;
-	}
-	//check_redir(argv, word, lenght);
-	argv[*lenght] = delete_quote(word, input, *i);
-	*i += ft_strlen_quote(input, *i, &temp);
-	(*lenght)++;
-}
-
-static char	**set_argv(char *input, t_input *command)
-{
-	char	**argv;
-	int		i;
-	int		lenght;
-
-	argv = malloc(command->args * sizeof(char *));
-	if (argv == NULL)
-		return (0);
-	lenght = 0;
-	i = ft_strlen(command->command);
-	while (input[i])
-	{
-		if (input[i] != ' ')
-			parse_word(argv, input, &i, &lenght);
-		if (lenght == -1)
-			return (0);
-		if (input[i] == ' ')
-			i++;
-	}
-	return (argv);
-}
-
-void	show_struct(t_input *command)
-{
+	int	num_args;
 	int	i;
 
-	printf("ARGS = %d\n", command->args);
-	printf("command = %s\n", command->command);
+	num_args = 1;
 	i = 0;
-	while (i != command->args)
+	while (input[i])
 	{
-		printf("ARGV = %s\n", command->argv[i]);
-		free(command->argv[i]);
+		if (input[i] == '|')
+		{
+			if (input[i - 1] == ' ' && input[i + 1] == ' ')
+				num_args++;
+		}
 		i++;
 	}
-	free(command->argv);
+	return (num_args);
 }
 
 int	parse_in_struct(t_glob *glob, char *input)
 {
+	int	num_args;
+	int	i;
+	int	temp;
+
+	i = 0;
+	num_args = get_num_args(input);
+	glob->command = malloc(num_args * sizeof(t_input));
+	while (i != num_args)
+	{
+		glob->command[i].command = set_command(input, i);
+		glob->command[i].args = count_args(input, i);
+		glob->command[i].argv = set_argv(input, i, &glob->command[i]);
+		i++;
+	}
+	i = 0;
+	while (i != num_args)
+	{
+		printf("Liste %d\n", i);
+		printf("COMMAND = %s\n", glob->command[i].command);
+		printf("ARGS = %d\n", glob->command[i].args);
+		temp = 0;
+		while (temp != glob->command[i].args)
+		{
+			printf("ARGV = %s\n", glob->command[i].argv[temp]);
+			temp++;
+		}
+		if (glob->command[i].heredoc.type != 0)
+		{
+			printf("Heredoc type = %s\n", glob->command[i].heredoc.type);
+			printf("Heredoc file = %s\n", glob->command[i].heredoc.file);
+		}
+		printf("\n");
+		i++;
+	}
+	/*
 	glob->command.command = set_command(input);
 	glob->command.args = count_args(input, ft_strlen(glob->command.command));
 	if (glob->command.args == -1)
@@ -196,6 +128,6 @@ int	parse_in_struct(t_glob *glob, char *input)
 	glob->command.argv = set_argv(input, &glob->command);
 	if (glob->command.argv == 0)
 		return (0);
-	show_struct(&glob->command);
+	show_struct(&glob->command);*/
 	return (1);
 }

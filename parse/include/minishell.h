@@ -36,17 +36,24 @@ typedef struct s_build
 	char	*pwd;
 }				t_build;
 
+typedef struct	s_heredoc
+{
+	char	*type;
+	char	*file;
+}				t_heredoc;
+
 typedef struct s_input
 {
-	char	*command;
-	char	**argv;
-	int		args;
+	char		*command;
+	char		**argv;
+	t_heredoc	heredoc;
+	int			args;
 }				t_input;
 
 typedef struct s_glob
 {
 	t_build	build;
-	t_input	command;
+	t_input	*command;
 	t_env	*env;
 }				t_glob;
 
@@ -55,6 +62,12 @@ int		check_command(char *input);
 int 	parse_in_struct(t_glob *glob, char *input);
 int		ft_strlen_quote(char *str, int len, int *quote);
 int		if_in_quote(char *str, int i);
+char	*delete_quote(char *tab, char *input, int i);
+char	**set_argv(char *input, int num, t_input *command);
+int		count_args(char *input, int lenght);
+int		get_lenght_num(char *input, int number);
+
+void	show_struct(t_input *command);
 
 /*********UTILS*********/
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
