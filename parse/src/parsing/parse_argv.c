@@ -123,12 +123,42 @@ static char **check_apply_heredoc(char **argv, t_input *command)
 	int		i;
 
 	i = command->args - 2;
+	command->heredoc.type_infile = NULL;
+	command->heredoc.file_infile = NULL;
 	while (i > 0)
 	{
 		if (ft_comp_str(argv[i], "<") == 1)
 		{
-			command->heredoc.type = "<";
-			command->heredoc.file = ft_super_dup(argv[i + 1], NULL);
+			command->heredoc.type_infile = "<";
+			command->heredoc.file_infile = ft_super_dup(argv[i + 1], NULL);
+			remove_heredoc(argv, i, command);
+			break ;
+		}
+		if (ft_comp_str(argv[i], "<<") == 1)
+		{
+			command->heredoc.type_infile = "<<";
+			command->heredoc.file_infile = ft_super_dup(argv[i + 1], NULL);
+			remove_heredoc(argv, i, command);
+			break ;
+		}
+		i--;
+	}
+	i = command->args - 2;
+	command->heredoc.type_outfile = NULL;
+	command->heredoc.file_outfile = NULL;
+	while (i > 0)
+	{
+		if (ft_comp_str(argv[i], ">") == 1)
+		{
+			command->heredoc.type_outfile = ">";
+			command->heredoc.file_outfile = ft_super_dup(argv[i + 1], NULL);
+			remove_heredoc(argv, i, command);
+			break ;
+		}
+		if (ft_comp_str(argv[i], ">>") == 1)
+		{
+			command->heredoc.type_outfile = ">>";
+			command->heredoc.file_outfile = ft_super_dup(argv[i + 1], NULL);
 			remove_heredoc(argv, i, command);
 			break ;
 		}

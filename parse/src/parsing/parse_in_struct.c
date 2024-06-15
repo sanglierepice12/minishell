@@ -112,10 +112,15 @@ int	parse_in_struct(t_glob *glob, char *input)
 			printf("ARGV = %s\n", glob->command[i].argv[temp]);
 			temp++;
 		}
-		if (glob->command[i].heredoc.type != 0)
+		if (glob->command[i].heredoc.type_infile != 0)
 		{
-			printf("Heredoc type = %s\n", glob->command[i].heredoc.type);
-			printf("Heredoc file = %s\n", glob->command[i].heredoc.file);
+			printf("Heredoc type = %s\n", glob->command[i].heredoc.type_infile);
+			printf("Heredoc file = %s\n", glob->command[i].heredoc.file_infile);
+		}
+		if (glob->command[i].heredoc.type_outfile != 0)
+		{
+			printf("Heredoc type = %s\n", glob->command[i].heredoc.type_outfile);
+			printf("Heredoc file = %s\n", glob->command[i].heredoc.file_outfile);
 		}
 		printf("\n");
 		i++;

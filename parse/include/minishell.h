@@ -38,8 +38,10 @@ typedef struct s_build
 
 typedef struct	s_heredoc
 {
-	char	*type;
-	char	*file;
+	char	*type_infile;
+	char	*file_infile;
+	char	*type_outfile;
+	char	*file_outfile;
 }				t_heredoc;
 
 typedef struct s_input
