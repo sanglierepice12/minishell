@@ -35,8 +35,8 @@ int	get_lenght_num(char *input, int number)
 
 static char	*set_command(char *input, int num_com)
 {
-	int 	i;
-	int 	lenght;
+	int		i;
+	int		lenght;
 	char	*tab;
 
 	i = 0;
@@ -65,7 +65,7 @@ static char	*set_command(char *input, int num_com)
 	return (tab);
 }
 
-static int get_num_args(char *input)
+static int	get_num_args(char *input)
 {
 	int	num_args;
 	int	i;
@@ -74,7 +74,7 @@ static int get_num_args(char *input)
 	i = 0;
 	while (input[i])
 	{
-		if (input[i] == '|')
+		if (input[i] == '|' && if_in_quote(input, i) == 3)
 		{
 			if (input[i - 1] == ' ' && input[i + 1] == ' ')
 				num_args++;
@@ -92,12 +92,17 @@ int	parse_in_struct(t_glob *glob, char *input)
 
 	i = 0;
 	num_args = get_num_args(input);
+	printf("Num ARG = %d\n", num_args);
 	glob->command = malloc(num_args * sizeof(t_input));
 	while (i != num_args)
 	{
+		glob->command[i].heredoc.type_outfile = NULL;
+		glob->command[i].heredoc.file_outfile = NULL;
+		glob->command[i].heredoc.type_infile = NULL;
+		glob->command[i].heredoc.file_infile = NULL;
 		glob->command[i].command = set_command(input, i);
 		glob->command[i].args = count_args(input, i);
-		glob->command[i].argv = set_argv(input, i, &glob->command[i]);
+		glob->command[i].argv = set_argv(input, i, glob);
 		i++;
 	}
 	i = 0;
@@ -114,13 +119,13 @@ int	parse_in_struct(t_glob *glob, char *input)
 		}
 		if (glob->command[i].heredoc.type_infile != 0)
 		{
-			printf("Heredoc type = %s\n", glob->command[i].heredoc.type_infile);
-			printf("Heredoc file = %s\n", glob->command[i].heredoc.file_infile);
+			printf("Heredoc type Infile = %s\n", glob->command[i].heredoc.type_infile);
+			printf("Heredoc file Infile = %s\n", glob->command[i].heredoc.file_infile);
 		}
 		if (glob->command[i].heredoc.type_outfile != 0)
 		{
-			printf("Heredoc type = %s\n", glob->command[i].heredoc.type_outfile);
-			printf("Heredoc file = %s\n", glob->command[i].heredoc.file_outfile);
+			printf("Heredoc type Outfile = %s\n", glob->command[i].heredoc.type_outfile);
+			printf("Heredoc file Outfile = %s\n", glob->command[i].heredoc.file_outfile);
 		}
 		printf("\n");
 		i++;

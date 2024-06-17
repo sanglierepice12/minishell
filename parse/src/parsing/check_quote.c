@@ -90,15 +90,21 @@ int	if_in_quote(char *str, int i)
 	quote = 0;
 	while (str[lenght])
 	{
-		if (str[lenght] == 34 && quote == 0)
+		if (str[lenght] == 34 && quote == 1)
+			quote = 0;
+		else if (str[lenght] == 39 && quote == 2)
+			quote = 0;
+		else if (str[lenght] == 34 && quote == 0)
 			quote = 1;
 		else if (str[lenght] == 39 && quote == 0)
 			quote = 2;
-		if (lenght == i && quote > 0)
-			return (0);
-		else if (lenght == i && quote == 0)
+		if (lenght == i && quote == 1)
 			return (1);
+		if (lenght == i && quote == 2)
+			return (2);
+		else if (lenght == i && quote == 0)
+			return (3);
 		lenght++;
 	}
-	return (2);
+	return (0);
 }

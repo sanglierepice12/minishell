@@ -81,7 +81,7 @@ static char	*copy_word(char *input, int *i)
 	return (tab);
 }
 
-static void	parse_word(char **argv, char *input, int *i, int *lenght)
+static char	*parse_word(char *input, int *i, t_glob *glob)
 {
 	int		temp;
 	char	*word;
@@ -89,91 +89,20 @@ static void	parse_word(char **argv, char *input, int *i, int *lenght)
 	temp = 0;
 	word = copy_word(input, i);
 	if (word == NULL)
-	{
-		free_tab(argv, (*lenght) - 1);
-		*lenght = -1;
-		return ;
-	}
-	argv[*lenght] = delete_quote(word, input, *i);
+		return (NULL);
+	word = expend_env_var(word, glob);
+	word = delete_quote(word, 0);
 	*i += ft_strlen_quote(input, *i, &temp);
-	(*lenght)++;
+	return (word);
 }
 
-static void remove_heredoc(char **argv, int pos, t_input *command)
-{
-	int i;
-	int size;
-
-	free(argv[pos]);
-	free(argv[pos + 1]);
-	i = pos;
-	size = command->args;
-	while (i < size - 2)
-	{
-		argv[i] = argv[i + 2];
-		i++;
-	}
-	argv[size - 2] = NULL;
-	argv[size - 1] = NULL;
-	command->args -= 2;
-}
-
-static char **check_apply_heredoc(char **argv, t_input *command)
-{
-	int		i;
-
-	i = command->args - 2;
-	command->heredoc.type_infile = NULL;
-	command->heredoc.file_infile = NULL;
-	while (i > 0)
-	{
-		if (ft_comp_str(argv[i], "<") == 1)
-		{
-			command->heredoc.type_infile = "<";
-			command->heredoc.file_infile = ft_super_dup(argv[i + 1], NULL);
-			remove_heredoc(argv, i, command);
-			break ;
-		}
-		if (ft_comp_str(argv[i], "<<") == 1)
-		{
-			command->heredoc.type_infile = "<<";
-			command->heredoc.file_infile = ft_super_dup(argv[i + 1], NULL);
-			remove_heredoc(argv, i, command);
-			break ;
-		}
-		i--;
-	}
-	i = command->args - 2;
-	command->heredoc.type_outfile = NULL;
-	command->heredoc.file_outfile = NULL;
-	while (i > 0)
-	{
-		if (ft_comp_str(argv[i], ">") == 1)
-		{
-			command->heredoc.type_outfile = ">";
-			command->heredoc.file_outfile = ft_super_dup(argv[i + 1], NULL);
-			remove_heredoc(argv, i, command);
-			break ;
-		}
-		if (ft_comp_str(argv[i], ">>") == 1)
-		{
-			command->heredoc.type_outfile = ">>";
-			command->heredoc.file_outfile = ft_super_dup(argv[i + 1], NULL);
-			remove_heredoc(argv, i, command);
-			break ;
-		}
-		i--;
-	}
-	return (argv);
-}
-
-char	**set_argv(char *input, int num, t_input *command)
+char	**set_argv(char *input, int num, t_glob *glob)
 {
 	char	**argv;
 	int		i;
 	int		lenght;
 
-	argv = malloc(command->args * sizeof(char *));
+	argv = malloc(glob->command->args * sizeof(char *));
 	if (argv == NULL)
 		return (0);
 	lenght = 0;
@@ -184,16 +113,19 @@ char	**set_argv(char *input, int num, t_input *command)
 	while (input[i])
 	{
 		if (input[i] != ' ')
-			parse_word(argv, input, &i, &lenght);
+			argv[lenght++] = parse_word(input, &i, glob);
 		if (lenght == -1)
+		{
+			//Faut free argv
 			return (0);
+		}
 		if (input[i] == ' ')
 			i++;
 		if (input[i] == '|')
 		{
 			if (input[i - 1] == ' ' && input[i + 1] == ' ')
-				break;
+				break ;
 		}
 	}
-	return (check_apply_heredoc(argv, command));
+	return (check_apply_heredoc(argv, glob->command));
 }

@@ -76,12 +76,12 @@ void	copy_without_quotes(char *tab, char *newtab, int lenght)
 	}
 }
 
-char	*delete_quote(char *tab, char *input, int i)
+char	*delete_quote(char *tab, int i)
 {
 	int		lenght;
 	char	*newtab;
 
-	newtab = allocate_newtab(input, i, &lenght);
+	newtab = allocate_newtab(tab, i, &lenght);
 	if (newtab == NULL)
 		return (NULL);
 	copy_without_quotes(tab, newtab, lenght);
