@@ -20,20 +20,20 @@ static char	*copy_word_env(char *input, int i)
 	lenght = 0;
 	while (input[i + lenght])
 	{
-		if (input[i + lenght] == ' ' || input[i + lenght] == '"')
+		if (input[i + lenght] == ' ' || input[i + lenght] == 39 || input[i + lenght] == 34)
 			break ;
 		lenght++;
 	}
 	tab = malloc(lenght * sizeof(char));
-	tab[lenght] = 0;
 	lenght = 0;
 	while (input[i + lenght])
 	{
-		if (input[i + lenght] == ' ' || input[i + lenght] == '"')
+		if (input[i + lenght] == ' ' || input[i + lenght] == 39 || input[i + lenght] == 34)
 			break ;
 		tab[lenght] = input[i + lenght];
 		lenght++;
 	}
+	tab[lenght] = 0;
 	return (tab);
 }
 
@@ -95,7 +95,7 @@ char	*expend_env_var(char *word, t_glob *glob)
 			check_sup = 1;
 			while (env != NULL)
 			{
-				if (ft_comp_str(env->value, temp) == 1)
+				if (strcmp(env->value, temp) == 0)
 				{
 					word = replace_env_word(word, i, env->path);
 					check_sup = 2;

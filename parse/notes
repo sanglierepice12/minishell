@@ -1,8 +1,5 @@
 Commande qui ne sont pas bien parse
 
-echo "'$USER'"
-echo '"'$USER'"'
-echo "''$USER''"
 echo $?
 echo \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\$USER \$PATH \\$PWD
 /bin/echo $USER =intergalaktikus miaf*szomez~
