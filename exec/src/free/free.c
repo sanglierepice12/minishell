@@ -12,13 +12,14 @@
 
 #include "../../include/minishell.h"
 
-void	ft_free_build(t_build *build)
+/*void	ft_free_build(t_build *build)
 {
 	if (build->pwd)
 		free(build->pwd);
-}
+}*/
 
 void	ft_free_all(t_glob *glob)
 {
-	ft_free_build(&glob->build);
+	(void)glob;
+	/*ft_free_build(&glob->build);*/
 }

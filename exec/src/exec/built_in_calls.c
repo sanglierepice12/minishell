@@ -29,7 +29,7 @@ void	ft_pwd_call(t_glob *glob, char *dup)
 }
 */
 
-void	ft_pwd_call(t_glob *glob, t_input *cmd)
+/*void	ft_pwd_call(t_glob *glob, t_input *cmd)
 {
 	if (cmd->argv[1][4] && cmd->argv[1][4] == '-' && cmd->argv[1][5])
 		dprintf(2, "bash: pwd: %c%c: invalid option\n"
@@ -42,14 +42,14 @@ void	ft_pwd_call(t_glob *glob, t_input *cmd)
 		printf("%s\n", glob->build.pwd);
 		free(glob->build.pwd);
 	}
-}
+}*/
 
 void	ft_call(t_glob *glob, t_input *cmd)
 {
 	if (!cmd->args)
 		return ;
 	if (ft_strncmp(cmd->command, "pwd", 3) == 0)
-		ft_pwd_call(glob, cmd);
+		ft_pwd(cmd, &glob->env);
 	if (ft_strncmp(cmd->command, "cd", 2) == 0)
 		ft_cd(glob, cmd);
 	if (ft_strncmp(cmd->command, "ls", 2) == 0)

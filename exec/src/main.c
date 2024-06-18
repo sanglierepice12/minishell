@@ -25,8 +25,8 @@ int	main(int arc, char **argv, char **env)
 		dprintf(2, "Malloc crash, no env\n");
 	while (1)
 	{
-		ft_pwd(&glob.build);
-		wiam = ft_super_dup(glob.build.pwd, "$ ");
+		//ft_pwd(&glob.build);
+		wiam = ft_super_dup(getcwd(NULL, 0), "$ ");
 		input = readline(wiam);
 		add_history(input);
 		if (input == NULL)

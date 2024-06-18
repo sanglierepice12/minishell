@@ -31,10 +31,10 @@ typedef struct s_env
 	struct s_env	*prev;
 }				t_env;
 
-typedef struct s_build
+/*typedef struct s_build
 {
 	char	*pwd;
-}				t_build;
+}				t_build;*/
 
 typedef struct s_input
 {
@@ -45,7 +45,7 @@ typedef struct s_input
 
 typedef struct s_glob
 {
-	t_build	build;
+/*	t_build	build;*/
 	t_input	cmd;
 	t_env	*env;
 }				t_glob;
@@ -72,10 +72,11 @@ size_t	ft_strlen_double(char **str);
 void	ft_call(t_glob *glob, t_input *cmd);
 //void	ft_call(t_glob *glob, char *input);
 //void	ft_pwd_call(t_glob *glob, char *dup);
-void	ft_pwd_call(t_glob *glob, t_input *cmd);
+/*void	ft_pwd_call(t_glob *glob, t_input *cmd);*/
 
 /*********EXEC*********/
-void	ft_pwd(t_build *build);
+void	ft_pwd(t_input *cmd, t_env **env);
+/*void	ft_pwd(t_build *build);*/
 //void	ft_cd(t_glob *glob, char *input);
 void	ft_cd(t_glob *glob, t_input *cmd);
 //void	ft_echo(char *input);
@@ -93,6 +94,7 @@ void	*ft_cal_loc(size_t nmemb, size_t size);
 void	ft_free_all(t_glob *glob);
 
 /*********LINKED_LIST*********/
+void	ft_print_this_node(t_env **env, char *value);
 void	print_env(t_env **head, int env);
 t_env	*ft_lst_last(t_env *lst);
 void	ft_lst_add_front(t_env **lst, t_env *new);
