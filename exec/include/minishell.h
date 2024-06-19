@@ -31,11 +31,6 @@ typedef struct s_env
 	struct s_env	*prev;
 }				t_env;
 
-/*typedef struct s_build
-{
-	char	*pwd;
-}				t_build;*/
-
 typedef struct	s_heredoc
 {
 	char	*type_infile;
@@ -54,7 +49,6 @@ typedef struct s_input
 
 typedef struct s_glob
 {
-/*	t_build	build;*/
 	t_input		*cmd;
 	t_env		*env;
 	t_heredoc	heredoc;

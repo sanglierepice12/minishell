@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../../../include/minishell.h"
 
 /*
 void	ft_pwd_call(t_glob *glob, char *dup)
@@ -65,27 +65,3 @@ void	ft_call(t_glob *glob, t_input *cmd)
 	if (ft_strncmp(cmd->command, "export", 6) == 0)
 		ft_export(&glob->env, cmd);
 }
-
-/*
-void	ft_call(t_glob *glob, char *input)
-{
-	if (!input)
-		return ;
-	if (ft_strncmp(input, "pwd", 3) == 0)
-		ft_pwd_call(glob, input);
-	if (ft_strncmp(input, "cd", 2) == 0)
-		ft_cd(glob, input);
-	if (ft_strncmp(input, "ls", 2) == 0)
-		ft_ls();
-	if (ft_strncmp(input, "echo", 4) == 0)
-		ft_echo(input + 4);
-	if (ft_strncmp(input, "clear", 5) == 0)
-		printf("\033[2J\033[H");
-	if (ft_strncmp(input, "env", 3) == 0)
-		print_env(&glob->env, 0);
-	if (ft_strncmp(input, "unset", 5) == 0)
-		ft_unset(glob, input);
-	if (ft_strncmp(input, "export", 6) == 0)
-		ft_export(&glob->env, input);
-}
-*/
