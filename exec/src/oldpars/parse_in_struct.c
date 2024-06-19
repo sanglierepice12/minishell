@@ -111,17 +111,18 @@ static char	*copy_word(char *input, int *i)
 	return (tab);
 }
 
-static char	**set_argv(char *input, t_input *command)
+static char	**set_argv(char *input, t_input *cmd)
 {
 	char	**argv;
 	int		i;
 	int		lenght;
 
-	argv = malloc(command->args * sizeof(char *));
+	argv = malloc(cmd->args * sizeof(char *) + 1);
 	if (argv == NULL)
 		return (0);
 	lenght = 0;
-	i = ft_strlen(command->command);
+	//i = ft_strlen(cmd->command);
+	i = 0;
 	while (input[i])
 	{
 		if (input[i] != ' ')
@@ -136,36 +137,39 @@ static char	**set_argv(char *input, t_input *command)
 		}
 		if (input[i] == ' ')
 			i++;
+		printf("i = %d\n", i);
 	}
 	return (argv);
 }
 
-void	show_struct(t_input *command)
+void	show_struct(t_input *cmd)
 {
 	int	i;
 
-	printf("ARGS = %d\n", command->args);
-	printf("command = %s\n", command->command);
+	printf("ARGS = %d\n", cmd->args);
+	printf("cmd = %s\n", cmd->command);
 	i = 0;
-	while (i != command->args)
+	while (i != cmd->args)
 	{
-		printf("ARGV = %s\n", command->argv[i]);
-		free(command->argv[i]);
+		printf("ARGV = %s\n", cmd->argv[i]);
+		free(cmd->argv[i]);
 		i++;
 	}
-	free(command->argv);
+	free(cmd->argv);
 }
 
 int	parse_in_struct(t_glob *glob, char *input)
 {
-	glob->command.command = set_command(input);
-	glob->command.args = count_args(input, ft_strlen(glob->command.command));
-	if (glob->command.args == -1)
+	glob->cmd.command = set_command(input);
+	glob->cmd.args = count_args(input, ft_strlen(glob->cmd.command));
+	if (glob->cmd.args == -1)
 		return (0);
-	glob->command.argv = set_argv(input, &glob->command);
-	if (glob->command.argv == 0)
+	glob->cmd.argv = set_argv(input, &glob->cmd);
+	if (glob->cmd.argv == 0)
 		return (0);
-	ft_call(glob, input);
-	show_struct(&glob->command);
+	//ft_call(glob, input);
+	glob->cmd.args = 1;
+	ft_call(glob, &glob->cmd);
+	show_struct(&glob->cmd);
 	return (1);
 }

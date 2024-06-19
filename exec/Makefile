@@ -27,10 +27,13 @@ DEP_DIR = ./dep
 
 # Source files
 SRCS =	main.c 						\
-		ft_lib.c					\
 		parsing/check_command.c		\
 		parsing/parse_in_struct.c	\
+		parsing/parse_quote.c		\
 		parsing/check_quote.c		\
+		parsing/parse_argv.c		\
+		parsing/parse_env.c			\
+		parsing/parse_heredoc.c		\
 		exec/pwd.c					\
 		exec/ls.c					\
 		exec/cd.c					\

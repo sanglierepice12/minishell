@@ -2,7 +2,7 @@
 
 --> de ca appliquer aux fonctions
 
---> adapter a export et unset
+--> adapter a export et unset -- ft_new_n -> pas de NULL mais des argv
 --> ajouter un unset env
 --> tester $export // peut-etre laisser au parseur
 --> tester export variable sans environnement

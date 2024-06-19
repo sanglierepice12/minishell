@@ -48,10 +48,10 @@ void	ft_call(t_glob *glob, t_input *cmd)
 {
 	if (!cmd->args)
 		return ;
-	if (ft_strncmp(cmd->command, "pwd", 3) == 0)
-		ft_pwd(cmd, &glob->env);
 	if (ft_strncmp(cmd->command, "cd", 2) == 0)
 		ft_cd(glob, cmd);
+	if (ft_strncmp(cmd->command, "pwd", 3) == 0)
+		ft_pwd(cmd, &glob->env);
 	if (ft_strncmp(cmd->command, "ls", 2) == 0)
 		ft_ls();
 	if (ft_strncmp(cmd->command, "echo", 4) == 0)

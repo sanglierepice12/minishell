@@ -12,6 +12,16 @@
 
 #include "../../include/minishell.h"
 
+void	free_tab(char **tab, int lenght)
+{
+	while (lenght != 0)
+	{
+		free(tab[lenght]);
+		lenght--;
+	}
+	free(tab);
+}
+
 /*void	ft_free_build(t_build *build)
 {
 	if (build->pwd)

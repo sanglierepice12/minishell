@@ -36,24 +36,43 @@ typedef struct s_env
 	char	*pwd;
 }				t_build;*/
 
+typedef struct	s_heredoc
+{
+	char	*type_infile;
+	char	*file_infile;
+	char	*type_outfile;
+	char	*file_outfile;
+}				t_heredoc;
+
 typedef struct s_input
 {
-	char	*command;
-	char	**argv;
-	int		args;
+	char		*command;
+	char		**argv;
+	t_heredoc	heredoc;
+	int			args;
 }				t_input;
 
 typedef struct s_glob
 {
 /*	t_build	build;*/
-	t_input	cmd;
-	t_env	*env;
+	t_input		*cmd;
+	t_env		*env;
+	t_heredoc	heredoc;
 }				t_glob;
 
 /*********PARSE*********/
 int		check_command(char *input);
 int 	parse_in_struct(t_glob *glob, char *input);
 int		ft_strlen_quote(char *str, int len, int *quote);
+int		if_in_quote(char *str, int i);
+char	*delete_quote(char *tab, int i);
+char	**set_argv(char *input, int num, t_glob *glob);
+int		count_args(char *input, int lenght);
+int		get_lenght_num(char *input, int number);
+char	*expend_env_var(char *word, t_glob *glob);
+char	**check_apply_heredoc(char **argv, t_input *command);
+
+void	show_struct(t_input *command);
 
 /*********UTILS*********/
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -67,6 +86,7 @@ void	ft_free_this_node(t_env *head);
 void	free_tab(char **tab, int lenght);
 size_t	ft_strlen(const char *str);
 size_t	ft_strlen_double(char **str);
+void	free_tab(char **tab, int lenght);
 
 /*********BUILT_INS_CALLS*********/
 void	ft_call(t_glob *glob, t_input *cmd);

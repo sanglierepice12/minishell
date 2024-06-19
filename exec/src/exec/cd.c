@@ -61,13 +61,15 @@ void	ft_update_pwd(t_env **env, char *value, char *path)
 
 void	ft_cd(t_glob *glob, t_input *cmd)
 {
-	if (cmd->argv[1][3] == '-' && cmd->argv[1][4] == '-')
+	if (!cmd->argv[0])
+		return (printf("\n"), (void)0);
+	else if (cmd->argv[1][0] == '-' && cmd->argv[1][1] == '-')
 		chdir("~");
-	else if (!cmd->argv[1][2] || (cmd->argv[1][3] == '~' && !cmd->argv[1][4]))
+	else if (cmd->argv[1][0] == '~' && !cmd->argv[1][1])
 		chdir("/");
-	else if (cmd->argv[1][3] == '-' && cmd->argv[1][4] != '-')
+	else if (cmd->argv[1][0] == '-' && cmd->argv[1][1] != '-')
 		dprintf(2, "bash: cd: %c%c: invalid option\n"
-			"cd: usage: [-L|[-P [-e]] [-@]] [dir]\n", cmd->argv[1][3], cmd->argv[1][4]);
+			"cd: usage: [-L|[-P [-e]] [-@]] [dir]\n", cmd->argv[1][0], cmd->argv[1][1]);
 	else if (chdir(cmd->argv[1]) != 0)
 	{
 		perror("bash: cd");
