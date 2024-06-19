@@ -31,7 +31,6 @@ void	show_struct(t_input *command)
 int	main(int arc, char **argv, char **env)
 {
 	char		*input;
-	//char		*wiam;
 	t_glob		glob;
 
 	if (arc)
@@ -41,7 +40,6 @@ int	main(int arc, char **argv, char **env)
 		dprintf(2, "Malloc crash, no env\n");
 	while (1)
 	{
-		//wiam = ft_super_dup(getcwd(NULL, 0), "$ ");
 		input = readline("MinisHell-1.0$ ");
 		add_history(input);
 		if (input == NULL)
@@ -49,18 +47,17 @@ int	main(int arc, char **argv, char **env)
 			printf("\n");
 			break ;
 		}
-		if (ft_strncmp(input, "exit", 4) == 0)
+		/*if (ft_strncmp(input, "exit", 4) == 0)
 		{
 			free(input);
 			break ;
-		}
+		}*/
 		if (rl_on_new_line() == 0)
 		{
 			if(parse_in_struct(&glob, input) == 0)
 				printf("Error\n");
 		}
 		free(input);
-		//free(wiam);
 	}
 	return (0);
 }

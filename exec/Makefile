@@ -34,6 +34,7 @@ SRCS =	main.c 								\
 		parsing/parse_argv.c				\
 		parsing/parse_env.c					\
 		parsing/parse_heredoc.c				\
+		exec/built_in_calls.c				\
 		exec/ls.c							\
 		exec/built_ins/pwd.c				\
 		exec/built_ins/cd.c					\
@@ -41,7 +42,7 @@ SRCS =	main.c 								\
 		exec/built_ins/env.c				\
 		exec/built_ins/unset.c				\
 		exec/built_ins/export.c				\
-		exec/built_ins/built_in_calls.c		\
+		exec/built_ins/exit.c				\
 		free/free.c							\
 		utils/copy.c						\
 		utils/ft_calloc.c					\

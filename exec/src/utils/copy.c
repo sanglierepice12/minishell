@@ -17,9 +17,10 @@ char	*ft_str_copy_n(char *str, int n)
 	char	*dup;
 	int		i;
 
-	dup = ft_cal_loc(n, sizeof(char));
+	dup = ft_cal_loc(n + 1, sizeof(char));
 	if (!dup)
 		return (NULL);
+	dup[n] = 0;
 	i = 0;
 	while (str[i] && i < n)
 	{
@@ -31,7 +32,7 @@ char	*ft_str_copy_n(char *str, int n)
 
 size_t	ft_strlen(const char *str)
 {
-	size_t	len;
+	ssize_t	len;
 
 	len = 0;
 	while (str[len])

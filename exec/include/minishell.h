@@ -22,6 +22,9 @@
 # include <stdint.h>
 # include <dirent.h>
 
+
+#include <stdlib.h>
+
 typedef struct s_env
 {
 	char			*value;
@@ -76,35 +79,31 @@ char	*ft_dup(const char *s);
 char	*ft_str_copy_n(char *str, int n);
 t_env	*ft_find_thing_in_env(t_env **env, char *value);
 void	ft_dell_node(t_env **temp, t_env **head);
-void	ft_free_this_node(t_env *head);
-void	free_tab(char **tab, int lenght);
 size_t	ft_strlen(const char *str);
 size_t	ft_strlen_double(char **str);
-void	free_tab(char **tab, int lenght);
 
 /*********BUILT_INS_CALLS*********/
 void	ft_call(t_glob *glob, t_input *cmd);
-//void	ft_call(t_glob *glob, char *input);
-//void	ft_pwd_call(t_glob *glob, char *dup);
-/*void	ft_pwd_call(t_glob *glob, t_input *cmd);*/
 
-/*********EXEC*********/
+/*********BUILT_INS*********/
 void	ft_pwd(t_input *cmd, t_env **env);
-/*void	ft_pwd(t_build *build);*/
-//void	ft_cd(t_glob *glob, char *input);
 void	ft_cd(t_glob *glob, t_input *cmd);
-//void	ft_echo(char *input);
 void	ft_echo(t_input *cmd);
 void	ft_ls();
 void	ft_get_env(t_glob *glob, char **env);
-//void	ft_unset(t_glob *glob, char *input);
 void	ft_unset(t_glob *glob, t_input *cmd);
-//void	ft_export(t_env **env, char *input);
 void	ft_export(t_env **env, t_input *cmd);
+void	ft_exit(t_glob *glob);
 
-/*********ALLOC*********/
+/*********FREE&&ALLOC*********/
 void	ft_bzero(void *s, size_t n);
 void	*ft_cal_loc(size_t nmemb, size_t size);
+void	ft_free_here_doc(t_heredoc *heredoc);
+void	ft_free_cmd(t_input *cmd);
+void	ft_free_env(t_env *env);
+void	ft_free_this_node(t_env *head);
+void	free_tab(char **tab/*, int lenght*/);
+void	ft_free_lst(t_env **lst);
 void	ft_free_all(t_glob *glob);
 
 /*********LINKED_LIST*********/
@@ -114,6 +113,5 @@ t_env	*ft_lst_last(t_env *lst);
 void	ft_lst_add_front(t_env **lst, t_env *new);
 void	ft_lst_add_back(t_env **head, t_env *new);
 t_env	*ft_new_node(char *value, char *path, bool flag);
-void	ft_free_lst(t_env **lst);
 
 #endif
