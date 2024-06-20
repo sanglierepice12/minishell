@@ -22,9 +22,6 @@
 # include <stdint.h>
 # include <dirent.h>
 
-
-#include <stdlib.h>
-
 typedef struct s_env
 {
 	char			*value;
@@ -73,7 +70,7 @@ void	show_struct(t_input *command);
 
 /*********UTILS*********/
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
-int		ft_comp_str(char *src, char *str);
+int		ft_comp_str(const char *src, const char *str);
 char	*ft_super_dup(char *src, char *msg);
 char	*ft_dup(const char *s);
 char	*ft_str_copy_n(char *str, int n);

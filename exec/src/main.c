@@ -40,18 +40,18 @@ int	main(int arc, char **argv, char **env)
 		dprintf(2, "Malloc crash, no env\n");
 	while (1)
 	{
-		input = readline("MinisHell-1.0$ ");
+		input = readline(/*"MinisHell-1.0$ "*/getcwd(NULL,0));
 		add_history(input);
 		if (input == NULL)
 		{
 			printf("\n");
 			break ;
 		}
-		/*if (ft_strncmp(input, "exit", 4) == 0)
+		if (ft_strncmp(input, "exit", 4) == 0)
 		{
 			free(input);
 			break ;
-		}*/
+		}
 		if (rl_on_new_line() == 0)
 		{
 			if(parse_in_struct(&glob, input) == 0)

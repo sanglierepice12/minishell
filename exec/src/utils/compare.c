@@ -12,7 +12,7 @@
 
 #include "../../include/minishell.h"
 
-int	ft_comp_str(char *src, char *str)
+int	ft_comp_str(const char *src, const char *str)
 {
 	size_t	i;
 

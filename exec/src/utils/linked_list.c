@@ -127,7 +127,6 @@ t_env	*ft_new_node(char *value, char *path, bool flag)
 		return (NULL);
 	if (value)
 		env->value = ft_dup(value);
-	(void)value;
 	if (path)
 		env->path = ft_dup(path);
 	if (flag)

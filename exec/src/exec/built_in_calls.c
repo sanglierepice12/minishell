@@ -48,7 +48,7 @@ void	ft_call(t_glob *glob, t_input *cmd)
 {
 	if (!cmd->args)
 		return ;
-	if (ft_strncmp(cmd->command, "cd", 2) == 0)
+	if (ft_comp_str(cmd->command, "cd"))
 		ft_cd(glob, cmd);
 	if (ft_strncmp(cmd->command, "pwd", 3) == 0)
 		ft_pwd(cmd, &glob->env);
@@ -64,6 +64,6 @@ void	ft_call(t_glob *glob, t_input *cmd)
 		ft_unset(glob, cmd);
 	if (ft_strncmp(cmd->command, "export", 6) == 0)
 		ft_export(&glob->env, cmd);
-	if (ft_strncmp(cmd->command, "exit", 4) == 0)
-		ft_exit(glob);
+	/*if (ft_strncmp(cmd->command, "exit", 4) == 0)
+		ft_exit(glob);*/
 }

@@ -72,16 +72,21 @@ void	ft_free_env(t_env *env)
 
 void	ft_free_all(t_glob *glob)
 {
-	int	i;
+//int	i;
 
 	if (glob->cmd)
 	{
-		i = 0;
-		while (&glob->cmd[i])
+		//i = 0;
+		//printf("cmd [%d] %s\n",i, glob->cmd->argv[0]);
+		//printf("i = %d\n", i);
+		/*while (&glob->cmd[i])
 		{
+			printf("ici i = %d\n", i);
 			ft_free_cmd(&glob->cmd[i]);
+			free(&glob->cmd[i]);
 			i++;
-		}
+		}*/
+		ft_free_cmd(&glob->cmd[0]);
 		free(glob->cmd);
 	}
 	if (glob->env)
