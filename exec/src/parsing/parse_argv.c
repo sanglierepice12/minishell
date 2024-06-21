@@ -102,7 +102,7 @@ char	**set_argv(char *input, int num, t_glob *glob)
 	int		i;
 	int		lenght;
 
-	argv = malloc(glob->cmd->args * sizeof(char *));
+	argv = calloc(glob->cmd->args, sizeof(char *));
 	if (argv == NULL)
 		return (0);
 	lenght = 0;

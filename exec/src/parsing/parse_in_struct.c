@@ -52,7 +52,7 @@ static char	*set_command(char *input, int num_com)
 			break ;
 		i++;
 	}
-	tab = malloc((i + 1) * sizeof(char));
+	tab = calloc((i + 1) , sizeof(char));
 	tab[i] = 0;
 	i = 0;
 	while (input[i + lenght])

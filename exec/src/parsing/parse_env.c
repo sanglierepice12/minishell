@@ -95,7 +95,7 @@ char	*expend_env_var(char *word, t_glob *glob)
 			check_sup = 1;
 			while (env != NULL)
 			{
-				if (strcmp(env->value, temp) == 0)
+				if (ft_comp_str(env->value, temp))
 				{
 					word = replace_env_word(word, i, env->path);
 					check_sup = 2;

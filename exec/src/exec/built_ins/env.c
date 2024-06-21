@@ -21,7 +21,7 @@ t_env	*ft_find_thing_in_env(t_env **env, char *value)
 	temp = *env;
 	while (temp)
 	{
-		if (temp->value == value)
+		if (ft_comp_str(temp->value, value))
 			return (temp);
 		temp = temp->next;
 	}
