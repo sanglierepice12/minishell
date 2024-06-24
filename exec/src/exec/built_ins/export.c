@@ -67,6 +67,42 @@ static void	ft_create_env_nodes(t_env **env, t_input *cmd, int flag)
 	}
 }
 
+void	ft_swap_nodes(t_env **temp, t_env **head)
+{
+	t_env	*temp_two;
+	t_env	*head_temp;
+
+	temp_two = (*temp)->prev;
+	head_temp = (*head)->prev;
+	while (head_temp->next)
+	{
+		if (!ft_comp_str(temp_two->value, head_temp->value))
+		{
+			head_temp->prev = temp_two->prev->next;
+			head_temp->prev->next = head_temp->prev;
+			temp_two->next = head_temp->next;
+			temp_two->next->prev = temp_two->next;
+			head_temp->next = temp_two->prev;
+			temp_two->prev = head_temp->next;
+		}
+	}
+}
+
+void	ft_atoz_env(t_env **env)
+{
+	t_env	*temp;
+	size_t	i;
+
+	temp = *env;
+	i = 0;
+	while (temp->next)
+	{
+		if (temp->value[i] > temp->next->value[i])
+			ft_swap_nodes(&temp, env);
+		i++;
+	}
+}
+
 void	ft_export(t_env **env, t_input *cmd)
 {
 	size_t	i;
@@ -91,5 +127,5 @@ void	ft_export(t_env **env, t_input *cmd)
 		ft_create_env_nodes(env, cmd, 1);
 	else
 		ft_create_env_nodes(env, cmd, 0);
-	//ft_tri env
+	ft_atoz_env(env);
 }
