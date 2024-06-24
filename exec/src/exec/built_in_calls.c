@@ -61,9 +61,9 @@ void	ft_call(t_glob *glob, t_input *cmd)
 	if (ft_strncmp(cmd->command, "env", 3) == 0)
 		print_env(&glob->env, 0);
 	if (ft_strncmp(cmd->command, "unset", 5) == 0)
-		ft_unset(glob, cmd);
+		ft_unset(glob, &cmd[0]);
 	if (ft_strncmp(cmd->command, "export", 6) == 0)
-		ft_export(&glob->env, cmd);
+		ft_export(&glob->env, &cmd[0]);
 	/*if (ft_strncmp(cmd->command, "exit", 4) == 0)
 		ft_exit(glob);*/
 }

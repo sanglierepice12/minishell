@@ -14,9 +14,9 @@
 
 void	show_struct(t_input *command)
 {
-	int	i;
+	size_t	i;
 
-	printf("ARGS = %d\n", command->args);
+	printf("ARGS = %zu\n", command->args);
 	printf("command = %s\n", command->command);
 	i = 0;
 	while (i != command->args)

@@ -33,10 +33,10 @@ int	get_lenght_num(char *input, int number)
 	return (i);
 }
 
-static char	*set_command(char *input, int num_com)
+static char	*set_command(char *input, size_t num_com)
 {
-	int		i;
-	int		lenght;
+	size_t		i;
+	size_t		lenght;
 	char	*tab;
 
 	i = 0;
@@ -65,10 +65,10 @@ static char	*set_command(char *input, int num_com)
 	return (tab);
 }
 
-static int	get_num_args(char *input)
+static size_t	get_num_args(char *input)
 {
-	int	num_args;
-	int	i;
+	size_t	num_args;
+	size_t	i;
 
 	num_args = 1;
 	i = 0;
@@ -86,13 +86,13 @@ static int	get_num_args(char *input)
 
 int	parse_in_struct(t_glob *glob, char *input)
 {
-	int	num_args;
-	int	i;
-	int	temp;
+	size_t	num_args;
+	size_t	i;
+	size_t	temp;
 
 	i = 0;
 	num_args = get_num_args(input);
-	printf("Num ARG = %d\n", num_args);
+	printf("Num ARG = %zu\n", num_args);
 	glob->cmd = malloc(num_args * sizeof(t_input));
 	while (i != num_args)
 	{
@@ -108,9 +108,9 @@ int	parse_in_struct(t_glob *glob, char *input)
 	i = 0;
 	while (i != num_args)
 	{
-		printf("Liste %d\n", i);
+		printf("Liste %zu\n", i);
 		printf("COMMAND = %s\n", glob->cmd[i].command);
-		printf("ARGS = %d\n", glob->cmd[i].args);
+		printf("ARGS = %zu\n", glob->cmd[i].args);
 		temp = 0;
 		while (temp != glob->cmd[i].args)
 		{

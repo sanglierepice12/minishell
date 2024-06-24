@@ -34,6 +34,8 @@ static void	ft_get_first_node(t_glob *glob, char **env)
 	char	*path;
 	int		j;
 
+	if (!env)
+		return ;
 	j = 0;
 	while (env[0][j])
 	{

@@ -48,24 +48,27 @@ static void	unset_variable(t_env **head, char *input)
 	temp = *head;
 	while (temp && temp->next)
 	{
-		if (ft_strlen(temp->value) == len && ft_strncmp(temp->value, input, len) == 0)
-			return (ft_dell_node(&temp, head), (void)0);
+		if (ft_strlen(temp->value) == len &&
+			ft_comp_str(temp->value, input))
+		{
+			if (temp->value)
+				printf("temp.v = %s\n", temp->value);
+			if (temp->value)
+				printf("v = %s\n", input);
+			return (ft_dell_node(&temp, head), (void) 0);
+		}
 		temp = temp->next;
 	}
-	if (ft_strlen(temp->value) == len && ft_strncmp(temp->value, input, len) == 0)
+	if (temp && ft_strlen(temp->value) == len &&
+		ft_comp_str(temp->value, input))
 		ft_dell_node(&temp, head);
 }
 
 void	ft_unset(t_glob *glob, t_input *cmd)
 {
-	size_t	len;
 	size_t	j;
 
-	j = 1;
-	len = ft_strlen_double(cmd->argv);
-	while (j < len)
-	{
-		unset_variable(&glob->env, cmd->argv[len]);
-		j++;
-	}
+	j = 0;
+	while (++j < cmd->args)
+		unset_variable(&glob->env, cmd->argv[j]);
 }

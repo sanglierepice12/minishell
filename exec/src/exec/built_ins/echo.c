@@ -16,7 +16,10 @@ static void	ft_print_echo(t_input *cmd, int flag)
 {
 	size_t	i;
 
-	i = 1;
+	if (flag)
+		i = 1;
+	else
+		i = 0;
 	while (++i, cmd->argv[i])
 		printf("%s", cmd->argv[i]);
 	if (!flag)
@@ -29,8 +32,8 @@ void	ft_echo(t_input *cmd)
 
 	if (cmd->args <= 1)
 		return (printf("\n"), (void)0);
-	if (ft_comp_str(cmd->argv[1], "-n") && cmd->args < 2)
-		return ;
+	if (ft_comp_str(cmd->argv[1], "-n") && cmd->args <= 2)
+		return;
 	/*if (cmd->argv[1] && !cmd->argv[1][0])
 		dprintf(2, "echo%s: command not found\n", cmd->argv[0]);*/
 	if (cmd->argv[1][0] == '-' && cmd->argv[1][1] == 'n')
@@ -41,10 +44,11 @@ void	ft_echo(t_input *cmd)
 			if (cmd->argv[1][i] != 'n')
 				return (ft_print_echo(cmd, 0), (void)0);
 		}
-		if (!cmd->argv[1][i] && !cmd->argv[2])
+		if (!cmd->argv[1][i] && cmd->args <= 2)
 			return ;
 		else
 			ft_print_echo(cmd, 1);
+		return ;
 	}
 	else
 		ft_print_echo(cmd, 0);

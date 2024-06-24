@@ -15,6 +15,7 @@
 void	print_env(t_env **head, int flag)
 {
 	t_env	*temp;
+
 	if (*head)
 	{
 		temp = *head;
@@ -76,13 +77,12 @@ char	*ft_dup(const char *s)
 
 	if (!s)
 		return (NULL);
-	new = malloc(sizeof(char) * (ft_strlen(s) + 1));
+	new = ft_cal_loc(sizeof(char), ft_strlen(s) + 1);
 	if (!new)
 		return (NULL);
 	i = -1;
 	while (s[++i])
 		new[i] = s[i];
-	new[i] = '\0';
 	return (new);
 }
 

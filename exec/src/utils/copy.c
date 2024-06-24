@@ -12,10 +12,10 @@
 
 #include "../../include/minishell.h"
 
-char	*ft_str_copy_n(char *str, int n)
+char	*ft_str_copy_n(const char *str, size_t n)
 {
 	char	*dup;
-	int		i;
+	size_t		i;
 
 	dup = ft_cal_loc(n + 1, sizeof(char));
 	if (!dup)
@@ -34,6 +34,8 @@ size_t	ft_strlen(const char *str)
 {
 	ssize_t	len;
 
+	if (!str)
+		return (0);
 	len = 0;
 	while (str[len])
 		len++;

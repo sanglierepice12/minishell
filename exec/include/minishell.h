@@ -44,7 +44,7 @@ typedef struct s_input
 	char		*command;
 	char		**argv;
 	t_heredoc	heredoc;
-	int			args;
+	size_t		args;
 }				t_input;
 
 typedef struct s_glob
@@ -73,11 +73,12 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_comp_str(const char *src, const char *str);
 char	*ft_super_dup(char *src, char *msg);
 char	*ft_dup(const char *s);
-char	*ft_str_copy_n(char *str, int n);
+char	*ft_str_copy_n(const char *str, size_t n);
 t_env	*ft_find_thing_in_env(t_env **env, char *value);
 void	ft_dell_node(t_env **temp, t_env **head);
 size_t	ft_strlen(const char *str);
 size_t	ft_strlen_double(char **str);
+int		ft_str_chr(const char *src, const char c);
 
 /*********BUILT_INS_CALLS*********/
 void	ft_call(t_glob *glob, t_input *cmd);
