@@ -12,6 +12,12 @@
 
 #include "../../include/minishell.h"
 
+void	free_parse(t_glob *glob, int i)
+{
+	if (i >= 1)
+		free(glob->command);
+}
+
 void	ft_free_build(t_build *build)
 {
 	if (build->pwd)

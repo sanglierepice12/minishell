@@ -31,7 +31,6 @@ void	show_struct(t_input *command)
 int	main(int arc, char **argv, char **env)
 {
 	char		*input;
-	char		*wiam;
 	t_glob		glob;
 
 	if (arc)
@@ -42,8 +41,7 @@ int	main(int arc, char **argv, char **env)
 	while (1)
 	{
 		ft_pwd(&glob.build);
-		wiam = ft_super_dup(glob.build.pwd, "$ ");
-		input = readline(wiam);
+		input = readline(ft_super_dup(glob.build.pwd, "$ "));
 		add_history(input);
 		if (input == NULL)
 		{
@@ -58,10 +56,9 @@ int	main(int arc, char **argv, char **env)
 		if (rl_on_new_line() == 0)
 		{
 			if(parse_in_struct(&glob, input) == 0)
-				printf("Error\n");
+			 	printf("Error\n");
 		}
 		free(input);
-		free(wiam);
 	}
 	return (0);
 }

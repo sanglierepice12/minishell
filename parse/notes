@@ -2,7 +2,7 @@ Commande qui ne sont pas bien parse
 
 echo $?
 echo \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\$USER \$PATH \\$PWD
-/bin/echo $USER =intergalaktikus miaf*szomez~
+echo $USER$USER
 
 Truc a faire demain
 

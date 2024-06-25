@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../../../include/minishell.h"
 
 static int	check_quote(char *str, int len, int *checkquote, char c)
 {
@@ -77,7 +77,10 @@ int	ft_strlen_quote(char *str, int len, int *quote)
 		i++;
 	}
 	if (checkquote == 1 || checkquote == 2)
+	{
+		*quote = -1;
 		return (-1);
+	}
 	return (i);
 }
 

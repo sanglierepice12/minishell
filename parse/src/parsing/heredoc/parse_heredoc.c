@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../../../include/minishell.h"
 
-static void	remove_heredoc(char **argv, int pos, t_input *command)
+void	remove_heredoc(char **argv, int pos, t_input *command)
 {
 	int	i;
 	int	size;
@@ -31,7 +31,7 @@ static void	remove_heredoc(char **argv, int pos, t_input *command)
 	command->args -= 2;
 }
 
-char	**check_apply_heredoc(char **argv, t_input *command)
+static void	get_heredoc_infile(char **argv, t_input *command)
 {
 	int	i;
 
@@ -54,6 +54,12 @@ char	**check_apply_heredoc(char **argv, t_input *command)
 		}
 		i--;
 	}
+}
+
+static void	get_heredoc_outfile(char **argv, t_input *command)
+{
+	int	i;
+
 	i = command->args - 2;
 	while (i > 0)
 	{
@@ -73,5 +79,24 @@ char	**check_apply_heredoc(char **argv, t_input *command)
 		}
 		i--;
 	}
+}
+
+int	ft_strlen_bis(char **tab)
+{
+	int	i;
+
+	i = 0;
+	if (tab == NULL)
+		return (0);
+	while (tab[i])
+		i++;
+	return (i);
+}
+
+char	**check_apply_heredoc(char **argv, t_input *command)
+{
+	get_heredoc_infile(argv, command);
+	get_heredoc_outfile(argv, command);
+	remove_and_stock_all_heredoc(argv, command);
 	return (argv);
 }

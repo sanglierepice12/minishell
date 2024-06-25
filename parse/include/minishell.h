@@ -42,6 +42,7 @@ typedef struct	s_heredoc
 	char	*file_infile;
 	char	*type_outfile;
 	char	*file_outfile;
+	char	**rest_heredoc;
 }				t_heredoc;
 
 typedef struct s_input
@@ -67,9 +68,13 @@ int		if_in_quote(char *str, int i);
 char	*delete_quote(char *tab, int i);
 char	**set_argv(char *input, int num, t_glob *glob);
 int		count_args(char *input, int lenght);
-int		get_lenght_num(char *input, int number);
+int		get_length_num(char *input, int number);
 char	*expend_env_var(char *word, t_glob *glob);
 char	**check_apply_heredoc(char **argv, t_input *command);
+int		ft_strlen_bis(char **tab);
+void	remove_and_stock_all_heredoc(char **argv, t_input *command);
+void	remove_heredoc(char **argv, int pos, t_input *command);
+void	free_parse(t_glob *glob, int i);
 
 void	show_struct(t_input *command);
 
