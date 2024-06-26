@@ -20,7 +20,7 @@ static void	ft_print_echo(t_input *cmd, int flag)
 		i = 1;
 	else
 		i = 0;
-	while (++i, cmd->argv[i])
+	while (++i, i < cmd->args && cmd->argv[i])
 		printf("%s", cmd->argv[i]);
 	if (!flag)
 		printf("\n");
@@ -33,7 +33,7 @@ void	ft_echo(t_input *cmd)
 	if (cmd->args <= 1)
 		return (printf("\n"), (void)0);
 	if (ft_comp_str(cmd->argv[1], "-n") && cmd->args <= 2)
-		return;
+		return ;
 	/*if (cmd->argv[1] && !cmd->argv[1][0])
 		dprintf(2, "echo%s: command not found\n", cmd->argv[0]);*/
 	if (cmd->argv[1][0] == '-' && cmd->argv[1][1] == 'n')

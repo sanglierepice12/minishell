@@ -12,7 +12,13 @@
 
 #include "../../include/minishell.h"
 
-/*void	free_tab(char **tab, int lenght)
+void	free_parse(t_glob *glob, int i)
+{
+	if (i >= 1)
+		free(glob->cmd);
+}
+
+void	free_tab(char **tab, int lenght)
 {
 	if (!tab)
 		return ;
@@ -22,8 +28,8 @@
 		lenght--;
 	}
 	free(tab);
-}*/
-void	free_tab(char **tab)
+}
+static void	ft_free_double_tab(char **tab)
 {
 	int	i;
 
@@ -48,6 +54,8 @@ void	ft_free_here_doc(t_heredoc *heredoc)
 		free(heredoc->type_infile);
 	if (heredoc->type_outfile)
 		free(heredoc->type_outfile);
+	if (heredoc->rest_heredoc)
+		ft_free_double_tab(heredoc->rest_heredoc);
 }
 
 
@@ -56,7 +64,7 @@ void	ft_free_cmd(t_input *cmd)
 	if (!cmd)
 		return ;
 	if (cmd->argv)
-		free_tab(cmd->argv);
+		ft_free_double_tab(cmd->argv);
 	if (cmd->command)
 		free(cmd->command);
 	ft_free_here_doc(&cmd->heredoc);
@@ -74,21 +82,21 @@ void	ft_free_all(t_glob *glob)
 {
 //int	i;
 
-	if (glob->cmd)
+	/*if (glob->cmd)
 	{
 		//i = 0;
 		//printf("cmd [%d] %s\n",i, glob->cmd->argv[0]);
 		//printf("i = %d\n", i);
-		/*while (&glob->cmd[i])
+		*//*while (&glob->cmd[i])
 		{
 			printf("ici i = %d\n", i);
 			ft_free_cmd(&glob->cmd[i]);
 			free(&glob->cmd[i]);
 			i++;
-		}*/
+		}*//*
 		ft_free_cmd(&glob->cmd[0]);
 		free(glob->cmd);
-	}
+	}*/
 	if (glob->env)
 		ft_free_env(glob->env);
 }

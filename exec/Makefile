@@ -26,27 +26,28 @@ OBJ_DIR = ./obj
 DEP_DIR = ./dep
 
 # Source files
-SRCS =	main.c 								\
-		parsing/check_command.c				\
-		parsing/parse_in_struct.c			\
-		parsing/parse_quote.c				\
-		parsing/check_quote.c				\
-		parsing/parse_argv.c				\
-		parsing/parse_env.c					\
-		parsing/parse_heredoc.c				\
-		exec/built_in_calls.c				\
-		exec/ls.c							\
-		exec/built_ins/pwd.c				\
-		exec/built_ins/cd.c					\
-		exec/built_ins/echo.c				\
-		exec/built_ins/env.c				\
-		exec/built_ins/unset.c				\
-		exec/built_ins/export.c				\
-		exec/built_ins/exit.c				\
-		free/free.c							\
-		utils/copy.c						\
-		utils/ft_calloc.c					\
-		utils/compare.c						\
+SRCS =	main.c 										\
+		parsing/check_function/check_command.c		\
+		parsing/parse_in_struct.c					\
+		parsing/parse_quote.c						\
+		parsing/check_function/check_quote.c		\
+		parsing/parse_argv.c						\
+		parsing/parse_env.c							\
+		parsing/heredoc/parse_heredoc.c				\
+		parsing/heredoc/remove_heredoc.c			\
+		exec/built_in_calls.c						\
+		exec/ls.c									\
+		exec/built_ins/pwd.c						\
+		exec/built_ins/cd.c							\
+		exec/built_ins/echo.c						\
+		exec/built_ins/env.c						\
+		exec/built_ins/unset.c						\
+		exec/built_ins/export.c						\
+		exec/built_ins/exit.c						\
+		free/free.c									\
+		utils/copy.c								\
+		utils/ft_calloc.c							\
+		utils/compare.c								\
 		utils/linked_list.c
 
 # Objet files
@@ -71,11 +72,12 @@ $(NAME): $(OBJS)
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR) $(DEP_DIR)
 	@mkdir -p $(OBJ_DIR)/parsing $(DEP_DIR)/parsing
+	@mkdir -p $(OBJ_DIR)/parsing/heredoc $(DEP_DIR)/parsing/heredoc
+	@mkdir -p $(OBJ_DIR)/parsing/check_function $(DEP_DIR)/parsing/check_function
 	@mkdir -p $(OBJ_DIR)/exec $(DEP_DIR)/exec
 	@mkdir -p $(OBJ_DIR)/exec/built_ins $(DEP_DIR)/exec/built_ins
 	@mkdir -p $(OBJ_DIR)/free $(DEP_DIR)/free
 	@mkdir -p $(OBJ_DIR)/utils $(DEP_DIR)/utils
-	@mkdir -p $(OBJ_DIR)/utils/printf $(DEP_DIR)/utils/printf
 	@$(CC) $(CFLAGS) -MMD -MP -MF $(DEP_DIR)/$*.d -c $< -o $@
 	@echo "$(GREEN)Compilation of $< completed!$(NC)"
 

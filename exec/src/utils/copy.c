@@ -12,6 +12,31 @@
 
 #include "../../include/minishell.h"
 
+char	*ft_str_join(char *begin, char *end)
+{
+	char	*final;
+	size_t	i;
+	size_t	j;
+
+	final = ft_cal_loc(ft_strlen(begin) + ft_strlen(end) + 1, sizeof(char));
+	if (!final)
+		return (NULL);
+	i = 0;
+	while (begin[i])
+	{
+		final[i] = begin[i];
+		i++;
+	}
+	j = 0;
+	while (end[j])
+	{
+		final[i] = end[j];
+		i++;
+		j++;
+	}
+	return (final);
+}
+
 char	*ft_str_copy_n(const char *str, size_t n)
 {
 	char	*dup;

@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
+/*
 static void	skip_command(char *input, int *i)
 {
 	while (input[*i] == ' ')
@@ -22,39 +22,35 @@ static void	skip_command(char *input, int *i)
 			break ;
 		(*i)++;
 	}
-}
+}*/
 
 int	count_args(char *input, int lenght)
 {
 	int	i;
 	int	args;
 	int	quote;
-	int	temp;
 
 	i = 0;
-	args = 1;
+	args = 0;
 	if (lenght != 0)
-		i = get_lenght_num(input, lenght);
+		i = get_length_num(input, lenght);
 	else
 		i = 0;
-	skip_command(input, &i);
+	quote = 0;
 	while (input[i])
 	{
 		if (input[i] != ' ')
 		{
 			args++;
-			temp = ft_strlen_quote(input, i, &quote);
-			if (temp == -1)
+			ft_strlen_quote(input, i, &quote);
+			if (quote == -1)
 				return (-1);
-			i += temp;
+			i += ft_strlen_quote(input, i, &quote);
 		}
 		if (input[i] == ' ')
 			i++;
-		if (input[i] == '|')
-		{
-			if (input[i - 1] == ' ' && input[i + 1] == ' ')
-				break ;
-		}
+		if (input[i] == '|' && input[i - 1] == ' ' && input[i + 1] == ' ')
+			break ;
 	}
 	return (args);
 }
@@ -71,6 +67,8 @@ static char	*copy_word(char *input, int *i)
 	if (lenght == -1)
 		return (NULL);
 	tab = malloc(lenght + 1 * sizeof(char));
+	if (!tab)
+		return (NULL);
 	tab[lenght] = 0;
 	y = 0;
 	while (lenght != y)
@@ -91,6 +89,8 @@ static char	*parse_word(char *input, int *i, t_glob *glob)
 	if (word == NULL)
 		return (NULL);
 	word = expend_env_var(word, glob);
+	if (!word)
+		return (NULL);
 	word = delete_quote(word, 0);
 	*i += ft_strlen_quote(input, *i, &temp);
 	return (word);
@@ -102,30 +102,24 @@ char	**set_argv(char *input, int num, t_glob *glob)
 	int		i;
 	int		lenght;
 
-	argv = calloc(glob->cmd->args, sizeof(char *));
+	argv = malloc(glob->cmd->args * sizeof(char *));
 	if (argv == NULL)
-		return (0);
+		return (NULL);
 	lenght = 0;
-	if (num != 0)
-		i = get_lenght_num(input, num);
-	else
-		i = 0;
+	i = get_length_num(input, num);
 	while (input[i])
 	{
 		if (input[i] != ' ')
 			argv[lenght++] = parse_word(input, &i, glob);
-		if (lenght == -1)
+		if (lenght == -1 || argv[lenght - 1] == NULL)
 		{
-			//Faut free argv
+			free_tab(argv, lenght - 1);
 			return (0);
 		}
 		if (input[i] == ' ')
 			i++;
-		if (input[i] == '|')
-		{
-			if (input[i - 1] == ' ' && input[i + 1] == ' ')
-				break ;
-		}
+		if (input[i] == '|' && (input[i - 1] == ' ' && input[i + 1] == ' '))
+			break ;
 	}
 	return (check_apply_heredoc(argv, glob->cmd));
 }

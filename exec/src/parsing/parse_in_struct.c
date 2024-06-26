@@ -12,13 +12,15 @@
 
 #include "../../include/minishell.h"
 
-int	get_lenght_num(char *input, int number)
+int	get_length_num(char *input, int number)
 {
 	int	num_args;
 	int	i;
 
 	num_args = 0;
 	i = 0;
+	if (number == 0)
+		return (0);
 	while (input[i])
 	{
 		if (input[i] == '|')
@@ -32,43 +34,51 @@ int	get_lenght_num(char *input, int number)
 	}
 	return (i);
 }
-
-static char	*set_command(char *input, size_t num_com)
+/*
+static char	*allocate_command(char *input, int length, int i)
 {
-	size_t		i;
-	size_t		lenght;
 	char	*tab;
 
-	i = 0;
-	if (num_com != 0)
-		lenght = get_lenght_num(input, num_com);
-	else
-		lenght = 0;
-	while (input[i + lenght] == ' ')
-		lenght++;
-	while (input[i + lenght])
-	{
-		if (input[i + lenght] == ' ' || input[i + lenght] == 0)
-			break ;
-		i++;
-	}
-	tab = calloc((i + 1) , sizeof(char));
+	tab = malloc((i + 1) * sizeof(char));
+	if (!tab)
+		return (NULL);
 	tab[i] = 0;
 	i = 0;
-	while (input[i + lenght])
+	while (input[i + length])
 	{
-		if (input[i + lenght] == ' ' || input[i + lenght] == 0)
+		if (input[i + length] == ' ' || input[i + length] == 0)
 			break ;
-		tab[i] = input[i + lenght];
+		tab[i] = input[i + length];
 		i++;
 	}
 	return (tab);
 }
 
-static size_t	get_num_args(char *input)
+static char	*set_command(char *input, int num_com)
 {
-	size_t	num_args;
-	size_t	i;
+	int		i;
+	int		length;
+
+	i = 0;
+	if (num_com != 0)
+		length = get_length_num(input, num_com);
+	else
+		length = 0;
+	while (input[i + length] == ' ')
+		length++;
+	while (input[i + length])
+	{
+		if (input[i + length] == ' ' || input[i + length] == 0)
+			break ;
+		i++;
+	}
+	return (allocate_command(input, length, i));
+}*/
+
+static int	get_num_args(char *input)
+{
+	int	num_args;
+	int	i;
 
 	num_args = 1;
 	i = 0;
@@ -84,60 +94,83 @@ static size_t	get_num_args(char *input)
 	return (num_args);
 }
 
+static void	initialize_command(t_input *cmd)
+{
+	cmd->heredoc.type_outfile = NULL;
+	cmd->heredoc.file_outfile = NULL;
+	cmd->heredoc.type_infile = NULL;
+	cmd->heredoc.file_infile = NULL;
+	cmd->heredoc.rest_heredoc = NULL;
+}
+
+static void	print_command_info(t_input *cmd)
+{
+	size_t	temp;
+	size_t	size;
+
+	printf("COMMAND = %s\n", cmd->command);
+	printf("ARGS = %zu\n", cmd->args);
+	temp = 0;
+	while (temp != cmd->args)
+	{
+		printf("ARGV = %s\n", cmd->argv[temp]);
+		temp++;
+	}
+	if (cmd->heredoc.rest_heredoc != 0)
+	{
+		size = 0;
+		temp = ft_strlen_bis(cmd->heredoc.rest_heredoc);
+		while (temp != size)
+		{
+			printf("HEREDOC INFO = %s\n", cmd->heredoc.rest_heredoc[size]);
+			size++;
+		}
+	}
+	if (cmd->heredoc.type_infile != 0)
+	{
+		printf("Heredoc type Infile = %s\n", cmd->heredoc.type_infile);
+		printf("Heredoc file Infile = %s\n", cmd->heredoc.file_infile);
+	}
+	if (cmd->heredoc.type_outfile != 0)
+	{
+		printf("Heredoc type Outfile = %s\n", cmd->heredoc.type_outfile);
+		printf("Heredoc file Outfile = %s\n", cmd->heredoc.file_outfile);
+	}
+	printf("\n");
+}
+
 int	parse_in_struct(t_glob *glob, char *input)
 {
-	size_t	num_args;
-	size_t	i;
-	size_t	temp;
+	int	num_args;
+	int	i;
 
 	i = 0;
 	num_args = get_num_args(input);
-	printf("Num ARG = %zu\n", num_args);
+	printf("Num ARG = %d\n", num_args);
 	glob->cmd = malloc(num_args * sizeof(t_input));
+	if (!glob->cmd)
+		return (0);
 	while (i != num_args)
 	{
-		glob->cmd[i].heredoc.type_outfile = NULL;
-		glob->cmd[i].heredoc.file_outfile = NULL;
-		glob->cmd[i].heredoc.type_infile = NULL;
-		glob->cmd[i].heredoc.file_infile = NULL;
-		glob->cmd[i].command = set_command(input, i);
+		initialize_command(&glob->cmd[i]);
 		glob->cmd[i].args = count_args(input, i);
+		if ((ssize_t)glob->cmd[i].args == -1)
+			return (0);
 		glob->cmd[i].argv = set_argv(input, i, glob);
+		if (glob->cmd[i].argv == NULL)
+			return (free_parse(glob, 2), 0);
+		glob->cmd[i].command = glob->cmd[i].argv[0];
+		if (glob->cmd[i].command == NULL)
+			return (free_parse(glob, 1), 0);
 		i++;
 	}
 	i = 0;
 	while (i != num_args)
 	{
-		printf("Liste %zu\n", i);
-		printf("COMMAND = %s\n", glob->cmd[i].command);
-		printf("ARGS = %zu\n", glob->cmd[i].args);
-		temp = 0;
-		while (temp != glob->cmd[i].args)
-		{
-			printf("ARGV = %s\n", glob->cmd[i].argv[temp]);
-			temp++;
-		}
-		if (glob->cmd[i].heredoc.type_infile != 0)
-		{
-			printf("Heredoc type Infile = %s\n", glob->cmd[i].heredoc.type_infile);
-			printf("Heredoc file Infile = %s\n", glob->cmd[i].heredoc.file_infile);
-		}
-		if (glob->cmd[i].heredoc.type_outfile != 0)
-		{
-			printf("Heredoc type Outfile = %s\n", glob->cmd[i].heredoc.type_outfile);
-			printf("Heredoc file Outfile = %s\n", glob->cmd[i].heredoc.file_outfile);
-		}
-		printf("\n");
+		printf("Liste %d\n", i);
+		print_command_info(&glob->cmd[i]);
 		i++;
 	}
-	/*glob->cmd->command = set_command(input);
-	glob->cmd.args = count_args(input, ft_strlen(glob->cmd->command));
-	if (glob->cmd.args == -1)
-		return (0);
-	glob->cmd.argv = set_argv(input, glob->cmd);
-	if (glob->cmd.argv == 0)
-		return (0);
-	show_struct(glob->cmd);*/
 	ft_call(glob, glob->cmd);
 	return (1);
 }

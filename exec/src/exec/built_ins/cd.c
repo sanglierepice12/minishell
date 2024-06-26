@@ -68,7 +68,7 @@ void	ft_cd(t_glob *glob, t_input *cmd)
 	if (cmd->args == 1)
 		return (chdir("/"), ft_update_pwd(&glob->env, "PWD", getcwd(NULL, 0)), (void) 0);
 	if (ft_comp_str(cmd->argv[1], "--"))
-		chdir("~");
+		chdir("/");
 	else if (ft_comp_str(cmd->argv[1], "~"))
 		chdir("/");
 	else if (ft_comp_str(cmd->argv[1], "-"))

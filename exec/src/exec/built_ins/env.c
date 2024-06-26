@@ -82,3 +82,22 @@ void	ft_get_env(t_glob *glob, char **env)
 		i++;
 	}
 }
+
+void	ft_env(t_glob *glob, t_input *cmd)
+{
+	size_t	i;
+	if (cmd->args == 1)
+		return (print_env(&glob->env, 0), (void)0);
+	else if (cmd->args > 1)
+	{
+		i = 0;
+		while (++i, i < cmd->args)
+		{
+			if (!ft_comp_str(cmd->argv[i], "env"))
+				return (printf("env: ‘%s’: No such file or directory\n",\
+							cmd->argv[1]), (void)0);
+		}
+		if (i == cmd->args)
+			print_env(&glob->env, 0);
+	}
+}

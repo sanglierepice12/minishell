@@ -49,6 +49,7 @@ int	main(int arc, char **argv, char **env)
 		}
 		if (ft_strncmp(input, "exit", 4) == 0)
 		{
+			ft_free_all(&glob);
 			free(input);
 			break ;
 		}
