@@ -42,8 +42,6 @@ static char	*ft_find_value(char *env, int flag, char *temp)
 	size_t	j;
 	char	*value;
 
-	/*if (!ft_strlen(temp))
-		temp = NULL;*/
 	value = NULL;
 	j = 0;
 	while (env[j])
@@ -96,12 +94,14 @@ static void	ft_create_env_nodes(t_env **env, t_input *cmd, int flag)
 		else
 			path = NULL;
 		if (temp)
-			ft_change_node(&temp, value, path);
+			ft_dell_node(&temp, env);
+			//ft_change_node(&temp, value, path);
 		if (flag == 1)
 			ft_new_node(value, path, 1);
-		else if (!temp)
+		else if (!temp && !path)
 			ft_lst_add_back(env, ft_new_node(value, path, 1));
-		printf("pa = %s\n", path);
+		else
+			ft_lst_add_back(env, ft_new_node(value, path, 0));
 		free(value);
 		free(path);
 		j++;
@@ -110,11 +110,26 @@ static void	ft_create_env_nodes(t_env **env, t_input *cmd, int flag)
 
 void	ft_export(t_env **env, t_input *cmd)
 {
+	t_env	*printer;
+	t_env	*tmp;
+
 	if (cmd->args == 1 && env)
-		return (print_env(env, 1), (void)0);
+	{
+		printer = copy_list(*env);
+		bubble_sort(&printer);
+		print_env(&printer, 1);
+		while (printer)
+		{
+			tmp = printer;
+			printer = printer->next;
+			free(tmp->value);
+			if (tmp->path)
+				free(tmp->path);
+			free(tmp);
+		}
+	}
 	if (!env)
 		ft_create_env_nodes(env, cmd, 1);
 	else
 		ft_create_env_nodes(env, cmd, 0);
-	//ft_atoz_env(env);
 }

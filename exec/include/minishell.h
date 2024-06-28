@@ -75,6 +75,7 @@ void	show_struct(t_input *command);
 /*********UTILS*********/
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_comp_str(const char *src, const char *str);
+int		ft_comp_str_for_alpha(const char *s1, const char *s2);
 char	*ft_super_dup(char *src, char *msg);
 char	*ft_dup(const char *s);
 char	*ft_str_copy_n(const char *str, size_t n);
@@ -121,5 +122,9 @@ void	ft_lst_add_front(t_env **lst, t_env *new);
 void	ft_lst_add_back(t_env **head, t_env *new);
 t_env	*ft_new_node(char *value, char *path, bool flag);
 void	ft_change_node(t_env **head, char *value, char *path);
+void	bubble_sort(t_env **head);
+void	ft_swap_nodes(t_env *a, t_env *b);
+t_env	*copy_node(t_env *head);
+t_env	*copy_list(t_env *head);
 
 #endif

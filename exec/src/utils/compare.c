@@ -75,3 +75,17 @@ int	ft_comp_str(const char *src, const char *str)
 		return (0);
 	return (1);
 }
+
+int ft_comp_str_for_alpha(const char *s1, const char *s2)
+{
+	int i;
+
+	i = 0;
+	while (s1[i] && s2[i])
+	{
+		if (s1[i] != s2[i])
+			return (s1[i] - s2[i]);
+		i++;
+	}
+	return (s1[i] - s2[i]);
+}
