@@ -42,18 +42,22 @@ static char	*ft_find_value(char *env, int flag, char *temp)
 	size_t	j;
 	char	*value;
 
+	/*if (!ft_strlen(temp))
+		temp = NULL;*/
 	value = NULL;
 	j = 0;
 	while (env[j])
 	{
 		if (env[j] == '=' && !flag)
 		{
-			value = ft_str_copy_n(env, j);
+			if (env[j - 1] == '+')
+				value = ft_str_copy_n(env, j - 1);
+			else
+				value = ft_str_copy_n(env, j);
 			break ;
 		}
 		else if (j != 0 && env[j] == '=')
 		{
-			printf("coucou = %s\n", env);
 			if (env[j - 1] == '+' && temp)
 				value = ft_str_join(env + j + 1, temp);
 			else
@@ -82,17 +86,20 @@ static void	ft_create_env_nodes(t_env **env, t_input *cmd, int flag)
 			return ;
 		value = ft_find_value(cmd->argv[j], 0, NULL);
 		temp = ft_find_thing_in_env(env, value);
-		/*if (!temp->value)
-			temp->value = strdup("");*/
 		if (ft_str_chr(cmd->argv[j], '='))
-			path = ft_find_value(cmd->argv[j], 1, "BITE");
+		{
+			if (temp)
+				path = ft_find_value(cmd->argv[j], 1, temp->path);
+			else
+				path = ft_find_value(cmd->argv[j], 1, NULL);
+		}
 		else
 			path = NULL;
 		if (temp)
-			ft_dell_node(&temp, env);
+			ft_change_node(&temp, value, path);
 		if (flag == 1)
 			ft_new_node(value, path, 1);
-		else
+		else if (!temp)
 			ft_lst_add_back(env, ft_new_node(value, path, 1));
 		printf("pa = %s\n", path);
 		free(value);

@@ -22,15 +22,15 @@ char	*ft_str_join(char *begin, char *end)
 	if (!final)
 		return (NULL);
 	i = 0;
-	while (begin[i])
+	while (end[i])
 	{
-		final[i] = begin[i];
+		final[i] = end[i];
 		i++;
 	}
 	j = 0;
-	while (end[j])
+	while (begin[j])
 	{
-		final[i] = end[j];
+		final[i] = begin[j];
 		i++;
 		j++;
 	}

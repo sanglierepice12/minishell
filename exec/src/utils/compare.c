@@ -25,7 +25,7 @@ bool	ft_export_is_printable(char *c)
 			return (0);
 		if ((c[i] < 'a' || c[i] > 'z') && (c[i] < 'A' || c[i] > 'Z')
 			&& (c[i] < '0' || c[i] > '9') && c[i] != '=')
-				return (1);
+			return (1);
 		i++;
 	}
 	return (0);

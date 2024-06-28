@@ -48,7 +48,8 @@ SRCS =	main.c 										\
 		utils/copy.c								\
 		utils/ft_calloc.c							\
 		utils/compare.c								\
-		utils/linked_list.c
+		utils/linked_list.c							\
+		utils/linked_follow.c
 
 # Objet files
 OBJS =	$(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
