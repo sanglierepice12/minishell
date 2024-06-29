@@ -52,7 +52,7 @@ void	print_env(t_env **head, int flag)
 		printf("\n");
 }
 
-void	ft_free_lst(t_env **lst)
+/*void	ft_free_lst(t_env **lst)
 {
 	t_env	*temp;
 
@@ -68,11 +68,11 @@ void	ft_free_lst(t_env **lst)
 		*lst = temp;
 	}
 	free(*lst);
-}
+}*/
 
 char	*ft_dup(const char *s)
 {
-	ssize_t	i;
+	size_t	i;
 	char	*new;
 
 	if (!s)
@@ -80,9 +80,13 @@ char	*ft_dup(const char *s)
 	new = ft_cal_loc(sizeof(char), ft_strlen(s) + 1);
 	if (!new)
 		return (NULL);
-	i = -1;
-	while (s[++i])
+	i = 0;
+	while (s[i])
+	{
 		new[i] = s[i];
+		i++;
+	}
+	new[i] = '\0';
 	return (new);
 }
 

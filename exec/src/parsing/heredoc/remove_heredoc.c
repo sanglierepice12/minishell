@@ -14,13 +14,13 @@
 
 static char	**ft_realloc(char **heredoc, char **tab)
 {
-	int		i;
-	int		size;
-	int		lenght;
+	size_t		i;
+	size_t		size;
+	size_t		lenght;
 	char	**realloc;
 
 	i = 0;
-	lenght = ft_strlen_bis(heredoc);
+	lenght = ft_strlen_double(heredoc);
 	realloc = malloc((lenght + 3) * sizeof(char *));
 	while (i != lenght)
 	{
@@ -35,7 +35,7 @@ static char	**ft_realloc(char **heredoc, char **tab)
 		size++;
 	}
 	realloc[i] = NULL;
-	if (ft_strlen_bis(heredoc) != 0)
+	if (ft_strlen_double(heredoc) != 0)
 		free(heredoc);
 	return (realloc);
 }

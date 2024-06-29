@@ -138,6 +138,7 @@ int	parse_in_struct(t_glob *glob, char *input)
 	if (glob->cmd.argv == 0)
 		return (0);
 	show_struct(glob->cmd);*/
+	free(input);
 	ft_call(glob, glob->cmd);
 	return (1);
 }

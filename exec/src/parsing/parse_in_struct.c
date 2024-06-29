@@ -101,6 +101,10 @@ static void	initialize_command(t_input *cmd)
 	cmd->heredoc.type_infile = NULL;
 	cmd->heredoc.file_infile = NULL;
 	cmd->heredoc.rest_heredoc = NULL;
+
+	cmd->argv = NULL;  // Ajout pour éviter la libération incorrecte
+	cmd->command = NULL;  // Ajout pour éviter la libération incorrecte
+	cmd->args = 0;  // Ajout pour éviter des erreurs de comptage
 }
 
 static void	print_command_info(t_input *cmd)
@@ -147,7 +151,7 @@ int	parse_in_struct(t_glob *glob, char *input)
 	i = 0;
 	num_args = get_num_args(input);
 	printf("Num ARG = %d\n", num_args);
-	glob->cmd = malloc(num_args * sizeof(t_input));
+	glob->cmd = malloc((num_args + 1) * sizeof(t_input));
 	if (!glob->cmd)
 		return (0);
 	while (i != num_args)
@@ -164,6 +168,9 @@ int	parse_in_struct(t_glob *glob, char *input)
 			return (free_parse(glob, 1), 0);
 		i++;
 	}
+
+	glob->cmd[num_args].command = NULL;
+
 	i = 0;
 	while (i != num_args)
 	{

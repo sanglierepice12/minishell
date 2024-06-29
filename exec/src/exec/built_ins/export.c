@@ -95,7 +95,6 @@ static void	ft_create_env_nodes(t_env **env, t_input *cmd, int flag)
 			path = NULL;
 		if (temp)
 			ft_dell_node(&temp, env);
-			//ft_change_node(&temp, value, path);
 		if (flag == 1)
 			ft_new_node(value, path, 1);
 		else if (!temp && !path)

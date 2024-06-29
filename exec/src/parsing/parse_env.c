@@ -95,7 +95,7 @@ static char	*find_env_var(char *word, t_glob *glob, int i, char *temp)
 	env = glob->env;
 	while (env != NULL)
 	{
-		if (strcmp(env->value, temp) == 0)
+		if (ft_comp_str_for_alpha(env->value, temp) == 0)
 		{
 			word = replace_env_word(word, i, env->path);
 			check_sup = 2;

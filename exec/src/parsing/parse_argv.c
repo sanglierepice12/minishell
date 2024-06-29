@@ -69,7 +69,7 @@ static char	*copy_word(char *input, int *i)
 	tab = malloc(lenght + 1 * sizeof(char));
 	if (!tab)
 		return (NULL);
-	tab[lenght] = 0;
+	tab[lenght] = '\0';
 	y = 0;
 	while (lenght != y)
 	{
@@ -102,7 +102,7 @@ char	**set_argv(char *input, int num, t_glob *glob)
 	int		i;
 	int		lenght;
 
-	argv = malloc(glob->cmd->args * sizeof(char *));
+	argv = malloc((glob->cmd->args)+ 1 * sizeof(char *));
 	if (argv == NULL)
 		return (NULL);
 	lenght = 0;
@@ -121,5 +121,6 @@ char	**set_argv(char *input, int num, t_glob *glob)
 		if (input[i] == '|' && (input[i - 1] == ' ' && input[i + 1] == ' '))
 			break ;
 	}
+	argv[lenght] = NULL;
 	return (check_apply_heredoc(argv, glob->cmd));
 }

@@ -32,6 +32,6 @@ void	ft_call(t_glob *glob, t_input *cmd)
 		ft_unset(glob, &cmd[0]);
 	if (ft_strncmp(cmd->command, "export", 6) == 0)
 		ft_export(&glob->env, &cmd[0]);
-	/*if (ft_strncmp(cmd->command, "exit", 4) == 0)
-		ft_exit(glob);*/
+	if (ft_strncmp(cmd->command, "exit", 4) == 0)
+		ft_exit(glob);
 }

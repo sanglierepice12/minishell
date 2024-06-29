@@ -66,7 +66,6 @@ int		count_args(char *input, int lenght);
 int		get_length_num(char *input, int number);
 char	*expend_env_var(char *word, t_glob *glob);
 char	**check_apply_heredoc(char **argv, t_input *command);
-int		ft_strlen_bis(char **tab);
 void	remove_and_stock_all_heredoc(char **argv, t_input *command);
 void	remove_heredoc(char **argv, int pos, t_input *command);
 
@@ -83,6 +82,7 @@ t_env	*ft_find_thing_in_env(t_env **env, char *value);
 void	ft_dell_node(t_env **temp, t_env **head);
 size_t	ft_strlen(const char *str);
 size_t	ft_strlen_double(char **str);
+int		ft_strlen_bis(char **tab);
 int		ft_str_chr(const char *src, const char c);
 bool	ft_is_numbalpha(char c);
 bool	ft_export_is_printable(char *c);

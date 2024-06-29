@@ -24,8 +24,8 @@ void	free_tab(char **tab, int lenght)
 		return ;
 	while (lenght != 0)
 	{
-		free(tab[lenght]);
 		lenght--;
+		free(tab[lenght]);
 	}
 	free(tab);
 }
@@ -62,41 +62,43 @@ void	ft_free_here_doc(t_heredoc *heredoc)
 void	ft_free_cmd(t_input *cmd)
 {
 	if (!cmd)
-		return ;
-	if (cmd->argv)
+		return;
+	if (ft_strlen_double(cmd->argv) || cmd->argv)
 		ft_free_double_tab(cmd->argv);
 	if (cmd->command)
 		free(cmd->command);
 	ft_free_here_doc(&cmd->heredoc);
-	if (cmd->args)
-		cmd->args = 0;
 }
 void	ft_free_env(t_env *env)
 {
-	if (!env)
-		return ;
-	ft_free_lst(&env);
+	t_env *tmp;
+
+	while (env)
+	{
+		tmp = env;
+		env = env->next;
+		if (tmp->value)
+			free(tmp->value);
+		if (tmp->path)
+			free(tmp->path);
+		free(tmp);
+	}
 }
 
 void	ft_free_all(t_glob *glob)
 {
-//int	i;
+	int i;
 
-	/*if (glob->cmd)
-	{
-		//i = 0;
-		//printf("cmd [%d] %s\n",i, glob->cmd->argv[0]);
-		//printf("i = %d\n", i);
-		*//*while (&glob->cmd[i])
+	if (glob->cmd) {
+		i = 0;
+		while (glob->cmd[i].command)
 		{
 			printf("ici i = %d\n", i);
 			ft_free_cmd(&glob->cmd[i]);
-			free(&glob->cmd[i]);
 			i++;
-		}*//*
-		ft_free_cmd(&glob->cmd[0]);
+		}
 		free(glob->cmd);
-	}*/
+	}
 	if (glob->env)
 		ft_free_env(glob->env);
 }
