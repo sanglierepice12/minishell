@@ -155,13 +155,13 @@ int	parse_in_struct(t_glob *glob, char *input)
 		initialize_command(&glob->command[i]);
 		glob->command[i].args = count_args(input, i);
 		if (glob->command[i].args == -1)
-			return (0);
+			return (free_parse(glob, 1), 0);
 		glob->command[i].argv = set_argv(input, i, glob);
 		if (glob->command[i].argv == NULL)
-			return (free_parse(glob, 2), 0);
+			return (free_parse(glob, 1), 0);
 		glob->command[i].command = glob->command[i].argv[0];
 		if (glob->command[i].command == NULL)
-			return (free_parse(glob, 1), 0);
+			return (free_parse(glob, 2), 0);
 		i++;
 	}
 	i = 0;

@@ -86,13 +86,16 @@ static char	*parse_word(char *input, int *i, t_glob *glob)
 
 	temp = 0;
 	word = copy_word(input, i);
-	if (word == NULL)
+	if (!word)
 		return (NULL);
 	word = expend_env_var(word, glob);
 	if (!word)
 		return (NULL);
 	word = delete_quote(word, 0);
+	if (!word)
+		return (NULL);
 	*i += ft_strlen_quote(input, *i, &temp);
+	printf("INFO = %s\n", word);
 	return (word);
 }
 
@@ -102,7 +105,7 @@ char	**set_argv(char *input, int num, t_glob *glob)
 	int		i;
 	int		lenght;
 
-	argv = malloc(glob->command->args * sizeof(char *));
+	argv = malloc(glob->command[num].args * sizeof(char *));
 	if (argv == NULL)
 		return (NULL);
 	lenght = 0;
@@ -121,5 +124,5 @@ char	**set_argv(char *input, int num, t_glob *glob)
 		if (input[i] == '|' && (input[i - 1] == ' ' && input[i + 1] == ' '))
 			break ;
 	}
-	return (check_apply_heredoc(argv, glob->command));
+	return (check_apply_heredoc(argv, &glob->command[num]));
 }

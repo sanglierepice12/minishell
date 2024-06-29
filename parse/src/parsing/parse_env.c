@@ -21,7 +21,7 @@ static char	*copy_word_env(char *input, int i)
 	while (input[i + lenght])
 	{
 		if (input[i + lenght] == ' ' || input[i + lenght] == 39 \
-			|| input[i + lenght] == 34)
+			|| input[i + lenght] == 34 || input[i + lenght] == '$')
 			break ;
 		lenght++;
 	}
@@ -32,7 +32,7 @@ static char	*copy_word_env(char *input, int i)
 	while (input[i + lenght])
 	{
 		if (input[i + lenght] == ' ' || input[i + lenght] == 39 \
-			|| input[i + lenght] == 34)
+			|| input[i + lenght] == 34 || input[i + lenght] == '$')
 			break ;
 		tab[lenght] = input[i + lenght];
 		lenght++;
@@ -46,15 +46,19 @@ static char	*alloc_new_word(char *word, int i, char *path)
 	char	*tab;
 	int		length;
 
-	length = ft_strlen(word) - ft_strlen(copy_word_env(word, i)) \
+	length = ft_strlen(word) - ft_strlen(copy_word_env(word, i + 1)) + 1 \
 			+ ft_strlen(path);
 	if (length == 0)
 	{
 		tab = malloc(1 * sizeof(char));
+		if (!tab)
+			return (0);
 		tab[0] = 0;
 		return (tab);
 	}
 	tab = malloc(length * sizeof(char));
+	if (!tab)
+		return (0);
 	tab[length] = 0;
 	return (tab);
 }
@@ -66,6 +70,8 @@ static char	*replace_env_word(char *word, int i, char *path)
 	int		index;
 
 	tab = alloc_new_word(word, i, path);
+	if (!tab)
+		return (free(word), NULL);
 	size = 0;
 	while (size != i)
 	{
@@ -79,7 +85,7 @@ static char	*replace_env_word(char *word, int i, char *path)
 		index--;
 	}
 	size += ft_strlen(path);
-	i += ft_strlen(copy_word_env(word, i));
+	i += ft_strlen(copy_word_env(word, i + 1)) + 1;
 	while (word[i])
 		tab[size++] = word[i++];
 	free(word);
@@ -98,6 +104,8 @@ static char	*find_env_var(char *word, t_glob *glob, int i, char *temp)
 		if (strcmp(env->value, temp) == 0)
 		{
 			word = replace_env_word(word, i, env->path);
+			if (!word)
+				return (NULL);
 			check_sup = 2;
 			break ;
 		}

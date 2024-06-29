@@ -49,7 +49,7 @@ char	*allocate_newtab(char *input, int i, int *lenght)
 	if (temp >= 1)
 		*lenght -= temp * 2;
 	newtab = malloc((*lenght + 1) * sizeof(char));
-	if (newtab == NULL)
+	if (!newtab)
 		return (NULL);
 	newtab[*lenght] = 0;
 	return (newtab);
@@ -82,8 +82,8 @@ char	*delete_quote(char *tab, int i)
 	char	*newtab;
 
 	newtab = allocate_newtab(tab, i, &lenght);
-	if (newtab == NULL)
-		return (NULL);
+	if (!newtab)
+		return (free(tab), NULL);
 	copy_without_quotes(tab, newtab, lenght);
 	free(tab);
 	return (newtab);
