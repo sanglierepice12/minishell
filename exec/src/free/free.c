@@ -14,6 +14,18 @@
 
 void	free_parse(t_glob *glob, int i)
 {
+	int	size;
+
+	if (i >= 2)
+	{
+		size = glob->cmd->args - 1;
+		while (size != -1)
+		{
+			free(glob->cmd->argv[size]);
+			size--;
+		}
+		free(glob->cmd->argv);
+	}
 	if (i >= 1)
 		free(glob->cmd);
 }

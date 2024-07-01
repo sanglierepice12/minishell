@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../../../include/minishell.h"
 
-static void	remove_heredoc(char **argv, int pos, t_input *cmd)
+void	remove_heredoc(char **argv, int pos, t_input *command)
 {
 	int	i;
 	int	size;
@@ -20,7 +20,7 @@ static void	remove_heredoc(char **argv, int pos, t_input *cmd)
 	free(argv[pos]);
 	free(argv[pos + 1]);
 	i = pos;
-	size = cmd->args;
+	size = command->args;
 	while (i < size - 2)
 	{
 		argv[i] = argv[i + 2];
@@ -28,50 +28,75 @@ static void	remove_heredoc(char **argv, int pos, t_input *cmd)
 	}
 	argv[size - 2] = NULL;
 	argv[size - 1] = NULL;
-	cmd->args -= 2;
+	command->args -= 2;
 }
 
-char	**check_apply_heredoc(char **argv, t_input *cmd)
+static void	get_heredoc_infile(char **argv, t_input *command)
 {
 	int	i;
 
-	i = cmd->args - 2;
+	i = command->args - 2;
 	while (i > 0)
 	{
 		if (ft_comp_str(argv[i], "<") == 1)
 		{
-			cmd->heredoc.type_infile = "<";
-			cmd->heredoc.file_infile = ft_super_dup(argv[i + 1], NULL);
-			remove_heredoc(argv, i, cmd);
+			command->heredoc.type_infile = "<";
+			command->heredoc.file_infile = ft_super_dup(argv[i + 1], NULL);
+			remove_heredoc(argv, i, command);
 			break ;
 		}
 		if (ft_comp_str(argv[i], "<<") == 1)
 		{
-			cmd->heredoc.type_infile = "<<";
-			cmd->heredoc.file_infile = ft_super_dup(argv[i + 1], NULL);
-			remove_heredoc(argv, i, cmd);
+			command->heredoc.type_infile = "<<";
+			command->heredoc.file_infile = ft_super_dup(argv[i + 1], NULL);
+			remove_heredoc(argv, i, command);
 			break ;
 		}
 		i--;
 	}
-	i = cmd->args - 2;
+}
+
+static void	get_heredoc_outfile(char **argv, t_input *command)
+{
+	int	i;
+
+	i = command->args - 2;
 	while (i > 0)
 	{
 		if (ft_comp_str(argv[i], ">") == 1)
 		{
-			cmd->heredoc.type_outfile = ">";
-			cmd->heredoc.file_outfile = ft_super_dup(argv[i + 1], NULL);
-			remove_heredoc(argv, i, cmd);
+			command->heredoc.type_outfile = ">";
+			command->heredoc.file_outfile = ft_super_dup(argv[i + 1], NULL);
+			remove_heredoc(argv, i, command);
 			break ;
 		}
 		if (ft_comp_str(argv[i], ">>") == 1)
 		{
-			cmd->heredoc.type_outfile = ">>";
-			cmd->heredoc.file_outfile = ft_super_dup(argv[i + 1], NULL);
-			remove_heredoc(argv, i, cmd);
+			command->heredoc.type_outfile = ">>";
+			command->heredoc.file_outfile = ft_super_dup(argv[i + 1], NULL);
+			remove_heredoc(argv, i, command);
 			break ;
 		}
 		i--;
 	}
+}
+
+int	ft_strlen_bis(char **tab)
+{
+	int	i;
+
+	i = 0;
+	if (tab == NULL)
+		return (0);
+	while (tab[i])
+		i++;
+	return (i);
+}
+
+char	**check_apply_heredoc(char **argv, t_input *command)
+{
+	get_heredoc_infile(argv, command);
+	get_heredoc_outfile(argv, command);
+	remove_and_stock_all_heredoc(argv, command);
 	return (argv);
 }
