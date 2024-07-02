@@ -66,7 +66,7 @@ static char	*copy_word(char *input, int *i)
 	lenght = ft_strlen_quote(input, *i, &temp);
 	if (lenght == -1)
 		return (NULL);
-	tab = calloc(lenght + 1, sizeof(char));
+	tab = ft_cal_loc(lenght + 1, sizeof(char));
 	if (!tab)
 		return (NULL);
 	tab[lenght] = '\0';
@@ -105,7 +105,7 @@ char	**set_argv(char *input, int num, t_glob *glob)
 	int		i;
 	int		lenght;
 
-	argv = calloc(glob->cmd[num].args, sizeof(*argv));
+	argv = ft_cal_loc(glob->cmd[num].args, sizeof(*argv));
 	if (argv == NULL)
 		return (NULL);
 	lenght = 0;
