@@ -73,13 +73,17 @@ void	ft_free_here_doc(t_heredoc *heredoc)
 
 void	ft_free_cmd(t_input *cmd)
 {
+	printf("coucou !\n");
 	if (!cmd)
 		return;
+	printf("je suis passé !\n");
 	if (cmd->args && cmd->argv)
-		ft_free_double_tab(cmd->argv);
+		free_tab(cmd->argv, cmd->args);
 	/*if (cmd->command)
 		free(cmd->command);*/
 	ft_free_here_doc(&cmd->heredoc);
+	printf("sans crash !\n");
+
 }
 void	ft_free_env(t_env *env)
 {

@@ -178,6 +178,8 @@ int	parse_in_struct(t_glob *glob, char *input)
 		print_command_info(&glob->cmd[i]);
 		i++;
 	}
+	free(input);
 	ft_call(glob, glob->cmd);
+	ft_free_cmd(glob->cmd);
 	return (1);
 }
