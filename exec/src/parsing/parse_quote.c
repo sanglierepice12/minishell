@@ -48,7 +48,7 @@ char	*allocate_newtab(char *input, int i, int *lenght)
 		return (NULL);
 	if (temp >= 1)
 		*lenght -= temp * 2;
-	newtab = malloc((*lenght + 1) * sizeof(char));
+	newtab = calloc((*lenght + 1), sizeof(char));
 	if (newtab == NULL)
 		return (NULL);
 	newtab[*lenght] = 0;

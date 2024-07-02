@@ -25,7 +25,7 @@ static char	*copy_word_env(char *input, int i)
 			break ;
 		lenght++;
 	}
-	tab = malloc(lenght * sizeof(char));
+	tab = calloc(lenght, sizeof(char));
 	if (!tab)
 		return (NULL);
 	lenght = 0;
@@ -50,13 +50,13 @@ static char	*alloc_new_word(char *word, int i, char *path)
 			+ ft_strlen(path);
 	if (length == 0)
 	{
-		tab = malloc(1 * sizeof(char));
+		tab = calloc(1, sizeof(char));
 		if (!tab)
 			return (0);
 		tab[0] = 0;
 		return (tab);
 	}
-	tab = malloc(length * sizeof(char));
+	tab = calloc(length, sizeof(char));
 	if (!tab)
 		return (0);
 	tab[length] = 0;

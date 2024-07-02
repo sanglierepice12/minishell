@@ -75,10 +75,10 @@ void	ft_free_cmd(t_input *cmd)
 {
 	if (!cmd)
 		return;
-	if (ft_strlen_double(cmd->argv) || cmd->argv)
+	if (cmd->args && cmd->argv)
 		ft_free_double_tab(cmd->argv);
-	if (cmd->command)
-		free(cmd->command);
+	/*if (cmd->command)
+		free(cmd->command);*/
 	ft_free_here_doc(&cmd->heredoc);
 }
 void	ft_free_env(t_env *env)

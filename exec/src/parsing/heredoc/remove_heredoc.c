@@ -45,7 +45,7 @@ static char	**rs_heredoc(char **argv, t_input *cmd, int i)
 	char	**tab;
 	char	**temp;
 
-	tab = malloc(3 * sizeof(char *));
+	tab = calloc(3, sizeof(char *));
 	if (argv[i + 1] != NULL)
 	{
 		tab[0] = ft_dup(argv[i]);

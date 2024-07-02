@@ -66,7 +66,7 @@ static char	*copy_word(char *input, int *i)
 	lenght = ft_strlen_quote(input, *i, &temp);
 	if (lenght == -1)
 		return (NULL);
-	tab = malloc(lenght + 1 * sizeof(char));
+	tab = calloc(lenght + 1, sizeof(char));
 	if (!tab)
 		return (NULL);
 	tab[lenght] = '\0';
@@ -87,13 +87,13 @@ static char	*parse_word(char *input, int *i, t_glob *glob)
 	temp = 0;
 	word = copy_word(input, i);
 	if (!word)
-		return (NULL);
+		return (word);
 	word = expend_env_var(word, glob);
 	if (!word)
-		return (NULL);
+		return (word);
 	word = delete_quote(word, 0);
 	if (!word)
-		return (NULL);
+		return (word);
 	*i += ft_strlen_quote(input, *i, &temp);
 	printf("INFO = %s\n", word);
 	return (word);
@@ -105,7 +105,7 @@ char	**set_argv(char *input, int num, t_glob *glob)
 	int		i;
 	int		lenght;
 
-	argv = malloc(glob->cmd[num].args * sizeof(char *));
+	argv = calloc(glob->cmd[num].args, sizeof(*argv));
 	if (argv == NULL)
 		return (NULL);
 	lenght = 0;
