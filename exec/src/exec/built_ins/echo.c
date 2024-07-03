@@ -21,7 +21,11 @@ static void	ft_print_echo(t_input *cmd, int flag)
 	else
 		i = 0;
 	while (++i, i < cmd->args && cmd->argv[i])
+	{
 		printf("%s", cmd->argv[i]);
+		if (i + 1 < cmd->args)
+			printf(" ");
+	}
 	if (!flag)
 		printf("\n");
 }
