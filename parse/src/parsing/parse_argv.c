@@ -95,7 +95,6 @@ static char	*parse_word(char *input, int *i, t_glob *glob)
 	if (!word)
 		return (NULL);
 	*i += ft_strlen_quote(input, *i, &temp);
-	printf("INFO = %s\n", word);
 	return (word);
 }
 

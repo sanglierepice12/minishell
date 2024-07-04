@@ -25,9 +25,10 @@ static char	*copy_word_env(char *input, int i)
 			break ;
 		lenght++;
 	}
-	tab = malloc(lenght * sizeof(char));
+	tab = malloc(lenght + 1 * sizeof(char));
 	if (!tab)
 		return (NULL);
+	tab[lenght] = 0;
 	lenght = 0;
 	while (input[i + lenght])
 	{
@@ -37,7 +38,6 @@ static char	*copy_word_env(char *input, int i)
 		tab[lenght] = input[i + lenght];
 		lenght++;
 	}
-	tab[lenght] = 0;
 	return (tab);
 }
 
@@ -46,8 +46,7 @@ static char	*alloc_new_word(char *word, int i, char *path)
 	char	*tab;
 	int		length;
 
-	length = ft_strlen(word) - ft_strlen(copy_word_env(word, i + 1)) + 1 \
-			+ ft_strlen(path);
+	length = ft_strlen(word) - ft_strlen(copy_word_env(word, i + 1)) - 1 + ft_strlen(path);
 	if (length == 0)
 	{
 		tab = malloc(1 * sizeof(char));
@@ -137,7 +136,8 @@ char	*expend_env_var(char *word, t_glob *glob)
 				return (free(temp), NULL);
 			free(temp);
 		}
-		i++;
+		else
+			i++;
 	}
 	return (word);
 }

@@ -1,8 +1,6 @@
 Commande qui ne sont pas bien parse
 
 echo $?
-echo \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\$USER \$PATH \\$PWD
-echo $USER$USER
 
 Truc a faire demain
 
