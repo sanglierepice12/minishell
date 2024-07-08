@@ -1,0 +1,14 @@
+1. Initialisation et Gestion des Signaux
+2. Validation de la Syntaxe des Commandes
+3. Vérification des Builtins
+4. Gestion des Redirections et Heredocs
+Analyse des redirections
+Gestion des fichiers
+Gérer les heredocs
+5. Vérification des Permissions et Existence
+6. Préparation des Arguments
+7. Création et Gestion du Processus Enfant
+8. Gestion des Erreurs
+9. Gestion des Variables d'Environnement
+10. Gestion des Pipes et Commandes en Chaîne
+11. Nettoyage et Libération des Ressources

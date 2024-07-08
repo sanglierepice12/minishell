@@ -151,7 +151,7 @@ int	parse_in_struct(t_glob *glob, char *input)
 	i = 0;
 	num_args = get_num_args(input);
 	printf("Num ARG = %d\n", num_args);
-	glob->cmd = calloc((num_args + 1), sizeof(t_input));
+	glob->cmd = ft_cal_loc((num_args + 1), sizeof(t_input));
 	if (!glob->cmd)
 		return (0);
 	while (i != num_args)

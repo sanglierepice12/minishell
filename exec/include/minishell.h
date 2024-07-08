@@ -6,7 +6,7 @@
 /*   By: arbenois <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 03:29:49 by arbenois          #+#    #+#             */
-/*   Updated: 2024/05/29 03:29:51 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/07/03 13:53:13 by gostr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,15 @@
 # include <stdbool.h>
 # include <stdint.h>
 # include <dirent.h>
+
+/*typedef struct s_exec
+{
+	char	**path;
+	int		fd[2];
+	int		pipe_fd[2];
+	pid_t	pid[2];
+	char	**cmd;
+}				t_exec;*/
 
 typedef struct s_env
 {
@@ -55,7 +64,7 @@ typedef struct s_glob
 	t_heredoc	heredoc;
 }				t_glob;
 
-/*********PARSE*********/
+/*----------PARSE----------*/
 int		check_command(char *input);
 int 	parse_in_struct(t_glob *glob, char *input);
 int		ft_strlen_quote(char *str, int len, int *quote);
@@ -71,7 +80,7 @@ void	remove_heredoc(char **argv, int pos, t_input *command);
 
 void	show_struct(t_input *command);
 
-/*********UTILS*********/
+/*----------UTILS----------*/
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_comp_str(const char *src, const char *str);
 int		ft_comp_str_for_alpha(const char *s1, const char *s2);
@@ -83,15 +92,15 @@ void	ft_dell_node(t_env **temp, t_env **head);
 size_t	ft_strlen(const char *str);
 size_t	ft_strlen_double(char **str);
 int		ft_strlen_bis(char **tab);
-int		ft_str_chr(const char *src, const char c);
+int		ft_str_chr(const char *src, char c);
 bool	ft_is_numbalpha(char c);
 bool	ft_export_is_printable(char *c);
 char	*ft_str_join(char *begin, char *end);
 
-/*********BUILT_INS_CALLS*********/
+/*----------BUILT_INS_CALLS----------*/
 void	ft_call(t_glob *glob, t_input *cmd);
 
-/*********BUILT_INS*********/
+/*----------BUILT_INS----------*/
 void	ft_pwd(t_input *cmd, t_env **env);
 void	ft_cd(t_glob *glob, t_input *cmd);
 void	ft_echo(t_input *cmd);
@@ -102,7 +111,7 @@ void	ft_export(t_env **env, t_input *cmd);
 void	ft_exit(t_glob *glob);
 void	ft_env(t_glob *glob, t_input *cmd);
 
-/*********FREE&&ALLOC*********/
+/*----------FREE&&ALLOC----------*/
 void	ft_bzero(void *s, size_t n);
 void	*ft_cal_loc(size_t nmemb, size_t size);
 void	ft_free_here_doc(t_heredoc *heredoc);
@@ -114,7 +123,7 @@ void	ft_free_lst(t_env **lst);
 void	ft_free_all(t_glob *glob);
 void	free_parse(t_glob *glob, int i);
 
-/*********LINKED_LIST*********/
+/*----------LINKED_LIST----------*/
 void	ft_print_this_node(t_env **env, char *value);
 void	print_env(t_env **head, int env);
 t_env	*ft_lst_last(t_env *lst);
