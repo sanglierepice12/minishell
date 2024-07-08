@@ -58,7 +58,7 @@ int	main(int arc, char **argv, char **env)
 			if (parse_in_struct(&glob, input) == 0)
 				printf("Error\n");
 		}
-		//free(input);
+		free(input);
 	}
 	return (0);
 }

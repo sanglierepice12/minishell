@@ -101,10 +101,9 @@ static void	initialize_command(t_input *cmd)
 	cmd->heredoc.type_infile = NULL;
 	cmd->heredoc.file_infile = NULL;
 	cmd->heredoc.rest_heredoc = NULL;
-
-	cmd->argv = NULL;  // Ajout pour éviter la libération incorrecte
-	cmd->command = NULL;  // Ajout pour éviter la libération incorrecte
-	cmd->args = 0;  // Ajout pour éviter des erreurs de comptage
+	cmd->argv = NULL;
+	cmd->command = NULL;
+	cmd->args = 0;
 }
 
 static void	print_command_info(t_input *cmd)
@@ -161,17 +160,15 @@ int	parse_in_struct(t_glob *glob, char *input)
 		if ((ssize_t)glob->cmd[i].args == -1)
 			return (0);
 		glob->cmd[i].argv = set_argv(input, i, glob);
-		/*if (glob->cmd[i].argv == NULL)
-			return (free_parse(glob, 2), 0);*/
+		if (glob->cmd[i].argv == NULL)
+			return (free_parse(glob, 2), 0);
 		if (glob->cmd[i].args)
 			glob->cmd[i].command = glob->cmd[i].argv[0];
-		/*if (glob->cmd[i].command == NULL)
-			return (free_parse(glob, 1), 0);*/
+		if (glob->cmd[i].command == NULL)
+			return (free_parse(glob, 1), 0);
 		i++;
 	}
-
 /*	glob->cmd[num_args].command = NULL;*/
-
 	i = 0;
 	while (i != num_args)
 	{
@@ -179,7 +176,6 @@ int	parse_in_struct(t_glob *glob, char *input)
 		print_command_info(&glob->cmd[i]);
 		i++;
 	}
-	free(input);
 	ft_call(glob, glob->cmd);
 	ft_free_cmd(glob->cmd);
 	return (1);

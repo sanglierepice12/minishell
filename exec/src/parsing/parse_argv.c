@@ -11,18 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-/*
-static void	skip_command(char *input, int *i)
-{
-	while (input[*i] == ' ')
-		(*i)++;
-	while (input[*i])
-	{
-		if (input[*i] == ' ' || input[*i] == 0)
-			break ;
-		(*i)++;
-	}
-}*/
 
 int	count_args(char *input, int lenght)
 {
@@ -30,22 +18,20 @@ int	count_args(char *input, int lenght)
 	int	args;
 	int	quote;
 
-	i = 0;
 	args = 0;
+	quote = 0;
 	if (lenght != 0)
 		i = get_length_num(input, lenght);
 	else
 		i = 0;
-	quote = 0;
 	while (input[i])
 	{
 		if (input[i] != ' ')
 		{
 			args++;
-			ft_strlen_quote(input, i, &quote);
+			i += ft_strlen_quote(input, i, &quote);
 			if (quote == -1)
 				return (-1);
-			i += ft_strlen_quote(input, i, &quote);
 		}
 		if (input[i] == ' ')
 			i++;
@@ -95,7 +81,6 @@ static char	*parse_word(char *input, int *i, t_glob *glob)
 	if (!word)
 		return (word);
 	*i += ft_strlen_quote(input, *i, &temp);
-	printf("INFO = %s\n", word);
 	return (word);
 }
 

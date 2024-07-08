@@ -17,7 +17,7 @@ static char	**ft_realloc(char **heredoc, char **tab)
 	size_t		i;
 	size_t		size;
 	size_t		lenght;
-	char	**realloc;
+	char		**realloc;
 
 	i = 0;
 	lenght = ft_strlen_double(heredoc);
