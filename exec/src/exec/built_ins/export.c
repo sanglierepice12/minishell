@@ -16,21 +16,21 @@ static void	ft_check_export_args(t_input *cmd, size_t *j)
 {
 	if (!ft_is_numbalpha(cmd->argv[*j][0]))
 	{
-		printf("bash: export: `%s': not a valid identifier\n",
+		printf("bash: export: `%s': not a valid identifier\n", \
 				cmd->argv[*j]);
 		*j = *j + 1;
 		return ;
 	}
 	if (ft_export_is_printable(cmd->argv[*j]))
 	{
-		printf("bash: export: `%s': not a valid identifier\n",
+		printf("bash: export: `%s': not a valid identifier\n", \
 				cmd->argv[*j]);
 		*j = *j + 1;
 		return ;
 	}
 	if (ft_comp_str(cmd->argv[*j], "="))
 	{
-		printf("bash: export: `%s': not a valid identifier\n",
+		printf("bash: export: `%s': not a valid identifier\n", \
 				cmd->argv[*j]);
 		*j = *j + 1;
 		return;

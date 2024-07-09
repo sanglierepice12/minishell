@@ -44,6 +44,7 @@ SRCS =	main.c 										\
 		exec/built_ins/unset.c						\
 		exec/built_ins/export.c						\
 		exec/built_ins/exit.c						\
+		exec/execution/init_exec.c					\
 		free/free.c									\
 		utils/copy.c								\
 		utils/ft_calloc.c							\
@@ -77,6 +78,7 @@ $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)/parsing/check_function $(DEP_DIR)/parsing/check_function
 	@mkdir -p $(OBJ_DIR)/exec $(DEP_DIR)/exec
 	@mkdir -p $(OBJ_DIR)/exec/built_ins $(DEP_DIR)/exec/built_ins
+	@mkdir -p $(OBJ_DIR)/exec/execution $(DEP_DIR)/exec/execution
 	@mkdir -p $(OBJ_DIR)/free $(DEP_DIR)/free
 	@mkdir -p $(OBJ_DIR)/utils $(DEP_DIR)/utils
 	@$(CC) $(CFLAGS) -MMD -MP -MF $(DEP_DIR)/$*.d -c $< -o $@

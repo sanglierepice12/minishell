@@ -47,6 +47,8 @@ int	main(int arc, char **argv, char **env)
 			printf("\n");
 			break ;
 		}
+		if (ft_strncmp(input, "exec", 4) == 0)
+			ft_init_exec(&glob);
 		/*if (ft_strncmp(input, "exit", 4) == 0)
 		{
 			ft_free_all(&glob);

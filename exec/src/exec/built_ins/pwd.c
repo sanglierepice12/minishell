@@ -42,8 +42,8 @@ void	ft_pwd(t_input *cmd, t_env **env)
 		free(path);
 	}
 	else if (cmd->argv[1] && cmd->argv[1][0] == '-' && cmd->argv[1][1])
-		dprintf(2, "bash: pwd: %c%c: invalid option\n"
-				   "pwd: usage: pwd [-LP]\n", cmd->argv[1][0], cmd->argv[1][1]);
+		dprintf(2, "bash: pwd: %c%c: invalid option\n"\
+				"pwd: usage: pwd [-LP]\n", cmd->argv[1][0], cmd->argv[1][1]);
 	else
 		ft_print_this_node(env, "PWD");
 }

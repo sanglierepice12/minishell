@@ -86,6 +86,7 @@ void	ft_get_env(t_glob *glob, char **env)
 void	ft_env(t_glob *glob, t_input *cmd)
 {
 	size_t	i;
+
 	if (cmd->args == 1)
 		return (print_env(&glob->env, 0), (void)0);
 	else if (cmd->args > 1)

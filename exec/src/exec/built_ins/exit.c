@@ -14,7 +14,6 @@
 
 void	ft_exit(t_glob *glob)
 {
-
 /*	if (glob->cmd->args == 1)
 		printf("exit\n");*/
 	ft_free_all(glob);

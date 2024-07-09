@@ -40,7 +40,7 @@ char	*ft_str_join(char *begin, char *end)
 char	*ft_str_copy_n(const char *str, size_t n)
 {
 	char	*dup;
-	size_t		i;
+	size_t	i;
 
 	dup = ft_cal_loc(n + 1, sizeof(char));
 	if (!dup)

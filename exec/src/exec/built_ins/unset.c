@@ -48,8 +48,7 @@ static void	unset_variable(t_env **head, char *input)
 	temp = *head;
 	while (temp && temp->next)
 	{
-		if (ft_strlen(temp->value) == len &&
-			ft_comp_str(temp->value, input))
+		if (ft_strlen(temp->value) == len && ft_comp_str(temp->value, input))
 		{
 			if (temp->value)
 				printf("temp.v = %s\n", temp->value);
@@ -59,8 +58,7 @@ static void	unset_variable(t_env **head, char *input)
 		}
 		temp = temp->next;
 	}
-	if (temp && ft_strlen(temp->value) == len &&
-		ft_comp_str(temp->value, input))
+	if (temp && ft_strlen(temp->value) == len && ft_comp_str(temp->value, input))
 		ft_dell_node(&temp, head);
 }
 

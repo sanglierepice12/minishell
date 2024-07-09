@@ -41,6 +41,7 @@ void	free_tab(char **tab, int lenght)
 	}
 	free(tab);
 }
+
 static void	ft_free_double_tab(char **tab)
 {
 	int	i;
@@ -70,24 +71,21 @@ void	ft_free_here_doc(t_heredoc *heredoc)
 		ft_free_double_tab(heredoc->rest_heredoc);
 }
 
-
 void	ft_free_cmd(t_input *cmd)
 {
-	printf("coucou !\n");
+	printf("\ncoucou !\n");
 	if (!cmd)
-		return;
+		return ;
 	printf("je suis passé !\n");
 	if (cmd->args && cmd->argv)
 		free_tab(cmd->argv, cmd->args);
-	/*if (cmd->command)
-		free(cmd->command);*/
 	ft_free_here_doc(&cmd->heredoc);
 	printf("sans crash !\n");
-
 }
+
 void	ft_free_env(t_env *env)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
 	while (env)
 	{
@@ -103,9 +101,10 @@ void	ft_free_env(t_env *env)
 
 void	ft_free_all(t_glob *glob)
 {
-	int i;
+	int	i;
 
-	if (glob->cmd) {
+	if (glob->cmd)
+	{
 		i = 0;
 		while (glob->cmd[i].command)
 		{

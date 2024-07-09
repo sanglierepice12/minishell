@@ -41,6 +41,7 @@ bool	ft_is_numbalpha(char c)
 int	ft_str_chr(const char *src, const char str)
 {
 	size_t	i;
+
 	if (!str || !src)
 		return (0);
 	i = 0;
@@ -76,9 +77,9 @@ int	ft_comp_str(const char *src, const char *str)
 	return (1);
 }
 
-int ft_comp_str_for_alpha(const char *s1, const char *s2)
+int	ft_comp_str_for_alpha(const char *s1, const char *s2)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s1[i] && s2[i])

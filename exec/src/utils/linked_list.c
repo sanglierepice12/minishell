@@ -51,7 +51,6 @@ void	print_env(t_env **head, int flag)
 	else
 		printf("\n");
 }
-
 /*void	ft_free_lst(t_env **lst)
 {
 	t_env	*temp;

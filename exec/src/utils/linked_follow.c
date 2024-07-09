@@ -34,11 +34,9 @@ void	ft_swap_nodes(t_env *a, t_env *b)
 	temp_value = a->value;
 	temp_path = a->path;
 	temp_flag = a->flag;
-
 	a->value = b->value;
 	a->path = b->path;
 	a->flag = b->flag;
-
 	b->value = temp_value;
 	b->path = temp_path;
 	b->flag = temp_flag;

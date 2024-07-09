@@ -25,10 +25,10 @@
 /*typedef struct s_exec
 {
 	char	**path;
-	int		fd[2];
-	int		pipe_fd[2];
-	pid_t	pid[2];
 	char	**cmd;
+	//int		fd[2];
+	//int		pipe_fd[2];
+	//pid_t	pid[2];
 }				t_exec;*/
 
 typedef struct s_env
@@ -53,8 +53,9 @@ typedef struct s_input
 {
 	char		*command;
 	char		**argv;
-	t_heredoc	heredoc;
+	char		**path;
 	size_t		args;
+	t_heredoc	heredoc;
 }				t_input;
 
 typedef struct s_glob
@@ -98,7 +99,7 @@ bool	ft_export_is_printable(char *c);
 char	*ft_str_join(char *begin, char *end);
 
 /*----------BUILT_INS_CALLS----------*/
-void	ft_call(t_glob *glob, t_input *cmd);
+void	ft_call_builtins(t_glob *glob, t_input *cmd);
 
 /*----------BUILT_INS----------*/
 void	ft_pwd(t_input *cmd, t_env **env);
@@ -110,6 +111,9 @@ void	ft_unset(t_glob *glob, t_input *cmd);
 void	ft_export(t_env **env, t_input *cmd);
 void	ft_exit(t_glob *glob);
 void	ft_env(t_glob *glob, t_input *cmd);
+
+/*----------EXECUTION----------*/
+void	ft_init_exec(t_glob *glob);
 
 /*----------FREE&&ALLOC----------*/
 void	ft_bzero(void *s, size_t n);
