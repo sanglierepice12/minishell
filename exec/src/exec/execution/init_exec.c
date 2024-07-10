@@ -12,23 +12,42 @@
 
 #include "../../../include/minishell.h"
 
+static void	ft_init_path(t_glob *glob, t_env *temp)
+{
+	size_t	i;
+	size_t	j;
+	char	*temp_path;
+
+	if (!temp)
+		return (printf("Nothing in temp\n"), (void)0);
+	i = 0;
+	while (i < glob->cmd[i].args)
+	{
+		glob->cmd[i].path = ft_split(temp->path, ':');
+		j = 0;
+		while (glob->cmd[i].path[j])
+		{
+			temp_path = ft_str_join("/", glob->cmd[i].path[j]);
+			free(glob->cmd->path[j]);
+			glob->cmd->path[j] = ft_dup(temp_path);
+			free(temp_path);
+			j++;
+		}
+		i++;
+	}
+}
+
 void	ft_init_exec(t_glob *glob)
 {
-	(void)glob;
-	//si (env->value == PATH) ok ?
-		//setpath glob->cmd[i]->cmd;
-			//si cmd = built_in -> path = NULL;
-			//cmd.path = ft_split(env.value == PATH, :);
-		//-> acces_cmd();
-			//si access fonctionne direct tu met dedans else :
-			//temp = strjoin (path[i], '/');
-			//path[i] = strjoin(temp, cmd.command); exemple "/bin/ls
-			//access (path[i] , F_OK, X_OK);
-			//cmd.command = path[i];
-		//execute_pipeline(glob.cmd)
-			//pipefd[2];
-			//pid;
-			// fd = 0 pour le stdin
+	t_env	*temp;
+
+	if (!glob)
+		return (printf("Nothing in glob\n"), (void)0);
+	if (glob->env)
+		temp = glob->env;
+	temp = ft_find_thing_in_env(&glob->env, "PATH");
+	if (temp && ft_comp_str(temp->value, "PATH"))
+		ft_init_path(glob, temp);
 }
 
 /*

@@ -97,6 +97,8 @@ int		ft_str_chr(const char *src, char c);
 bool	ft_is_numbalpha(char c);
 bool	ft_export_is_printable(char *c);
 char	*ft_str_join(char *begin, char *end);
+void	ft_free_double_tab(char **tab);
+char	**ft_split(char const *s, char c);
 
 /*----------BUILT_INS_CALLS----------*/
 void	ft_call_builtins(t_glob *glob, t_input *cmd);

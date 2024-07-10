@@ -11,4 +11,17 @@ Gérer les heredocs
 8. Gestion des Erreurs
 9. Gestion des Variables d'Environnement
 10. Gestion des Pipes et Commandes en Chaîne
-11. Nettoyage et Libération des Ressources
+11. Nettoyage et Libération des Ressource
+
+
+
+//-> acces_cmd();
+	//si access fonctionne direct tu met dedans else :
+	//temp = strjoin (path[i], '/');
+	//path[i] = strjoin(temp, cmd.command); exemple "/bin/ls
+	//access (path[i] , F_OK, X_OK);
+	//cmd.command = path[i];
+//execute_pipeline(glob.cmd)
+	//pipefd[2];
+	//pid;
+	// fd = 0 pour le stdins

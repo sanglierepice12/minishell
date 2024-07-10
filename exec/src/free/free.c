@@ -26,6 +26,8 @@ void	free_parse(t_glob *glob, int i)
 		}
 		free(glob->cmd->argv);
 	}
+	if (glob->cmd->args && glob->cmd->path)
+		ft_free_double_tab(glob->cmd->path);
 	if (i >= 1)
 		free(glob->cmd);
 }
@@ -42,7 +44,7 @@ void	free_tab(char **tab, int lenght)
 	free(tab);
 }
 
-static void	ft_free_double_tab(char **tab)
+void	ft_free_double_tab(char **tab)
 {
 	int	i;
 
@@ -79,6 +81,8 @@ void	ft_free_cmd(t_input *cmd)
 	printf("je suis passé !\n");
 	if (cmd->args && cmd->argv)
 		free_tab(cmd->argv, cmd->args);
+	if (cmd->args && cmd->path)
+		ft_free_double_tab(cmd->path);
 	ft_free_here_doc(&cmd->heredoc);
 	printf("sans crash !\n");
 }
@@ -101,19 +105,20 @@ void	ft_free_env(t_env *env)
 
 void	ft_free_all(t_glob *glob)
 {
-	int	i;
+	/*int	i;*/
 
 	if (glob->cmd)
-	{
+		free_parse(glob, 2);
+	/*{
 		i = 0;
 		while (glob->cmd[i].command)
 		{
 			printf("ici i = %d\n", i);
-			ft_free_cmd(&glob->cmd[i]);
+			//ft_free_cmd(&glob->cmd[i]);
 			i++;
 		}
 		free(glob->cmd);
-	}
+	}*/
 	if (glob->env)
 		ft_free_env(glob->env);
 }
