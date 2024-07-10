@@ -48,6 +48,8 @@ void	ft_init_exec(t_glob *glob)
 	temp = ft_find_thing_in_env(&glob->env, "PATH");
 	if (temp && ft_comp_str(temp->value, "PATH"))
 		ft_init_path(glob, temp);
+	//access et renvoie d'erreur
+		//built_in ? i++;
 }
 
 /*

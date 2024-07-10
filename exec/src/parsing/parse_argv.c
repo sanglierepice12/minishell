@@ -99,7 +99,7 @@ char	**set_argv(char *input, int num, t_glob *glob)
 	{
 		if (input[i] != ' ')
 			argv[lenght++] = parse_word(input, &i, glob);
-		if (lenght == -1 || argv[lenght - 1] == NULL)
+		if (lenght == -1 || (lenght && (argv[lenght - 1] == NULL)))
 		{
 			free_tab(argv, lenght);
 			return (0);
