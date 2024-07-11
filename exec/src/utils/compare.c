@@ -24,7 +24,7 @@ bool	ft_export_is_printable(char *c)
 		if (!c[i])
 			return (0);
 		if ((c[i] < 'a' || c[i] > 'z') && (c[i] < 'A' || c[i] > 'Z')
-			&& (c[i] < '0' || c[i] > '9') && c[i] != '=')
+			&& (c[i] < '0' || c[i] > '9') && c[i] != '=' && c[i] != '/')
 			return (1);
 		i++;
 	}
@@ -33,7 +33,7 @@ bool	ft_export_is_printable(char *c)
 
 bool	ft_is_numbalpha(char c)
 {
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c == '_'))
 		return (1);
 	return (0);
 }

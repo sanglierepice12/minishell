@@ -60,6 +60,7 @@ typedef struct s_input
 
 typedef struct s_glob
 {
+	size_t		count_cmd;
 	t_input		*cmd;
 	t_env		*env;
 	t_heredoc	heredoc;
@@ -101,6 +102,7 @@ void	ft_free_double_tab(char **tab);
 char	**ft_split(char const *s, char c);
 
 /*----------BUILT_INS_CALLS----------*/
+bool	ft_is_builtin(char *cmd);
 void	ft_call_builtins(t_glob *glob, t_input *cmd);
 
 /*----------BUILT_INS----------*/
@@ -121,7 +123,7 @@ void	ft_init_exec(t_glob *glob);
 void	ft_bzero(void *s, size_t n);
 void	*ft_cal_loc(size_t nmemb, size_t size);
 void	ft_free_here_doc(t_heredoc *heredoc);
-void	ft_free_cmd(t_input *cmd);
+void	ft_free_cmd(t_glob *glob);
 void	ft_free_env(t_env *env);
 void	ft_free_this_node(t_env *head);
 void	free_tab(char **tab, int lenght);

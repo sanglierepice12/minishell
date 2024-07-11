@@ -89,7 +89,10 @@ char	**set_argv(char *input, int num, t_glob *glob)
 	char	**argv;
 	int		i;
 	int		lenght;
-
+////////////////////////////////////
+	if (!glob->cmd[num].args)
+		return (NULL);
+	///////////////////////////////
 	argv = ft_cal_loc(glob->cmd[num].args, sizeof(*argv));
 	if (argv == NULL)
 		return (NULL);

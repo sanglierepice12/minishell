@@ -73,18 +73,24 @@ void	ft_free_here_doc(t_heredoc *heredoc)
 		ft_free_double_tab(heredoc->rest_heredoc);
 }
 
-void	ft_free_cmd(t_input *cmd)
+void	ft_free_cmd(t_glob *glob)
 {
-	printf("\ncoucou !\n");
-	if (!cmd)
+	size_t	i;
+
+	if (!glob->cmd)
 		return ;
-	printf("je suis passé !\n");
-	if (cmd->args && cmd->argv)
-		free_tab(cmd->argv, cmd->args);
-	if (cmd->args && cmd->path)
-		ft_free_double_tab(cmd->path);
-	ft_free_here_doc(&cmd->heredoc);
-	printf("sans crash !\n");
+	i = 0;
+	while (i < glob->count_cmd && &glob->cmd[i])
+	{
+		if (glob->cmd[i].args && glob->cmd[i].argv)
+			free_tab(glob->cmd[i].argv, glob->cmd[i].args);
+		if (glob->cmd[i].args && glob->cmd[i].path)
+			ft_free_double_tab(glob->cmd[i].path);
+		//ft_free_here_doc(&glob->cmd[i].heredoc);
+		i++;
+	}
+	free(glob->cmd);
+	printf("\ncoucou !\n");
 }
 
 void	ft_free_env(t_env *env)
@@ -105,20 +111,9 @@ void	ft_free_env(t_env *env)
 
 void	ft_free_all(t_glob *glob)
 {
-	/*int	i;*/
-
-	if (glob->cmd)
-		free_parse(glob, 2);
-	/*{
-		i = 0;
-		while (glob->cmd[i].command)
-		{
-			printf("ici i = %d\n", i);
-			//ft_free_cmd(&glob->cmd[i]);
-			i++;
-		}
-		free(glob->cmd);
-	}*/
+	/*if (glob->cmd)
+		free_parse(glob, 2);*/
+	ft_free_cmd(glob);
 	if (glob->env)
 		ft_free_env(glob->env);
 }
