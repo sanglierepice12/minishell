@@ -21,6 +21,7 @@
 # include <stdbool.h>
 # include <stdint.h>
 # include <dirent.h>
+# include <fcntl.h>
 
 /*typedef struct s_exec
 {
@@ -118,6 +119,7 @@ void	ft_env(t_glob *glob, t_input *cmd);
 
 /*----------EXECUTION----------*/
 void	ft_init_exec(t_glob *glob);
+bool	ft_here_doc_tester(t_input *cmd);
 
 /*----------FREE&&ALLOC----------*/
 void	ft_bzero(void *s, size_t n);

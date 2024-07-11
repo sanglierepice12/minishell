@@ -74,6 +74,8 @@ static void	ft_init_path(t_glob *glob, t_env *temp)
 	i = 0;
 	while (i < glob->count_cmd)
 	{
+		if (ft_here_doc_tester(&glob->cmd[i]))
+			return ;
 		if (ft_is_builtin(glob->cmd[i].command))
 		{
 			i++;
@@ -97,9 +99,7 @@ static void	ft_init_path(t_glob *glob, t_env *temp)
 			free(temp_path);
 			j++;
 		}
-		//ft_heredoc()? potentiel stop ici aussi
 		ft_access(&glob->cmd[i]);
-		//printf("glob-cmd.command = %s\n", glob->cmd[i].argv[0]);
 		i++;
 	}
 }

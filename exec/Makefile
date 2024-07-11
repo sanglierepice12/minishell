@@ -45,6 +45,7 @@ SRCS =	main.c 										\
 		exec/built_ins/export.c						\
 		exec/built_ins/exit.c						\
 		exec/execution/init_exec.c					\
+		exec/execution/here_doc_tester.c			\
 		free/free.c									\
 		utils/copy.c								\
 		utils/ft_calloc.c							\
