@@ -41,16 +41,20 @@ void	ft_access(t_input *cmd)
 	while (cmd->path[i])
 	{
 		temp_cmd = ft_str_join(cmd->command, cmd->path[i]);
+		if (!temp_cmd)
+			return (printf("no cmd\n"), (void)0);
 		if (!access(temp_cmd, F_OK | X_OK))
 		{
 			if (cmd->argv[0])
 				free(cmd->argv[0]);
 			cmd->argv[0] = ft_dup(temp_cmd);
+			cmd->command = cmd->argv[0];
 			free(temp_cmd);
 			break ;
 		}
 		else
 		{
+		printf("temp = %s\n", temp_cmd);
 			i++;
 			free(temp_cmd);
 		}
