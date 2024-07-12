@@ -25,3 +25,7 @@ Gérer les heredocs
 	//pipefd[2];
 	//pid;
 	// fd = 0 pour le stdins
+Reste ->
+Exit avec le numéro
+
+Redirection << et donc restdoc qui va avec

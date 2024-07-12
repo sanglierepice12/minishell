@@ -19,12 +19,10 @@ bool	ft_export_is_printable(char *c)
 	i = 0;
 	while (c[i])
 	{
-		if (c[i] == '+' && c[i + 1] == '=')
-			i++;
 		if (!c[i])
 			return (0);
 		if ((c[i] < 'a' || c[i] > 'z') && (c[i] < 'A' || c[i] > 'Z')
-			&& (c[i] < '0' || c[i] > '9') && c[i] != '=' && c[i] != '/')
+			&& (c[i] < '0' || c[i] > '9') && c[i] != '=' && c[i] != '/' && c[i] != '+')
 			return (1);
 		i++;
 	}

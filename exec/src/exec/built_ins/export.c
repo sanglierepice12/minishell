@@ -12,59 +12,60 @@
 
 #include "../../../include/minishell.h"
 
-static void	ft_check_export_args(t_input *cmd, size_t *j)
+static void	ft_check_export_args(char *cmd, size_t	flag, size_t *j)
 {
-	if (!ft_is_numbalpha(cmd->argv[*j][0]))
+	if (!ft_is_numbalpha(cmd[0]) && !flag)
 	{
 		printf("bash: export: `%s': not a valid identifier\n", \
-				cmd->argv[*j]);
+				cmd);
 		*j = *j + 1;
 		return ;
 	}
-	if (ft_export_is_printable(cmd->argv[*j]))
+	if (ft_export_is_printable(cmd))
 	{
 		printf("bash: export: `%s': not a valid identifier\n", \
-				cmd->argv[*j]);
+				cmd);
 		*j = *j + 1;
 		return ;
 	}
-	if (ft_comp_str(cmd->argv[*j], "="))
+	if (ft_comp_str(cmd, "="))
 	{
 		printf("bash: export: `%s': not a valid identifier\n", \
-				cmd->argv[*j]);
+				cmd);
 		*j = *j + 1;
-		return;
+		return ;
 	}
 }
 
-static char	*ft_find_value(char *env, int flag, char *temp)
+static char	*ft_find_value(char *env, int flag, char *temp, size_t *j)
 {
-	size_t	j;
+	size_t	i;
 	char	*value;
 
 	value = NULL;
-	j = 0;
-	while (env[j])
+	i = 0;
+	while (env[i])
 	{
-		if (env[j] == '=' && !flag)
+		if (env[i] == '=' && !flag)
 		{
-			if (env[j - 1] == '+')
-				value = ft_str_copy_n(env, j - 1);
+			if (env[i - 1] == '+')
+				value = ft_str_copy_n(env, i - 1);
 			else
-				value = ft_str_copy_n(env, j);
+				value = ft_str_copy_n(env, i);
+			ft_check_export_args(value, flag, j);
 			break ;
 		}
-		else if (j != 0 && env[j] == '=')
+		else if (i != 0 && env[i] == '=')
 		{
-			if (env[j - 1] == '+' && temp)
-				value = ft_str_join(env + j + 1, temp);
+			if (env[i - 1] == '+' && temp)
+				value = ft_str_join(env + i + 1, temp);
 			else
-				value = ft_dup(env + j + 1);
+				value = ft_dup(env + i + 1);
 			break ;
 		}
-		j++;
+		i++;
 	}
-	if (!env[j])
+	if (!env[i])
 		value = ft_dup(env);
 	return (value);
 }
@@ -72,6 +73,7 @@ static char	*ft_find_value(char *env, int flag, char *temp)
 static void	ft_create_env_nodes(t_env **env, t_input *cmd, int flag)
 {
 	size_t	j;
+	size_t	j_copy;
 	char	*value;
 	char	*path;
 	t_env	*temp;
@@ -79,20 +81,22 @@ static void	ft_create_env_nodes(t_env **env, t_input *cmd, int flag)
 	j = 1;
 	while (j <= cmd->args - 1)
 	{
-		ft_check_export_args(cmd, &j);
-		if (j + 1 > cmd->args)
-			return ;
-		value = ft_find_value(cmd->argv[j], 0, NULL);
+		j_copy = j;
+		value = ft_find_value(cmd->argv[j], 0, NULL, &j);
+		if (j_copy + 1 == j)
+			continue ;
 		temp = ft_find_thing_in_env(env, value);
 		if (ft_str_chr(cmd->argv[j], '='))
 		{
 			if (temp)
-				path = ft_find_value(cmd->argv[j], 1, temp->path);
+				path = ft_find_value(cmd->argv[j], 1, temp->path, &j);
 			else
-				path = ft_find_value(cmd->argv[j], 1, NULL);
+				path = ft_find_value(cmd->argv[j], 1, NULL, &j);
 		}
 		else
 			path = NULL;
+		if (j_copy + 1 == j)
+			continue ;
 		if (temp)
 			ft_dell_node(&temp, env);
 		if (flag == 1)

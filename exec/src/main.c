@@ -47,16 +47,10 @@ int	main(int arc, char **argv, char **env)
 			printf("\n");
 			break ;
 		}
-		/*if (ft_strncmp(input, "exit", 4) == 0)
-		{
-			ft_free_all(&glob);
-			free(input);
-			break ;
-		}*/
 		if (rl_on_new_line() == 0)
 		{
 			if (parse_in_struct(&glob, input) == 0)
-				printf("Error\n");
+				printf("\n");
 		}
 		free(input);
 	}

@@ -22,15 +22,7 @@
 # include <stdint.h>
 # include <dirent.h>
 # include <fcntl.h>
-
-/*typedef struct s_exec
-{
-	char	**path;
-	char	**cmd;
-	//int		fd[2];
-	//int		pipe_fd[2];
-	//pid_t	pid[2];
-}				t_exec;*/
+# include <sys/wait.h>
 
 typedef struct s_env
 {
@@ -104,7 +96,7 @@ char	**ft_split(char const *s, char c);
 
 /*----------BUILT_INS_CALLS----------*/
 bool	ft_is_builtin(char *cmd);
-void	ft_call_builtins(t_glob *glob, t_input *cmd);
+void	ft_call_builtins(t_glob *glob, t_input cmd);
 
 /*----------BUILT_INS----------*/
 void	ft_pwd(t_input *cmd, t_env **env);
@@ -119,7 +111,9 @@ void	ft_env(t_glob *glob, t_input *cmd);
 
 /*----------EXECUTION----------*/
 void	ft_init_exec(t_glob *glob);
-bool	ft_here_doc_tester(t_input *cmd);
+bool	ft_here_doc_tester(t_input *cmd, int *fd);
+void	ft_unlink_cmd(t_glob *glob);
+void	ft_executor(t_glob *glob);
 
 /*----------FREE&&ALLOC----------*/
 void	ft_bzero(void *s, size_t n);

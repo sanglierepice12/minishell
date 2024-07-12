@@ -54,13 +54,12 @@ void	ft_access(t_input *cmd)
 		}
 		else
 		{
-		printf("temp = %s\n", temp_cmd);
 			i++;
 			free(temp_cmd);
 		}
 	}
 	if (access(cmd->argv[0], F_OK))
-		perror("Access");
+		perror("MinisHell");
 }
 
 static void	ft_init_path(t_glob *glob, t_env *temp)
@@ -74,8 +73,6 @@ static void	ft_init_path(t_glob *glob, t_env *temp)
 	i = 0;
 	while (i < glob->count_cmd)
 	{
-		if (ft_here_doc_tester(&glob->cmd[i]))
-			return ;
 		if (ft_is_builtin(glob->cmd[i].command))
 		{
 			i++;
@@ -115,28 +112,33 @@ void	ft_init_exec(t_glob *glob)
 	temp = ft_find_thing_in_env(&glob->env, "PATH");
 	if (temp && ft_comp_str(temp->value, "PATH"))
 		ft_init_path(glob, temp);
+	ft_executor(glob);
 }
 
-/*
-void execute_pipeline(Command **cmds, int num_cmds) {
+
+/*void execute_pipeline(Command **cmds, int num_cmds) {
 	int pipefd[2];
 	pid_t pid;
 	int in_fd = 0;  // Le premier processus lit de stdin
 
-	for (int i = 0; i < num_cmds; i++) {
+	for (int i = 0; i < num_cmds; i++)
+ 	{
 		// Vérifier et exécuter les builtins dans le processus parent
-		if (execute_builtin(cmds[i])) {
+		if (execute_builtin(cmds[i]))
+		{
 			continue; // Passer à la prochaine commande
 		}
 
-		if (i < num_cmds - 1) {
+		if (i < num_cmds - 1)
+		{
 			if (pipe(pipefd) == -1) {
 				perror("pipe");
 				exit(EXIT_FAILURE);
 			}
 		}
 
-		if ((pid = fork()) == 0) {
+		if ((pid = fork()) == 0)
+		{
 			// Dans le processus enfant
 			if (i < num_cmds - 1) {
 				if (dup2(pipefd[1], STDOUT_FILENO) == -1) {
