@@ -101,6 +101,62 @@ static void	ft_init_path(t_glob *glob, t_env *temp)
 	}
 }
 
+/*static void	ft_init_path(t_glob *glob, t_env *temp)
+{
+	size_t	i;
+	size_t	j;
+	char	*temp_path;
+
+	if (!temp || !glob)
+		return (printf("Nothing in temp\n"), (void)0);
+	i = 0;
+	while (i < glob->count_cmd)
+	{
+		if (ft_is_builtin(glob->cmd[i].command))
+		{
+			i++;
+			continue;
+		}
+		//temp_path = ft_get_all_path(temp);
+		glob->cmd[i].path = ft_split(temp_path, ':');
+		//free(temp_path);
+		if (!glob->cmd[i].path)
+			return (printf("Nothing in path\n"), (void)0);
+		j = 0;
+		while (glob->cmd[i].path[j])
+		{
+			temp_path = NULL;
+			temp_path = ft_str_join("/", glob->cmd[i].path[j]);
+			if (!temp_path)
+				return (printf("temp_path empty\n"), (void)0);
+			free(glob->cmd[i].path[j]);
+			glob->cmd[i].path[j] = ft_dup(temp_path);
+			if (!glob->cmd[i].path[j])
+				return (free(temp_path), \
+					printf("glob->cmd->path empty\n"), (void)0);
+			free(temp_path);
+			j++;
+		}
+		ft_access(&glob->cmd[i]);
+		i++;
+	}
+}*/
+
+/*void	ft_init_exec(t_glob *glob)
+{
+	t_env	*temp;
+
+	if (!glob)
+		return (printf("Nothing in glob\n"), (void)0);
+	if (glob->env)
+		temp = glob->env;
+	//temp = ft_find_thing_in_env(&glob->env, "PATH");
+	if (temp *//*&& ft_comp_str(temp->value, "PATH")*//*)
+		ft_init_path(glob, temp);
+	ft_executor(glob);
+}*/
+
+
 void	ft_init_exec(t_glob *glob)
 {
 	t_env	*temp;
@@ -114,70 +170,3 @@ void	ft_init_exec(t_glob *glob)
 		ft_init_path(glob, temp);
 	ft_executor(glob);
 }
-
-
-/*void execute_pipeline(Command **cmds, int num_cmds) {
-	int pipefd[2];
-	pid_t pid;
-	int in_fd = 0;  // Le premier processus lit de stdin
-
-	for (int i = 0; i < num_cmds; i++)
- 	{
-		// Vérifier et exécuter les builtins dans le processus parent
-		if (execute_builtin(cmds[i]))
-		{
-			continue; // Passer à la prochaine commande
-		}
-
-		if (i < num_cmds - 1)
-		{
-			if (pipe(pipefd) == -1) {
-				perror("pipe");
-				exit(EXIT_FAILURE);
-			}
-		}
-
-		if ((pid = fork()) == 0)
-		{
-			// Dans le processus enfant
-			if (i < num_cmds - 1) {
-				if (dup2(pipefd[1], STDOUT_FILENO) == -1) {
-					perror("dup2");
-					exit(EXIT_FAILURE);
-				}
-			}
-			if (i > 0) {
-				if (dup2(in_fd, STDIN_FILENO) == -1) {
-					perror("dup2");
-					exit(EXIT_FAILURE);
-				}
-			}
-
-			// Fermer les descripteurs inutilisés dans le processus enfant
-			if (i < num_cmds - 1) {
-				close(pipefd[0]);
-				close(pipefd[1]);
-			}
-			execvp(cmds[i]->command, cmds[i]->argv);
-			perror("execvp");
-			exit(EXIT_FAILURE);
-		} else if (pid < 0) {
-			perror("fork");
-			exit(EXIT_FAILURE);
-		}
-
-		// Processus parent
-		waitpid(pid, NULL, 0);
-
-		// Fermer le descripteur de lecture précédent si ce n'est pas stdin
-		if (in_fd != 0) {
-			close(in_fd);
-		}
-
-		// Si ce n'est pas la dernière commande, mettre à jour le descripteur de fichier d'entrée
-		if (i < num_cmds - 1) {
-			close(pipefd[1]);  // Fermer le descripteur d'écriture actuel
-			in_fd = pipefd[0]; // Le prochain processus lit depuis ce pipe
-		}
-	}
-}*/

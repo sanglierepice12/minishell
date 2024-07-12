@@ -114,6 +114,7 @@ void	ft_init_exec(t_glob *glob);
 bool	ft_here_doc_tester(t_input *cmd, int *fd);
 void	ft_unlink_cmd(t_glob *glob);
 void	ft_executor(t_glob *glob);
+char	*ft_get_all_path(t_env	*temp);
 
 /*----------FREE&&ALLOC----------*/
 void	ft_bzero(void *s, size_t n);

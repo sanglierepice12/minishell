@@ -12,6 +12,53 @@
 
 #include "../../../include/minishell.h"
 
+/*char	**ft_double_join(char **src, char **dest)
+{
+	char	**value;
+	size_t	i;
+	size_t	j;
+	size_t	len;
+
+	*//*if (!src && !dest)
+		return (NULL);*//*
+	len = ft_strlen_double(src) + ft_strlen_double(dest);
+	if (!len)
+		return (NULL);
+	value = ft_cal_loc(len, sizeof(char *));
+	if (!value)
+		return (printf("calloc error\n"), NULL);
+	i = 0;
+	while (src[i])
+	{
+		value[i] = ft_dup(src[i]);
+		i++;
+	}
+	j = 0;
+	while (dest[j])
+	{
+		value[i] = ft_dup(dest[j]);
+		i++;
+		j++;
+	}
+	return (value);
+}*/
+
+/*
+char	*ft_get_all_path(t_env	*temp)
+{
+	char	*test;
+
+	test = ft_str_join(temp->path, temp->next->next->path);
+	if (!test)
+		return (printf("error\n"), NULL);
+	printf("%s\n", test);
+	printf("%s\n", temp->path);
+	printf("%s\n", temp->next->path);
+
+	return (NULL);
+}
+*/
+
 t_env	*ft_find_thing_in_env(t_env **env, char *value)
 {
 	t_env	*temp;
