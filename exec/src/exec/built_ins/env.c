@@ -42,22 +42,45 @@
 	}
 	return (value);
 }*/
+/*char	*ft_copy_stack(char *str, char	*src)
+{
+	size_t	i;
+	size_t	len;
 
-/*
-char	*ft_get_all_path(t_env	*temp)
+	len = ft_strlen(src);
+	i = 0;
+	while (str[i])
+	{
+		src[len] = str[i];
+		i++;
+		len++;
+	}
+	return (src);
+}*/
+
+/*char	*ft_get_all_path(t_env	*temp)
 {
 	char	*test;
+	size_t	len;
 
-	test = ft_str_join(temp->path, temp->next->next->path);
+	len = 0;
+	while (temp->next)
+	{
+		len += ft_strlen(temp->path);
+		temp = temp->next;
+	}
+	while (temp->prev)
+		temp = temp->prev;
+	test = ft_cal_loc(len + 1, sizeof(char));
 	if (!test)
-		return (printf("error\n"), NULL);
-	printf("%s\n", test);
-	printf("%s\n", temp->path);
-	printf("%s\n", temp->next->path);
-
-	return (NULL);
-}
-*/
+		return (printf("malloc null\n"), NULL);
+	while (temp->next)
+	{
+		test = ft_copy_stack(temp->path, test);
+		temp = temp->next;
+	}
+	return (test);
+}*/
 
 t_env	*ft_find_thing_in_env(t_env **env, char *value)
 {

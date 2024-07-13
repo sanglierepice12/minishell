@@ -59,7 +59,8 @@ void	ft_access(t_input *cmd)
 		}
 	}
 	if (access(cmd->argv[0], F_OK))
-		perror("MinisHell");
+		dprintf(2, "MinisHell: %s: No such file or directory\n", cmd->argv[0]);
+		//perror("MinisHell");
 }
 
 static void	ft_init_path(t_glob *glob, t_env *temp)
@@ -76,7 +77,7 @@ static void	ft_init_path(t_glob *glob, t_env *temp)
 		if (ft_is_builtin(glob->cmd[i].command))
 		{
 			i++;
-			continue;
+			continue ;
 		}
 		glob->cmd[i].path = ft_split(temp->path, ':');
 		if (!glob->cmd[i].path)
@@ -101,7 +102,7 @@ static void	ft_init_path(t_glob *glob, t_env *temp)
 	}
 }
 
-/*static void	ft_init_path(t_glob *glob, t_env *temp)
+/*void	ft_init_path(t_glob *glob, t_env *temp)
 {
 	size_t	i;
 	size_t	j;
@@ -117,9 +118,7 @@ static void	ft_init_path(t_glob *glob, t_env *temp)
 			i++;
 			continue;
 		}
-		//temp_path = ft_get_all_path(temp);
-		glob->cmd[i].path = ft_split(temp_path, ':');
-		//free(temp_path);
+		glob->cmd[i].path = ft_split(, ':');
 		if (!glob->cmd[i].path)
 			return (printf("Nothing in path\n"), (void)0);
 		j = 0;

@@ -64,7 +64,6 @@ void	ft_executor(t_glob *glob)
 			if (i < glob->count_cmd - 1)
 				close(pipefd[0]);
 			execve(glob->cmd[i].argv[0], glob->cmd[i].argv, glob->cmd[i].path);
-			perror("MinisHell");
 			exit(EXIT_FAILURE);
 		}
 
