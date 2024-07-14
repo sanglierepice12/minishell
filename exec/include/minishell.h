@@ -35,6 +35,7 @@ typedef struct s_env
 
 typedef struct	s_heredoc
 {
+	bool	is_there_any;
 	char	*type_infile;
 	char	*file_infile;
 	char	*type_outfile;
@@ -47,6 +48,7 @@ typedef struct s_input
 	char		*command;
 	char		**argv;
 	char		**path;
+	int			fd;
 	size_t		args;
 	t_heredoc	heredoc;
 }				t_input;
@@ -111,7 +113,8 @@ void	ft_env(t_glob *glob, t_input *cmd);
 
 /*----------EXECUTION----------*/
 void	ft_init_exec(t_glob *glob);
-bool	ft_here_doc_tester(t_input *cmd, int *fd);
+bool	ft_here_doc_tester(t_input *cmd);
+void	ft_reset_in_out(t_glob *glob);
 void	ft_unlink_cmd(t_glob *glob);
 void	ft_executor(t_glob *glob);
 char	*ft_get_all_path(t_env	*temp);

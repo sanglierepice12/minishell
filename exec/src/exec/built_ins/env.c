@@ -43,7 +43,6 @@
 	return (value);
 }*/
 /*char	*ft_copy_stack(char *str, char	*src)
-{
 	size_t	i;
 	size_t	len;
 

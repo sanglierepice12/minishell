@@ -27,70 +27,63 @@ void	ft_unlink_cmd(t_glob *glob)
 	}
 }
 
-bool	ft_here_doc_tester(t_input *cmd, int *fd)
+bool	ft_here_doc_tester(t_input *cmd)
 {
 	if (ft_comp_str(cmd->heredoc.type_outfile, ">"))
 	{
-		*fd = open(cmd->heredoc.file_outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		if (*fd == -1)
-		{
-			perror("MiniHell");
-			return (true);
-		}
-		if (dup2(*fd, STDOUT_FILENO) == -1)
-		{
-			perror("MiniHell");
-			close(*fd);
-			return (true);
-		}
-		close(*fd);
+		cmd->fd = open(cmd->heredoc.file_outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if (cmd->fd == -1)
+			return (perror("MiniHell"), true);
+		if (dup2(cmd->fd, 1) == -1)
+			return (perror("MiniHell"), true);
+		close(glob->cmd->fd);
 	}
 	if (ft_comp_str(cmd->heredoc.type_outfile, ">>"))
 	{
-		*fd = open(cmd->heredoc.file_outfile, \
+		cmd->fd = open(cmd->heredoc.file_outfile, \
 			O_WRONLY | O_CREAT | O_APPEND, 0644);
-		if (*fd == -1)
+		if (cmd->fd == -1)
 		{
 			perror("MiniHell");
-			close(*fd);
+			close(cmd->fd);
 			return (true);
 		}
-		if (dup2(*fd, STDOUT_FILENO) == -1)
+		if (dup2(cmd->fd, STDOUT_FILENO) == -1)
 		{
 			perror("MiniHell");
 			return (true);
 		}
-		close(*fd);
+		close(cmd->fd);
 	}
 	if (ft_comp_str(cmd->heredoc.type_infile, "<"))
 	{
-		*fd = open(cmd->heredoc.file_infile, O_RDONLY);
-		if (*fd == -1)
+		cmd->fd = open(cmd->heredoc.file_infile, O_RDONLY);
+		if (cmd->fd == -1)
 		{
 			perror("MiniHell");
 			return (true);
 		}
-		if (dup2(*fd, STDIN_FILENO) == -1)
+		if (dup2(cmd->fd, STDIN_FILENO) == -1)
 		{
 			perror("MiniHell");
-			close(*fd);
+			close(cmd->fd);
 			return (true);
 		}
-		close(*fd);
+		close(cmd->fd);
 	}
 	/*if (ft_comp_str(cmd->heredoc.type_infile, "<<"))
 	{
-		*fd = open(cmd->heredoc.file_infile, \
+		cmd->fd = open(cmd->heredoc.file_infile, \
             O_WRONLY | O_CREAT | O_APPEND, 0644);
-		if (*fd == -1)
+		if (cmd->fd == -1)
 		{
 			perror("MiniHell");
-			close(*fd);
+			close(cmd->fd);
 			return (true);
 		}
-		close(*fd);
-		*fd = open("/heredoc_temp_file", O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		if (*fd == -1)
+		close(cmd->fd);
+		cmd->fd = open("/heredoc_temp_file", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if (cmd->fd == -1)
 		{
 			perror("MiniHell");
 			return (true);
@@ -100,8 +93,8 @@ bool	ft_here_doc_tester(t_input *cmd, int *fd)
 			perror("MiniHell");
 			return (true);
 		}
-		close(*fd);
+		close(cmd->fd);
 		unlink("/heredoc_temp_file");
 	}*/
-	return (0);
+	return (false);
 }

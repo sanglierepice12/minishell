@@ -14,67 +14,81 @@
 
 void	ft_executor(t_glob *glob)
 {
-	int pipefd[2];
-	pid_t pid;
-	int fd;
+	int		pipefd[2];
+	pid_t	pid;
+	int		temp_fd_in;
+	int		temp_fd_out;
 	size_t	i;
 
 	if (!glob)
 		return (dprintf(2, "no glob variable \n"), (void)0);
-	fd = 0;
+	glob->cmd->fd = 0;
 	i = 0;
+	if (glob->count_cmd == 1 && ft_is_builtin(glob->cmd[0].command))
+	{
+		temp_fd_out = dup(STDOUT_FILENO);
+		temp_fd_in = dup(STDIN_FILENO);
+		if (!ft_here_doc_tester(&glob->cmd[0]))
+			ft_call_builtins(glob, glob->cmd[0]);
+		dup2(temp_fd_out, STDOUT_FILENO);
+		dup2(temp_fd_in, STDIN_FILENO);
+		close(temp_fd_in);
+		close(temp_fd_out);
+		//ft_reset_in_out(glob);
+		return ;
+	}
 	while (i < glob->count_cmd)
 	{
-		if (ft_is_builtin(glob->cmd[i].command))
-		{
-			ft_here_doc_tester(&glob->cmd[i], &fd);
-			ft_call_builtins(glob, glob->cmd[i]);
-			dup2(fd, STDOUT_FILENO);
-			i++;
-			continue ;
-		}
-		if (i < glob->count_cmd -1)
-		{
-			if (pipe(pipefd) == -1)
-				return (perror("MinisHell"), (void)0);
-		}
-
+		if (pipe(pipefd) == -1)
+			return (perror("MinisHell"), (void)0);
 		pid = fork();
 		if (pid == -1)
 			return (perror("MinisHell"), (void)0);
-
 		if (pid == 0)
 		{
+			if (i > 0)
+			{
+				if (dup2(glob->cmd->fd, STDIN_FILENO) == -1)
+				{
+					perror("MiniHell");
+					ft_free_all(glob);
+					exit(EXIT_FAILURE);
+				}
+			}
 			if (i < glob->count_cmd - 1)
 			{
+				close(pipefd[0]);
 				if (dup2(pipefd[1], STDOUT_FILENO) == -1)
 				{
 					perror("MiniHell");
+					ft_free_all(glob);
 					exit(EXIT_FAILURE);
 				}
+				close(pipefd[1]);
 			}
-			if (i > 0)
+			if (ft_here_doc_tester(&glob->cmd[i]))
 			{
-				if (dup2(fd, STDIN_FILENO) == -1)
-				{
-					perror("MiniHell");
-					exit(EXIT_FAILURE);
-				}
+				ft_free_all(glob);
+				exit(EXIT_FAILURE);
 			}
-			if (i < glob->count_cmd - 1)
-				close(pipefd[0]);
+			if (ft_is_builtin(glob->cmd[i].command))
+			{
+				ft_call_builtins(glob, glob->cmd[i]);
+				ft_free_all(glob);
+				exit(EXIT_SUCCESS);
+			}
 			execve(glob->cmd[i].argv[0], glob->cmd[i].argv, glob->cmd[i].path);
+			ft_free_all(glob);
 			exit(EXIT_FAILURE);
 		}
-
-		waitpid(pid, NULL, 0);
-		if (fd != 0)
-			close(fd);
 		if (i < glob->count_cmd - 1)
 		{
-			close(pipefd[1]);  // Fermer le descripteur d'écriture actuel
-			fd = pipefd[0]; // Le prochain processus lit depuis ce pipe
+			close(pipefd[1]);
+			glob->cmd->fd = pipefd[0];
 		}
+		if (glob->cmd->fd != 0)
+			close(glob->cmd->fd);
 		i++;
+		waitpid(pid, 0, 0);
 	}
 }

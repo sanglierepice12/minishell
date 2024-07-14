@@ -40,6 +40,7 @@ static void	get_heredoc_infile(char **argv, t_input *cmd)
 	{
 		if (ft_comp_str(argv[i], "<") == 1)
 		{
+			cmd->heredoc.is_there_any = 1;
 			cmd->heredoc.type_infile = "<";
 			cmd->heredoc.file_infile = ft_super_dup(argv[i + 1], NULL);
 			remove_heredoc(argv, i, cmd);
@@ -47,6 +48,7 @@ static void	get_heredoc_infile(char **argv, t_input *cmd)
 		}
 		if (ft_comp_str(argv[i], "<<") == 1)
 		{
+			cmd->heredoc.is_there_any = 1;
 			cmd->heredoc.type_infile = "<<";
 			cmd->heredoc.file_infile = ft_super_dup(argv[i + 1], NULL);
 			remove_heredoc(argv, i, cmd);
@@ -65,6 +67,7 @@ static void	get_heredoc_outfile(char **argv, t_input *cmd)
 	{
 		if (ft_comp_str(argv[i], ">") == 1)
 		{
+			cmd->heredoc.is_there_any = 1;
 			cmd->heredoc.type_outfile = ">";
 			cmd->heredoc.file_outfile = ft_super_dup(argv[i + 1], NULL);
 			remove_heredoc(argv, i, cmd);
@@ -72,6 +75,7 @@ static void	get_heredoc_outfile(char **argv, t_input *cmd)
 		}
 		if (ft_comp_str(argv[i], ">>") == 1)
 		{
+			cmd->heredoc.is_there_any = 1;
 			cmd->heredoc.type_outfile = ">>";
 			cmd->heredoc.file_outfile = ft_super_dup(argv[i + 1], NULL);
 			remove_heredoc(argv, i, cmd);
@@ -95,6 +99,7 @@ int	ft_strlen_bis(char **tab)
 
 char	**check_apply_heredoc(char **argv, t_input *cmd)
 {
+	cmd->heredoc.is_there_any = 0;
 	get_heredoc_infile(argv, cmd);
 	get_heredoc_outfile(argv, cmd);
 	remove_and_stock_all_heredoc(argv, cmd);

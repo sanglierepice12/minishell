@@ -12,6 +12,24 @@
 
 #include "../../../include/minishell.h"
 
+void	ft_reset_in_out(t_glob *glob)
+{
+	int	temp_stdout;
+	int	temp_stdin;
+
+	temp_stdin = dup(0);
+	temp_stdout = dup(1);
+	if (temp_stdout == -1 || temp_stdin == -1)
+		return (perror("MinisHell"), (void)0);
+	close (temp_stdin);
+	close (temp_stdout);
+	if (glob->cmd[0].heredoc.is_there_any)
+	{
+		dup2(temp_stdin, 0);
+		dup2(temp_stdout, 1);
+	}
+}
+
 bool	ft_is_builtin(char *cmd)
 {
 	if ((ft_comp_str(cmd, "cd"))	\
@@ -63,7 +81,7 @@ void	ft_access(t_input *cmd)
 		//perror("MinisHell");
 }
 
-static void	ft_init_path(t_glob *glob, t_env *temp)
+void	ft_init_path(t_glob *glob, t_env *temp)
 {
 	size_t	i;
 	size_t	j;
@@ -101,60 +119,6 @@ static void	ft_init_path(t_glob *glob, t_env *temp)
 		i++;
 	}
 }
-
-/*void	ft_init_path(t_glob *glob, t_env *temp)
-{
-	size_t	i;
-	size_t	j;
-	char	*temp_path;
-
-	if (!temp || !glob)
-		return (printf("Nothing in temp\n"), (void)0);
-	i = 0;
-	while (i < glob->count_cmd)
-	{
-		if (ft_is_builtin(glob->cmd[i].command))
-		{
-			i++;
-			continue;
-		}
-		glob->cmd[i].path = ft_split(, ':');
-		if (!glob->cmd[i].path)
-			return (printf("Nothing in path\n"), (void)0);
-		j = 0;
-		while (glob->cmd[i].path[j])
-		{
-			temp_path = NULL;
-			temp_path = ft_str_join("/", glob->cmd[i].path[j]);
-			if (!temp_path)
-				return (printf("temp_path empty\n"), (void)0);
-			free(glob->cmd[i].path[j]);
-			glob->cmd[i].path[j] = ft_dup(temp_path);
-			if (!glob->cmd[i].path[j])
-				return (free(temp_path), \
-					printf("glob->cmd->path empty\n"), (void)0);
-			free(temp_path);
-			j++;
-		}
-		ft_access(&glob->cmd[i]);
-		i++;
-	}
-}*/
-
-/*void	ft_init_exec(t_glob *glob)
-{
-	t_env	*temp;
-
-	if (!glob)
-		return (printf("Nothing in glob\n"), (void)0);
-	if (glob->env)
-		temp = glob->env;
-	//temp = ft_find_thing_in_env(&glob->env, "PATH");
-	if (temp *//*&& ft_comp_str(temp->value, "PATH")*//*)
-		ft_init_path(glob, temp);
-	ft_executor(glob);
-}*/
-
 
 void	ft_init_exec(t_glob *glob)
 {
