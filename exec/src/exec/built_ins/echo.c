@@ -36,8 +36,7 @@ void	ft_echo(t_input *cmd)
 
 	if (cmd->args <= 1)
 		return (printf("\n"), (void)0);
-	if (ft_comp_str(cmd->argv[1], "-n") && cmd->args <= 2)
-		return ;
+
 	/*if (cmd->argv[1] && !cmd->argv[1][0])
 		dprintf(2, "echo%s: command not found\n", cmd->argv[0]);*/
 	if (cmd->argv[1][0] == '-' && cmd->argv[1][1] == 'n')
