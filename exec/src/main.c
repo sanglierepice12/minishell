@@ -33,26 +33,20 @@ int	main(int arc, char **argv, char **env)
 	char		*input;
 	t_glob		glob;
 
-	if (arc)
-		(void)argv;
+	(void)argv;
+	if (arc > 1)
+		return (printf("To much args\n"));
 	ft_get_env(&glob, env);
 	if (!env)
 		dprintf(2, "Malloc crash, no env\n");
 	while (1)
 	{
 		input = readline("MinisHell-1.0$ "/*getcwd(NULL,0)*/);
-		add_history(input);
 		if (input == NULL)
-		{
+			return (printf("coucoucCUCOU\n"));
+		if (parse_in_struct(&glob, input) == 0)
 			printf("\n");
-			break ;
-		}
-		if (rl_on_new_line() == 0)
-		{
-			if (parse_in_struct(&glob, input) == 0)
-				printf("\n");
-		}
+		add_history(input);
 		free(input);
 	}
-	return (0);
 }

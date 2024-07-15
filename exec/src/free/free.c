@@ -90,7 +90,6 @@ void	ft_free_cmd(t_glob *glob)
 		i++;
 	}
 	free(glob->cmd);
-	printf("\ncoucou !\n");
 }
 
 void	ft_free_env(t_env *env)
