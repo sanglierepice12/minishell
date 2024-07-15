@@ -113,7 +113,7 @@ void	ft_executor(t_glob *glob)
 				close(glob->cmd->fd);
 			glob->cmd->fd = pipefd[0];
 		}
-		else
+		else if (glob->cmd->fd > 2)
 			close(glob->cmd->fd);
 		i++;
 	}
