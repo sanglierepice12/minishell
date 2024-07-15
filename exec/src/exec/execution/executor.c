@@ -21,8 +21,8 @@ void	ft_executor(t_glob *glob)
 	int		close_int;
 	size_t	i;
 
-	temp_fd_out = 1;
-	temp_fd_in = 0;
+	temp_fd_out = 4;
+	temp_fd_in = 4;
 	pipefd[0] = 0;
 	pipefd[1] = 1;
 	if (!glob)
@@ -38,8 +38,13 @@ void	ft_executor(t_glob *glob)
 		}
 		if (!ft_here_doc_tester(&glob->cmd[0]))
 			ft_call_builtins(glob, glob->cmd[0]);
-		dup2(temp_fd_out, STDOUT_FILENO);
-		dup2(temp_fd_in, STDIN_FILENO);
+		if (glob->cmd->heredoc.is_there_any)
+		{
+			if (dup2(temp_fd_out, STDOUT_FILENO) == -1)
+				return (perror("dup"), (void) 0);
+			if (dup2(temp_fd_in, STDIN_FILENO))
+				return (perror("dup"), (void) 0);
+		}
 		close(temp_fd_in);
 		close(temp_fd_out);
 		//ft_reset_in_out(glob);
@@ -108,8 +113,8 @@ void	ft_executor(t_glob *glob)
 				close(glob->cmd->fd);
 			glob->cmd->fd = pipefd[0];
 		}
-		/*else
-			close(glob->cmd->fd);*/
+		else
+			close(glob->cmd->fd);
 		i++;
 	}
 	temp_fd_in = 0;
