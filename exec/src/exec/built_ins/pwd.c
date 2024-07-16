@@ -31,13 +31,20 @@ void	ft_print_this_node(t_env **env, char *value)
 void	ft_pwd(t_input *cmd, t_env **env)
 {
 	char	*path;
+	t_env	*temp;
 
 	path = NULL;
 	if (*env && cmd->args < 2)
 	{
 		path = getcwd(NULL, 0);
 		if (!path)
-			return (perror("getcwd : error\n"), (void)0);
+		{
+			temp = *env;
+			temp = ft_find_thing_in_env(&temp, "PWD");
+			path = ft_dup(temp->path);
+			if (!path)
+				return (perror("no path in PWD : error\n"), (void) 0);
+		}
 		printf("%s\n", path);
 		free(path);
 	}

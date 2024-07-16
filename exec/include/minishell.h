@@ -13,6 +13,8 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+extern int	g_error_code;
+
 # include <stdio.h>
 # include <readline/readline.h>
 # include <stdlib.h>
@@ -108,7 +110,7 @@ void	ft_ls();
 void	ft_get_env(t_glob *glob, char **env);
 void	ft_unset(t_glob *glob, t_input *cmd);
 void	ft_export(t_env **env, t_input *cmd);
-void	ft_exit(t_glob *glob);
+void	ft_exit(t_glob *glob, t_input *cmd);
 void	ft_env(t_glob *glob, t_input *cmd);
 
 /*----------EXECUTION----------*/
@@ -118,6 +120,7 @@ void	ft_reset_in_out(t_glob *glob);
 void	ft_unlink_cmd(t_glob *glob);
 void	ft_executor(t_glob *glob);
 char	*ft_get_all_path(t_env	*temp);
+void	ft_handle_signal();
 
 /*----------FREE&&ALLOC----------*/
 void	ft_bzero(void *s, size_t n);

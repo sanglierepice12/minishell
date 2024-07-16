@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+int	g_error_code = 0;
 
 void	show_struct(t_input *command)
 {
@@ -33,9 +34,10 @@ int	main(int arc, char **argv, char **env)
 	char		*input;
 	t_glob		glob;
 
+	ft_handle_signal();
 	(void)argv;
 	if (arc > 1)
-		return (printf("To much args\n"));
+		return (printf("To much args\n"), g_error_code);
 	ft_get_env(&glob, env);
 	if (!env)
 		dprintf(2, "Malloc crash, no env\n");
@@ -43,10 +45,11 @@ int	main(int arc, char **argv, char **env)
 	{
 		input = readline("MinisHell-1.0$ "/*getcwd(NULL,0)*/);
 		if (input == NULL)
-			return (printf("coucoucCUCOU\n"));
+			return (ft_free_env(glob.env), g_error_code);
 		if (parse_in_struct(&glob, input) == 0)
 			printf("\n");
-		add_history(input);
+		if (*input)
+			add_history(input);
 		free(input);
 	}
 }

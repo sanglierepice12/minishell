@@ -36,6 +36,7 @@ SRCS =	main.c 										\
 		parsing/heredoc/parse_heredoc.c				\
 		parsing/heredoc/remove_heredoc.c			\
 		exec/built_in_calls.c						\
+		exec/handle_signal.c						\
 		exec/ls.c									\
 		exec/built_ins/pwd.c						\
 		exec/built_ins/cd.c							\

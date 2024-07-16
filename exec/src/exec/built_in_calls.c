@@ -33,7 +33,7 @@ void	ft_call_builtins(t_glob *glob, t_input cmd)
 	if (ft_strncmp(cmd.command, "export", 6) == 0)
 		ft_export(&glob->env, &cmd);
 	if (ft_strncmp(cmd.command, "exit", 4) == 0)
-		return (ft_exit(glob));
+		return (ft_exit(glob, &cmd));
 	if (ft_strncmp(cmd.command, "exec", 4) == 0)
 		ft_init_exec(glob);
 }

@@ -36,10 +36,15 @@ void	ft_update_pwd(t_env **env, char *value, char *path)
 {
 	t_env	*temp;
 
-	if (!*env || !path)
+	if (!*env)
+		return (perror("MinisHell"), (void)0);
+	if (!path)
 	{
-		perror("PWD : error\n");
-		return ;
+		temp = *env;
+		temp = ft_find_thing_in_env(&temp, "PWD");
+		path = ft_dup(temp->path);
+		if (!path)
+			return (perror("MinisHell PWD"), (void) 0);
 	}
 	temp = *env;
 	while (temp)
@@ -65,30 +70,27 @@ void	ft_cd(t_glob *glob, t_input *cmd)
 
 	if (!cmd->args)
 		return (printf("pas dargv \n"), (void)0);
-	if (cmd->args == 1)
+	if (cmd->args == 1 || ft_comp_str(cmd->argv[1], "~") || \
+			ft_comp_str(cmd->argv[1], "--"))
 		return (chdir("/"), ft_update_pwd(&glob->env, \
 			"PWD", getcwd(NULL, 0)), (void) 0);
-	if (ft_comp_str(cmd->argv[1], "--"))
-		chdir("/");
-	else if (ft_comp_str(cmd->argv[1], "~"))
-		chdir("/");
 	else if (ft_comp_str(cmd->argv[1], "-"))
 	{
 		temp = ft_find_thing_in_env(&glob->env, "OLDPWD");
 		if (temp)
 		{
 			if (chdir(temp->path) != 0)
-				dprintf(2, "bash: cd: %s: No such file or directory\n", \
+				dprintf(2, "MinisHell: cd: %s: No such file or directory\n", \
 					temp->path);
 		}
 		else
-			printf("bash: cd: OLDPWD not set\n");
+			printf("MinisHell: cd: OLDPWD not set\n");
 	}
 	else if (cmd->argv[1][0] == '-')
 	{
 		if (cmd->argv[1][1] != 'L' && cmd->argv[1][1] != 'P')
 		{
-			dprintf(2, "bash: cd: %c%c: invalid option\n" \
+			dprintf(2, "MinisHell: cd: %c%c: invalid option\n" \
 					"cd: usage: [-L|[-P [-e]] [-@]] [dir]\n", \
 						cmd->argv[1][0], cmd->argv[1][1]);
 		}
@@ -98,7 +100,7 @@ void	ft_cd(t_glob *glob, t_input *cmd)
 	else
 	{
 		if (chdir(cmd->argv[1]) != 0)
-			dprintf(2, "bash: cd: %s: No such file or directory\n", \
+			dprintf(2, "MinisHell: cd: %s: No such file or directory\n", \
 				cmd->argv[1]);
 	}
 	ft_update_pwd(&glob->env, "PWD", getcwd(NULL, 0));
