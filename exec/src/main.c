@@ -38,9 +38,10 @@ int	main(int arc, char **argv, char **env)
 	(void)argv;
 	if (arc > 1)
 		return (printf("To much args\n"), g_error_code);
-	ft_get_env(&glob, env);
-	if (!env)
-		dprintf(2, "Malloc crash, no env\n");
+	if (env && *env)
+		ft_get_env(&glob, env);
+	else
+		ft_main_get_env(&glob);
 	while (1)
 	{
 		input = readline("MinisHell-1.0$ "/*getcwd(NULL,0)*/);

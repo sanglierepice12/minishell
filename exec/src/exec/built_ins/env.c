@@ -90,6 +90,7 @@ void	ft_get_env(t_glob *glob, char **env)
 	int			j;
 	char		*value;
 	char		*path;
+	t_env		*temp;
 
 	ft_get_first_node(glob, env);
 	if (!env)
@@ -113,6 +114,9 @@ void	ft_get_env(t_glob *glob, char **env)
 		}
 		i++;
 	}
+	temp = glob->env;
+	if (!ft_find_thing_in_env(&temp, "PATH"))
+		ft_main_get_env(glob);
 }
 
 void	ft_env(t_glob *glob, t_input *cmd)

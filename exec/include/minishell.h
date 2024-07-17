@@ -97,6 +97,7 @@ bool	ft_export_is_printable(char *c);
 char	*ft_str_join(char *begin, char *end);
 void	ft_free_double_tab(char **tab);
 char	**ft_split(char const *s, char c);
+void	ft_main_get_env(t_glob *glob);
 
 /*----------BUILT_INS_CALLS----------*/
 bool	ft_is_builtin(char *cmd);

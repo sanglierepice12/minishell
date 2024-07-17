@@ -50,6 +50,7 @@ SRCS =	main.c 										\
 		exec/execution/children.c					\
 		free/free.c									\
 		free/free_follow.c							\
+		utils/get_env.c								\
 		utils/copy.c								\
 		utils/ft_calloc.c							\
 		utils/compare.c								\
