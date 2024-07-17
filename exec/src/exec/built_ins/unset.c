@@ -52,7 +52,8 @@ static void	unset_variable(t_env **head, char *input)
 			return (ft_dell_node(&temp, head), (void) 0);
 		temp = temp->next;
 	}
-	if (temp && ft_strlen(temp->value) == len && ft_comp_str(temp->value, input))
+	if (temp && ft_strlen(temp->value) == len && \
+			ft_comp_str(temp->value, input))
 		ft_dell_node(&temp, head);
 }
 

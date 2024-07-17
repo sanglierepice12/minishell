@@ -37,7 +37,6 @@ SRCS =	main.c 										\
 		parsing/heredoc/remove_heredoc.c			\
 		exec/built_in_calls.c						\
 		exec/handle_signal.c						\
-		exec/ls.c									\
 		exec/built_ins/pwd.c						\
 		exec/built_ins/cd.c							\
 		exec/built_ins/echo.c						\
@@ -48,7 +47,9 @@ SRCS =	main.c 										\
 		exec/execution/init_exec.c					\
 		exec/execution/here_doc_tester.c			\
 		exec/execution/executor.c					\
+		exec/execution/children.c					\
 		free/free.c									\
+		free/free_follow.c							\
 		utils/copy.c								\
 		utils/ft_calloc.c							\
 		utils/compare.c								\

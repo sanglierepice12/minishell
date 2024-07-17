@@ -12,74 +12,37 @@
 
 #include "../../../include/minishell.h"
 
-/*char	**ft_double_join(char **src, char **dest)
+char	**ft_get_all_path(t_env	**env)
 {
-	char	**value;
-	size_t	i;
-	size_t	j;
+	char	**test;
 	size_t	len;
+	ssize_t	i;
+	t_env	*temp;
 
-	*//*if (!src && !dest)
-		return (NULL);*//*
-	len = ft_strlen_double(src) + ft_strlen_double(dest);
-	if (!len)
-		return (NULL);
-	value = ft_cal_loc(len, sizeof(char *));
-	if (!value)
-		return (printf("calloc error\n"), NULL);
-	i = 0;
-	while (src[i])
-	{
-		value[i] = ft_dup(src[i]);
-		i++;
-	}
-	j = 0;
-	while (dest[j])
-	{
-		value[i] = ft_dup(dest[j]);
-		i++;
-		j++;
-	}
-	return (value);
-}*/
-/*char	*ft_copy_stack(char *str, char	*src)
-	size_t	i;
-	size_t	len;
-
-	len = ft_strlen(src);
-	i = 0;
-	while (str[i])
-	{
-		src[len] = str[i];
-		i++;
-		len++;
-	}
-	return (src);
-}*/
-
-/*char	*ft_get_all_path(t_env	*temp)
-{
-	char	*test;
-	size_t	len;
-
+	if (!env)
+		return (printf("no env\n"), NULL);
+	temp = *env;
 	len = 0;
 	while (temp->next)
 	{
-		len += ft_strlen(temp->path);
+		if (temp->path)
+			len += 1;
 		temp = temp->next;
 	}
 	while (temp->prev)
 		temp = temp->prev;
-	test = ft_cal_loc(len + 1, sizeof(char));
+	test = ft_cal_loc(len + 1, sizeof(char *));
 	if (!test)
 		return (printf("malloc null\n"), NULL);
-	while (temp->next)
+	i = -1;
+	while (++i, temp->next)
 	{
-		test = ft_copy_stack(temp->path, test);
+		if (temp->path)
+			test[i] = ft_dup(temp->path);
 		temp = temp->next;
 	}
 	return (test);
-}*/
+}
 
 t_env	*ft_find_thing_in_env(t_env **env, char *value)
 {
@@ -164,7 +127,7 @@ void	ft_env(t_glob *glob, t_input *cmd)
 		while (++i, i < cmd->args)
 		{
 			if (!ft_comp_str(cmd->argv[i], "env"))
-				return (printf("env: ‘%s’: No such file or directory\n",\
+				return (printf("env: ‘%s’: No such file or directory\n", \
 							cmd->argv[1]), (void)0);
 		}
 		if (i == cmd->args)

@@ -115,11 +115,13 @@ void	ft_env(t_glob *glob, t_input *cmd);
 
 /*----------EXECUTION----------*/
 void	ft_init_exec(t_glob *glob);
-bool	ft_here_doc_tester(t_input *cmd);
+char	**ft_get_all_path(t_env	**env);
 void	ft_reset_in_out(t_glob *glob);
 void	ft_unlink_cmd(t_glob *glob);
+bool	ft_here_doc_tester(t_input *cmd);
 void	ft_executor(t_glob *glob);
-char	*ft_get_all_path(t_env	*temp);
+void	ft_exec_built_in(t_glob *glob);
+void	ft_children(t_glob *glob, int pipefd[2], size_t *i);
 void	ft_handle_signal();
 
 /*----------FREE&&ALLOC----------*/

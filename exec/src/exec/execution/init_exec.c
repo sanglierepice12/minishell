@@ -38,7 +38,8 @@ bool	ft_is_builtin(char *cmd)
 	|| (ft_comp_str(cmd, "env"))	\
 	|| (ft_comp_str(cmd, "unset"))	\
 	|| (ft_comp_str(cmd, "export"))	\
-	|| (ft_comp_str(cmd, "exit")))	\
+	|| (ft_comp_str(cmd, "exit"))	\
+	|| (ft_comp_str(cmd, "clear")))	\
 		return (1);
 	else
 		return (0);
@@ -138,5 +139,7 @@ void	ft_init_exec(t_glob *glob)
 		if (ft_init_path(glob, temp))
 			return ;
 	}
+	ft_free_double_tab(glob->cmd->path);
+	glob->cmd->path = ft_get_all_path(&glob->env);
 	ft_executor(glob);
 }

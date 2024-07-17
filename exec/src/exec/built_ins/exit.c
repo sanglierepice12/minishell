@@ -47,7 +47,6 @@ int	ft_atoi(const char *nptr)
 	return (value * sign);
 }
 
-
 static bool	check_if_number(const char *cmd)
 {
 	size_t	i;
@@ -66,8 +65,8 @@ static bool	check_if_number(const char *cmd)
 
 void	ft_exit(t_glob *glob, t_input *cmd)
 {
-	int	code;
-	unsigned char exit_code;
+	int				code;
+	unsigned char	exit_code;
 
 	if (!cmd)
 		return (printf("no cmd \n"), (void)0);
@@ -79,7 +78,8 @@ void	ft_exit(t_glob *glob, t_input *cmd)
 	}
 	if (!check_if_number(cmd->argv[1]))
 	{
-		printf("MinisHell: exit: %s: numeric argument required\n", cmd->argv[1]);
+		printf("MinisHell: exit: %s: numeric argument required\n", \
+			cmd->argv[1]);
 		code = 255;
 	}
 	else

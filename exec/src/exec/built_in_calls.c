@@ -20,12 +20,10 @@ void	ft_call_builtins(t_glob *glob, t_input cmd)
 		ft_cd(glob, &cmd);
 	if (ft_strncmp(cmd.command, "pwd", 3) == 0)
 		ft_pwd(&cmd, &glob->env);
-	/*if (ft_strncmp(cmd.command, "ls", 2) == 0)
-		ft_ls();*/
 	if (ft_strncmp(cmd.command, "echo", 4) == 0)
 		ft_echo(&cmd);
-/*	if (ft_strncmp(cmd.command, "clear", 5) == 0)
-		printf("\033[2J\033[H");*/
+	if (ft_strncmp(cmd.command, "clear", 5) == 0)
+		printf("\033[2J\033[H");
 	if (ft_strncmp(cmd.command, "env", 3) == 0)
 		ft_env(glob, &cmd);
 	if (ft_strncmp(cmd.command, "unset", 5) == 0)

@@ -12,53 +12,6 @@
 
 #include "../../include/minishell.h"
 
-void	free_parse(t_glob *glob, int i)
-{
-	int	size;
-
-	if (i >= 2)
-	{
-		size = glob->cmd->args - 1;
-		while (size != -1)
-		{
-			free(glob->cmd->argv[size]);
-			size--;
-		}
-		free(glob->cmd->argv);
-	}
-	if (glob->cmd->args && glob->cmd->path)
-		ft_free_double_tab(glob->cmd->path);
-	if (i >= 1)
-		free(glob->cmd);
-}
-
-void	free_tab(char **tab, int lenght)
-{
-	if (!tab)
-		return ;
-	while (lenght != 0)
-	{
-		lenght--;
-		free(tab[lenght]);
-	}
-	free(tab);
-}
-
-void	ft_free_double_tab(char **tab)
-{
-	int	i;
-
-	if (!tab)
-		return ;
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
-}
-
 void	ft_free_here_doc(t_heredoc *heredoc)
 {
 	if (heredoc->file_infile)
@@ -110,8 +63,6 @@ void	ft_free_env(t_env *env)
 
 void	ft_free_all(t_glob *glob)
 {
-	/*if (glob->cmd)
-		free_parse(glob, 2);*/
 	ft_free_cmd(glob);
 	if (glob->env)
 		ft_free_env(glob->env);
