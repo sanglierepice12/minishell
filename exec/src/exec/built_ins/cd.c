@@ -26,10 +26,11 @@ void	ft_update_old_pwd(t_env **env, char *value, char *path)
 			if (temp->path)
 				free(temp->path);
 			temp->path = ft_dup(path);
-			break ;
+			return ;
 		}
 		temp = temp->next;
 	}
+	ft_lst_add_back(env, ft_new_node("OLDPWD", path, 0));
 }
 
 void	ft_update_pwd(t_env **env, char *value, char *path)
@@ -62,6 +63,9 @@ void	ft_update_pwd(t_env **env, char *value, char *path)
 		}
 		temp = temp->next;
 	}
+	temp = *env;
+	if (!ft_find_thing_in_env(&temp, "PWD"))
+		ft_lst_add_back(env, ft_new_node("PWD", getcwd(NULL, 0), 0));
 }
 
 void	ft_cd(t_glob *glob, t_input *cmd)
@@ -84,7 +88,7 @@ void	ft_cd(t_glob *glob, t_input *cmd)
 					temp->path);
 		}
 		else
-			printf("MinisHell: cd: OLDPWD not set\n");
+			ft_lst_add_back(&glob->env, ft_new_node("PWD", getcwd(NULL, 0), 0));
 	}
 	else if (cmd->argv[1][0] == '-')
 	{
