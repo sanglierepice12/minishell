@@ -26,14 +26,14 @@ int	count_args(char *input, int lenght)
 		i = 0;
 	while (input[i])
 	{
-		if (input[i] != ' ')
+		if (input[i] != ' ' && input[i] != '\t')
 		{
 			args++;
 			i += ft_strlen_quote(input, i, &quote);
 			if (quote == -1)
 				return (-1);
 		}
-		if (input[i] == ' ')
+		if (input[i] == ' ' || input[i] == '\t')
 			i++;
 		if (input[i] == '|' && input[i - 1] == ' ' && input[i + 1] == ' ')
 			break ;

@@ -150,7 +150,6 @@ int	parse_in_struct(t_glob *glob, char *input)
 	i = 0;
 	num_args = get_num_args(input);
 	glob->count_cmd = num_args;
-	printf("Num ARG = %d\n", num_args);
 	glob->cmd = ft_cal_loc((num_args + 1), sizeof(t_input));
 	if (!glob->cmd)
 		return (0);
@@ -169,7 +168,7 @@ int	parse_in_struct(t_glob *glob, char *input)
 			return (free_parse(glob, 1), 0);
 		i++;
 	}
-/*	glob->cmd[num_args].command = NULL;*/
+	glob->cmd[num_args].command = NULL;
 	i = 0;
 	while (i != num_args)
 	{

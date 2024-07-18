@@ -36,7 +36,7 @@ static void	get_heredoc_infile(char **argv, t_input *cmd)
 	int	i;
 
 	i = cmd->args - 2;
-	while (i > 0)
+	while (i >= 0)
 	{
 		if (ft_comp_str(argv[i], "<") == 1)
 		{
@@ -63,7 +63,7 @@ static void	get_heredoc_outfile(char **argv, t_input *cmd)
 	int	i;
 
 	i = cmd->args - 2;
-	while (i > 0)
+	while (i >= 0)
 	{
 		if (ft_comp_str(argv[i], ">") == 1)
 		{
