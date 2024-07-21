@@ -127,15 +127,20 @@ char	*expend_env_var(char *word, t_glob *glob)
 	while (word[i])
 	{
 		if (word[i] == '$' && (if_in_quote(word, i) == 1 \
-			|| if_in_quote(word, i) == 3) && word[i + 1] != ' ')
+			|| if_in_quote(word, i) == 3))
 		{
-			temp = copy_word_env(word, i + 1);
-			if (!temp)
-				return (free(word), NULL);
-			word = find_env_var(word, glob, i, temp);
-			if (!word)
-				return (free(temp), NULL);
-			free(temp);
+			if (ft_isspace(word[i + 1]) == 1 && word[i + 1] != '"' && word[i + 1] != 0)
+			{
+				temp = copy_word_env(word, i + 1);
+				if (!temp)
+					return (free(word), NULL);
+				word = find_env_var(word, glob, i, temp);
+				if (!word)
+					return (free(temp), NULL);
+				free(temp);
+			}
+			else
+				i++;
 		}
 		else
 			i++;

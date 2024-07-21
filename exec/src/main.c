@@ -54,4 +54,5 @@ int	main(int arc, char **argv, char **env)
 			add_history(input);
 		free(input);
 	}
+	return (0);
 }

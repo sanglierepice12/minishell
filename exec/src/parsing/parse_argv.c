@@ -26,14 +26,14 @@ int	count_args(char *input, int lenght)
 		i = 0;
 	while (input[i])
 	{
-		if (input[i] != ' ' && input[i] != '\t')
+		if (ft_isspace(input[i]) == 1)
 		{
 			args++;
 			i += ft_strlen_quote(input, i, &quote);
 			if (quote == -1)
 				return (-1);
 		}
-		if (input[i] == ' ' || input[i] == '\t')
+		if (ft_isspace(input[i]) == 0)
 			i++;
 		if (input[i] == '|' && input[i - 1] == ' ' && input[i + 1] == ' ')
 			break ;
@@ -100,14 +100,14 @@ char	**set_argv(char *input, int num, t_glob *glob)
 	i = get_length_num(input, num);
 	while (input[i])
 	{
-		if (input[i] != ' ')
+		if (ft_isspace(input[i]) == 1)
 			argv[lenght++] = parse_word(input, &i, glob);
 		if (lenght == -1 || (lenght && (argv[lenght - 1] == NULL)))
 		{
 			free_tab(argv, lenght);
 			return (0);
 		}
-		if (input[i] == ' ')
+		if (ft_isspace(input[i]) == 0)
 			i++;
 		if (input[i] == '|' && (input[i - 1] == ' ' && input[i + 1] == ' '))
 			break ;

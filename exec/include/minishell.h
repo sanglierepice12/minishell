@@ -79,6 +79,9 @@ void	remove_heredoc(char **argv, int pos, t_input *command);
 
 void	show_struct(t_input *command);
 
+/*----------LIB----------*/
+int		ft_isspace(char c);
+
 /*----------UTILS----------*/
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_comp_str(const char *src, const char *str);
