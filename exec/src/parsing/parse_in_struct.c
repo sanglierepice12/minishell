@@ -105,8 +105,8 @@ static void	initialize_command(t_input *cmd)
 	cmd->command = NULL;
 	cmd->args = 0;
 }
-/*
-static void	print_command_info(t_input *cmd)
+
+/*static void	print_command_info(t_input *cmd)
 {
 	size_t	temp;
 	size_t	size;

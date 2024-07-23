@@ -18,7 +18,13 @@ static char	*copy_word_env(char *input, int i)
 	int		lenght;
 
 	lenght = 0;
-	while (input[i + lenght])
+	if (input[i] == '?')
+	{
+		tab = calloc(2, sizeof(char));
+		tab[0] = '?';
+		return (tab);
+	}
+	while (input[i + lenght] && lenght >= 0)
 	{
 		if (input[i + lenght] == ' ' || input[i + lenght] == 39 \
 			|| input[i + lenght] == 34 || input[i + lenght] == '$')
@@ -97,6 +103,11 @@ static char	*find_env_var(char *word, t_glob *glob, int i, char *temp)
 	t_env	*env;
 	int		check_sup;
 
+    if (ft_comp_str(temp, "?") == 1)
+    {
+    	word = replace_env_word(word, i, "0", temp);
+		return (word);
+    }
 	check_sup = 1;
 	env = glob->env;
 	while (env != NULL)

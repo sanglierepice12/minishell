@@ -48,8 +48,7 @@ int	main(int arc, char **argv, char **env)
 		input = readline("MinisHell-1.0$ ");
 		if (input == NULL)
 			return (ft_free_env(glob.env), g_error_code);
-		if (parse_in_struct(&glob, input) == 0)
-			printf("\n");
+		parse_in_struct(&glob, input);
 		if (*input)
 			add_history(input);
 		free(input);

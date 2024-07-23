@@ -73,6 +73,16 @@ void	remove_and_stock_all_heredoc(char **argv, t_input *cmd)
 			cmd->heredoc.rest_heredoc = rs_heredoc(argv, cmd, i);
 			remove_heredoc(argv, i, cmd);
 		}
+		if (ft_comp_str(argv[i], "<") == 1)
+		{
+			cmd->heredoc.rest_heredoc = rs_heredoc(argv, cmd, i);
+			remove_heredoc(argv, i, cmd);
+		}
+		else if (ft_comp_str(argv[i], "<<") == 1)
+		{
+			cmd->heredoc.rest_heredoc = rs_heredoc(argv, cmd, i);
+			remove_heredoc(argv, i, cmd);
+		}
 		i--;
 	}
 }
