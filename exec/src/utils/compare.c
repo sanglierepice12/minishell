@@ -25,14 +25,27 @@ bool	ft_export_is_printable(char *c)
 			&& (c[i] < '0' || c[i] > '9') && c[i] != '=' && c[i] != '/' && c[i] != '+' \
 			&& c[i] != '_')
 			return (1);
+		if (c[i] == '-' && c[i + 1] == '=')
+			return (1);
 		i++;
 	}
 	return (0);
 }
 
+bool	ft_is_minus(char *c)
+{
+	if (c[0] == '-' && c[1] == '=')
+	{
+		printf("bash: export: `%s': not a valid identifier\n", \
+                c);
+		return (1);
+	}
+	return (1);
+}
+
 bool	ft_is_numbalpha(char c)
 {
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c == '_'))
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c == '_') || (c == '-'))
 		return (1);
 	return (0);
 }

@@ -46,7 +46,7 @@ static char	*ft_find_value(char *env, int flag, char *temp, size_t *j)
 	i = 0;
 	while (env[i])
 	{
-		if (env[i] == '=' && !flag)
+		if (env[i + 1] && env[i] == '=' && !flag)
 		{
 			if (env[i - 1] == '+')
 				value = ft_str_copy_n(env, i - 1);
@@ -61,12 +61,18 @@ static char	*ft_find_value(char *env, int flag, char *temp, size_t *j)
 				value = ft_str_join(env + i + 1, temp);
 			else
 				value = ft_dup(env + i + 1);
+			if (ft_is_minus(value))
+				j = j + 1;
+			i++;
 			break ;
 		}
 		i++;
 	}
 	if (!env[i])
+	{
 		value = ft_dup(env);
+		ft_check_export_args(value, flag, j);
+	}
 	return (value);
 }
 
@@ -83,7 +89,7 @@ static void	ft_create_env_nodes(t_env **env, t_input *cmd, int flag)
 	{
 		j_copy = j;
 		value = ft_find_value(cmd->argv[j], 0, NULL, &j);
-		if (j_copy + 1 == j)
+		if (cmd->argv[j] && j_copy + 1 == j)
 			continue ;
 		temp = ft_find_thing_in_env(env, value);
 		if (ft_str_chr(cmd->argv[j], '='))
@@ -93,9 +99,12 @@ static void	ft_create_env_nodes(t_env **env, t_input *cmd, int flag)
 			else
 				path = ft_find_value(cmd->argv[j], 1, NULL, &j);
 		}
-		else
-			path = NULL;
-		if (j_copy + 1 == j)
+		/*else
+		{// -> export -= ca bug
+			path = ft_dup(cmd->argv[j]);
+			ft_check_export_args(value, flag, &j);
+		}*/
+		if (cmd->argv[j] && j_copy + 1 == j)
 			continue ;
 		if (temp)
 			ft_dell_node(&temp, env);

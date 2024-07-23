@@ -25,6 +25,7 @@ void	handle_sigint(int sig)
 void	handle_sigquit(int sig)
 {
 	(void)sig;
+	handle_sigint(sig);
 	g_error_code = 131;
 }
 

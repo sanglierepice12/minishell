@@ -78,7 +78,7 @@ bool	ft_access(t_input *cmd)
 		}
 	}
 	if (access(cmd->argv[0], F_OK))
-		return (dprintf(2, "MinisHell: %s: No such file or directory\n", \
+		return (dprintf(2, "%s: command not found\n", \
 			cmd->argv[0]), 1);
 		//perror("MinisHell");
 	return (0);
