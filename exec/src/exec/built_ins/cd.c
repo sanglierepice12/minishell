@@ -74,6 +74,8 @@ void	ft_cd(t_glob *glob, t_input *cmd)
 
 	if (!cmd->args)
 		return (printf("pas dargv \n"), (void)0);
+	if (cmd->args > 1)
+		return (printf("minisHell: cd: too many arguments\n"), (void)0);
 	if (cmd->args == 1 || ft_comp_str(cmd->argv[1], "~") || \
 			ft_comp_str(cmd->argv[1], "--"))
 		return (chdir("/"), ft_update_pwd(&glob->env, \
@@ -84,7 +86,7 @@ void	ft_cd(t_glob *glob, t_input *cmd)
 		if (temp)
 		{
 			if (chdir(temp->path) != 0)
-				dprintf(2, "MinisHell: cd: %s: No such file or directory\n", \
+				dprintf(2, "minisHell: cd: %s: No such file or directory\n", \
 					temp->path);
 		}
 		else
@@ -94,7 +96,7 @@ void	ft_cd(t_glob *glob, t_input *cmd)
 	{
 		if (cmd->argv[1][1] != 'L' && cmd->argv[1][1] != 'P')
 		{
-			dprintf(2, "MinisHell: cd: %c%c: invalid option\n" \
+			dprintf(2, "minisHell: cd: %c%c: invalid option\n" \
 					"cd: usage: [-L|[-P [-e]] [-@]] [dir]\n", \
 						cmd->argv[1][0], cmd->argv[1][1]);
 		}
@@ -104,7 +106,7 @@ void	ft_cd(t_glob *glob, t_input *cmd)
 	else
 	{
 		if (chdir(cmd->argv[1]) != 0)
-			dprintf(2, "MinisHell: cd: %s: No such file or directory\n", \
+			dprintf(2, "minisHell: cd: %s: No such file or directory\n", \
 				cmd->argv[1]);
 	}
 	ft_update_pwd(&glob->env, "PWD", getcwd(NULL, 0));
