@@ -45,7 +45,7 @@ int	main(int arc, char **argv, char **env)
 		ft_main_get_env(&glob);
 	while (1)
 	{
-		input = readline("MinisHell-1.0$ ");
+		input = readline("minisHell-1.0$ ");
 		if (input == NULL)
 			return (ft_free_env(glob.env), g_error_code);
 		parse_in_struct(&glob, input);

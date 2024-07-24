@@ -36,9 +36,9 @@ bool	ft_is_minus(char *c)
 {
 	if (c[0] == '-' && c[1] == '=')
 	{
-		printf("bash: export: `%s': not a valid identifier\n", \
+		printf("minisHell: export: `%s': invalid option\n", \
                 c);
-		return (1);
+		return (0);
 	}
 	return (1);
 }

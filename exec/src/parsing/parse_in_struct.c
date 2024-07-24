@@ -166,7 +166,8 @@ int	parse_in_struct(t_glob *glob, char *input)
 			return (0);
 		glob->cmd[i].argv = set_argv(input, i, glob);
 		if (glob->cmd[i].argv == NULL)
-			return (free_parse(glob, 2, i), 0);
+			return (ft_free_cmd(glob), 0);
+			/*return (free_parse(glob, 2, i), 0);*/
 		if (glob->cmd[i].args)
 			glob->cmd[i].command = glob->cmd[i].argv[0];
 		if (glob->cmd[i].command == NULL)
