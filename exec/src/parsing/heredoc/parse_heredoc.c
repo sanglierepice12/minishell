@@ -31,6 +31,48 @@ void	remove_heredoc(char **argv, int pos, t_input *cmd)
 	cmd->args -= 2;
 }
 
+static char **add_tab(char *input, char **tab, size_t *size)
+{
+	char	**new_tab;
+	size_t	i;
+
+	new_tab = ft_cal_loc(*size + 1, sizeof(char *));
+	i = 0;
+	while (i != *size - 1)
+	{
+		new_tab[i] = ft_super_dup(tab[i], NULL);
+		i++;
+	}
+	new_tab[i] = ft_super_dup(input, NULL);
+	(*size)++;
+	free(tab);
+	return (new_tab);
+}
+
+static char **ft_write_infile(char *word)
+{
+	char	*input;
+	char	**tab;
+	size_t	size;
+
+	size = 1;
+	tab = ft_cal_loc(1, sizeof(char *));
+	while (1)
+	{
+		input = readline("> ");
+		if (input == NULL)
+			return (NULL);
+		if (ft_comp_str(input, word) == 1)
+			break ;
+		tab = add_tab(input, tab, &size);
+		//if (*input)
+		//	add_history(input);
+		free(input);
+	}
+
+	return (tab);
+}
+
 static void	get_heredoc_infile(char **argv, t_input *cmd)
 {
 	int	i;
@@ -42,7 +84,8 @@ static void	get_heredoc_infile(char **argv, t_input *cmd)
 		{
 			cmd->heredoc.is_there_any = 1;
 			cmd->heredoc.type_infile = "<";
-			cmd->heredoc.file_infile = ft_super_dup(argv[i + 1], NULL);
+			cmd->heredoc.file_infile = ft_cal_loc(2, sizeof(char *));
+			cmd->heredoc.file_infile[0] = ft_super_dup(argv[i + 1], NULL);
 			remove_heredoc(argv, i, cmd);
 			break ;
 		}
@@ -50,7 +93,10 @@ static void	get_heredoc_infile(char **argv, t_input *cmd)
 		{
 			cmd->heredoc.is_there_any = 1;
 			cmd->heredoc.type_infile = "<<";
-			cmd->heredoc.file_infile = ft_super_dup(argv[i + 1], NULL);
+			cmd->heredoc.file_infile = ft_write_infile(argv[i + 1]);
+			if (cmd->heredoc.file_infile == NULL)
+				return ;
+			// faut free au dessus
 			remove_heredoc(argv, i, cmd);
 			break ;
 		}

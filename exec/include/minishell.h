@@ -39,7 +39,7 @@ typedef struct	s_heredoc
 {
 	bool	is_there_any;
 	char	*type_infile;
-	char	*file_infile;
+	char	**file_infile;
 	char	*type_outfile;
 	char	*file_outfile;
 	char	**rest_heredoc;
@@ -69,7 +69,7 @@ int 	parse_in_struct(t_glob *glob, char *input);
 int		ft_strlen_quote(char *str, int len, int *quote);
 int		if_in_quote(char *str, int i);
 char	*delete_quote(char *tab, int i);
-char	**set_argv(char *input, int num, t_glob *glob);
+char	**set_argv(char *input, unsigned long num, t_glob *glob);
 int		count_args(char *input, int lenght);
 int		get_length_num(char *input, int number);
 char	*expend_env_var(char *word, t_glob *glob);
@@ -139,7 +139,7 @@ void	ft_free_this_node(t_env *head);
 void	free_tab(char **tab, int lenght);
 void	ft_free_lst(t_env **lst);
 void	ft_free_all(t_glob *glob);
-void	free_parse(t_glob *glob, int i);
+void	free_parse(t_glob *glob, int i, ssize_t size_cmd);
 
 /*----------LINKED_LIST----------*/
 void	ft_print_this_node(t_env **env, char *value);

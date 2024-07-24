@@ -21,8 +21,8 @@ void	ft_unlink_cmd(t_glob *glob)
 	{
 		if (!access(glob->cmd[i].heredoc.file_outfile, F_OK))
 			unlink(glob->cmd[i].heredoc.file_outfile);
-		if (!access(glob->cmd[i].heredoc.file_infile, F_OK))
-			unlink(glob->cmd[i].heredoc.file_infile);
+		if (!access(glob->cmd[i].heredoc.file_infile[0], F_OK))
+			unlink(glob->cmd[i].heredoc.file_infile[0]);
 		i++;
 	}
 }
@@ -49,7 +49,7 @@ bool	ft_here_doc_tester(t_input *cmd)
 	}
 	if (ft_comp_str(cmd->heredoc.type_infile, "<"))
 	{
-		cmd->fd = open(cmd->heredoc.file_infile, O_RDONLY);
+		cmd->fd = open(cmd->heredoc.file_infile[0], O_RDONLY);
 		if (cmd->fd == -1)
 		{
 			perror("MiniHell");

@@ -12,22 +12,27 @@
 
 #include "../../include/minishell.h"
 
-void	free_parse(t_glob *glob, int i)
+void	free_parse(t_glob *glob, int i, ssize_t size_cmd)
 {
-	int	size;
+	ssize_t	size_argv;
 
 	if (i >= 2)
 	{
-		size = glob->cmd->args - 1;
-		while (size != -1)
+		size_cmd--;
+		while (size_cmd != -1)
 		{
-			free(glob->cmd->argv[size]);
-			size--;
+			size_argv = glob->cmd[size_cmd].args - 1;
+			while (size_argv != -1)
+			{
+				free(glob->cmd[size_cmd].argv[size_argv]);
+				size_argv--;
+			}
+			free(glob->cmd[size_cmd].argv);
+			size_cmd--;
 		}
-		free(glob->cmd->argv);
 	}
-	if (glob->cmd->args && glob->cmd->path)
-		ft_free_double_tab(glob->cmd->path);
+	if (glob->cmd[i].args && glob->cmd[i].path)
+		ft_free_double_tab(glob->cmd[i].path);
 	if (i >= 1)
 		free(glob->cmd);
 }

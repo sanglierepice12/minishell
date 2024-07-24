@@ -84,7 +84,76 @@ static char	*parse_word(char *input, int *i, t_glob *glob)
 	return (word);
 }
 
-char	**set_argv(char *input, int num, t_glob *glob)
+static int check_redir(char **argv, t_glob *glob, unsigned long num)
+{
+	int		i;
+	size_t	y;
+	int 	count_right;
+	int 	count_left;
+
+	i = glob->cmd->args - 1;
+	if (ft_comp_str(argv[glob->cmd->args - 1], ">") == 1 || ft_comp_str(argv[glob->cmd->args - 1], ">>") == 1 \
+		|| ft_comp_str(argv[glob->cmd->args - 1], "<") == 1 || ft_comp_str(argv[glob->cmd->args - 1], "<<") == 1)
+	{
+		if (num == glob->count_cmd - 2)
+			return (printf("MinisHell: syntax error near unexpected token `|'\n"), 0);
+		else
+			return (printf("MinisHell: syntax error near unexpected token `newline'\n"), 0);
+	}
+	while (i >= 0)
+	{
+		y = 0;
+		count_right = 0;
+		count_left = 0;
+		while (y != ft_strlen(argv[i]))
+		{
+			if (argv[i][y] == '>')
+				count_right++;
+			else
+			{
+				if (count_right > 2)
+					return (printf("MinisHell: syntax error near unexpected token `>>'\n"), 0);
+				else if (count_right == 2)
+					return (printf("MinisHell: syntax error near unexpected token `>'\n"), 0);
+				else
+					count_right = 0;
+			}
+			if (argv[i][y] == '<')
+				count_left++;
+			else
+			{
+				if (count_left > 2)
+					return (printf("MinisHell: syntax error near unexpected token `<<'\n"), 0);
+				else if (count_left == 2)
+					return (printf("MinisHell: syntax error near unexpected token `<'\n"), 0);
+				else
+					count_left = 0;
+			}
+			y++;
+		}
+		if (count_right > 3)
+			return (printf("MinisHell: syntax error near unexpected token `>>'\n"), 0);
+		else if (count_right == 3)
+			return (printf("MinisHell: syntax error near unexpected token `>'\n"), 0);
+		else
+			count_right = 0;
+		if (argv[i][y] == '<')
+			count_left++;
+		else
+		{
+			if (count_left > 3)
+				return (printf("MinisHell: syntax error near unexpected token `<<'\n"), 0);
+			else if (count_left == 3)
+				return (printf("MinisHell: syntax error near unexpected token `<'\n"), 0);
+			else
+				count_left = 0;
+			}
+		i--;
+	}
+	return (1);
+}
+
+char	**set_argv(char *input, unsigned long num, t_glob *glob)
 {
 	char	**argv;
 	int		i;
@@ -112,5 +181,7 @@ char	**set_argv(char *input, int num, t_glob *glob)
 		if (input[i] == '|' && (input[i - 1] == ' ' && input[i + 1] == ' '))
 			break ;
 	}
+	if (check_redir(argv, glob, num) == 0)
+		return (NULL);
 	return (check_apply_heredoc(argv, &glob->cmd[num]));
 }
