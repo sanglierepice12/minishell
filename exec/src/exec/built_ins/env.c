@@ -20,7 +20,7 @@ char	**ft_get_all_path(t_env	**env)
 	t_env	*temp;
 
 	if (!env)
-		return (printf("no env\n"), NULL);
+		return (ft_err_printf("no env", 1), NULL);
 	temp = *env;
 	len = 0;
 	while (temp->next)
@@ -33,7 +33,7 @@ char	**ft_get_all_path(t_env	**env)
 		temp = temp->prev;
 	test = ft_cal_loc(len + 1, sizeof(char *));
 	if (!test)
-		return (printf("malloc null\n"), NULL);
+		return (ft_err_printf("error malloc", 1), NULL);
 	i = -1;
 	while (++i, temp->next)
 	{
@@ -74,7 +74,11 @@ static void	ft_get_first_node(t_glob *glob, char **env)
 		if (env[0][j] == '=')
 		{
 			path = ft_dup(env[0] + j + 1);
+			if (!path)
+				return (ft_err_printf("error malloc", 1));
 			value = ft_str_copy_n(env[0], j);
+			if (!value)
+				return (ft_err_printf("error malloc", 1));
 			glob->env = ft_new_node(value, path, 0);
 			free(path);
 			free(value);
@@ -94,7 +98,7 @@ void	ft_get_env(t_glob *glob, char **env)
 
 	ft_get_first_node(glob, env);
 	if (!env)
-		return (dprintf(2, "No env\n"), (void)0);
+		return (ft_err_printf("no env", 1));
 	i = 1;
 	while (env[i])
 	{
@@ -104,7 +108,11 @@ void	ft_get_env(t_glob *glob, char **env)
 			if (env[i][j] == '=')
 			{
 				path = ft_dup(env[i] + j + 1);
+				if (!path)
+					return (ft_err_printf("error malloc", 1));
 				value = ft_str_copy_n(env[i], j);
+				if (!value)
+					return (ft_err_printf("error malloc", 1));
 				ft_lst_add_back(&glob->env, ft_new_node(value, path, 0));
 				free(path);
 				free(value);
@@ -123,17 +131,16 @@ void	ft_env(t_glob *glob, t_input *cmd)
 {
 	size_t	i;
 
+	g_error_code = 0;
 	if (cmd->args == 1)
-		return (print_env(&glob->env, 0), (void)0);
+		return (print_env(&glob->env, 0));
 	else if (cmd->args > 1)
 	{
 		i = 0;
 		while (++i, i < cmd->args)
-		{
 			if (!ft_comp_str(cmd->argv[i], "env"))
-				return (printf("env: ‘%s’: No such file or directory\n", \
-							cmd->argv[1]), (void)0);
-		}
+				return (ft_derror("env", cmd->argv[1], \
+					"no such file or directory", 127));
 		if (i == cmd->args)
 			print_env(&glob->env, 0);
 	}

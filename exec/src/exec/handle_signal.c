@@ -16,7 +16,7 @@ void	handle_sigint(int sig)
 {
 	(void)sig;
 	g_error_code = 130;
-	printf("\n");
+	write(STDOUT_FILENO, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
@@ -39,7 +39,7 @@ void	ft_handle_signal(void)
 	sa_int.sa_flags = SA_RESTART;
 	if (sigaction(SIGINT, &sa_int, NULL) == -1)
 	{
-		perror("sigaction");
+		ft_error(1);
 		exit(EXIT_FAILURE);
 	}
 	sa_quit.sa_handler = handle_sigquit;
@@ -47,7 +47,29 @@ void	ft_handle_signal(void)
 	sa_quit.sa_flags = SA_RESTART;
 	if (sigaction(SIGQUIT, &sa_quit, NULL) == -1)
 	{
-		perror("sigaction");
+		ft_error(1);
 		exit(EXIT_FAILURE);
 	}
 }
+
+/*potentiellement pour gérer le ctrl c qui double le rline minishel $
+void ft_handle_execution_signal(void)
+{
+	struct sigaction sa;
+
+	sa.sa_handler = SIG_IGN;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+
+	if (sigaction(SIGINT, &sa, NULL) == -1)
+	{
+		ft_error(1);
+		exit(EXIT_FAILURE);
+	}
+
+	if (sigaction(SIGQUIT, &sa, NULL) == -1)
+	{
+		ft_error(1);
+		exit(EXIT_FAILURE);
+	}
+}*/

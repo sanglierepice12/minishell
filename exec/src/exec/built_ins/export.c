@@ -16,22 +16,21 @@ static void	ft_check_export_args(char *cmd, size_t	flag, size_t *j, char *env)
 {
 	if (!ft_is_numbalpha(cmd[0]) && !flag)
 	{
-		printf("minisHell: export: `%s': not a valid identifier\n", \
-				env);
+		ft_env_derror("export", env, "not a valid identifier", 1);
+		/*printf("minisHell: export: `%s': not a valid identifier\n", \
+				env);*/
 		*j = *j + 1;
 		return ;
 	}
 	if (ft_export_is_printable(cmd))
 	{
-		printf("minisHell: export: `%s': not a valid identifier\n", \
-				env);
+		ft_env_derror("export", env, "not a valid identifier", 1);
 		*j = *j + 1;
 		return ;
 	}
 	if (ft_comp_str(cmd, "="))
 	{
-		printf("minisHell: export: `%s': not a valid identifier\n", \
-				env);
+		ft_env_derror("export", env, "not a valid identifier", 1);
 		*j = *j + 1;
 		return ;
 	}
@@ -67,7 +66,9 @@ static char	*ft_find_value(char *env, int flag, char *temp, size_t *j)
 				value = ft_dup(env + i + 1);
 			if (env[i - 1] == '-' && !flag)
 			{
-				printf("minisHell: export: `%s': invalid option\n", env);
+				ft_env_derror("export", env, "invalid option", 2);
+				printf("export: usage: export \\"
+					   "[-fn] [name[=value] ...] or export -p \n");
 				k += 1;
 				*j = k;
 			}

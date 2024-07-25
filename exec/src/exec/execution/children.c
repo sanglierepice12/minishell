@@ -35,16 +35,16 @@ void	ft_exec_built_in(t_glob *glob)
 	}
 	close(temp_fd_in);
 	close(temp_fd_out);
-	return ;
 }
 
 void	ft_children(t_glob *glob, int pipefd[2], size_t *i)
 {
+	ft_handle_signal();
 	if (*i > 0)
 	{
 		if (dup2(glob->cmd->fd, STDIN_FILENO) == -1)
 		{
-			perror("MiniHell");
+			perror("miniHell");
 			ft_free_all(glob);
 			exit(EXIT_FAILURE);
 		}
@@ -55,7 +55,7 @@ void	ft_children(t_glob *glob, int pipefd[2], size_t *i)
 		close(pipefd[0]);
 		if (dup2(pipefd[1], STDOUT_FILENO) == -1)
 		{
-			perror("MiniHell");
+			perror("miniHell");
 			ft_free_all(glob);
 			exit(EXIT_FAILURE);
 		}
@@ -67,7 +67,6 @@ void	ft_children(t_glob *glob, int pipefd[2], size_t *i)
 		ft_free_all(glob);
 		exit(EXIT_FAILURE);
 	}
-
 	if (ft_is_builtin(glob->cmd[*i].command))
 	{
 		ft_call_builtins(glob, glob->cmd[*i]);

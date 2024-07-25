@@ -127,7 +127,10 @@ bool	ft_here_doc_tester(t_input *cmd);
 void	ft_executor(t_glob *glob);
 void	ft_exec_built_in(t_glob *glob);
 void	ft_children(t_glob *glob, int pipefd[2], size_t *i);
+
+/*----------SIGNALS----------*/
 void	ft_handle_signal();
+void	ft_handle_execution_signal(void);
 
 /*----------FREE&&ALLOC----------*/
 void	ft_bzero(void *s, size_t n);
@@ -140,6 +143,11 @@ void	free_tab(char **tab, int lenght);
 void	ft_free_lst(t_env **lst);
 void	ft_free_all(t_glob *glob);
 void	free_parse(t_glob *glob, int i, ssize_t size_cmd);
+void	ft_derror(char *cmd, char *variable, char *followed, int code);
+void	ft_env_derror(char *cmd, char *variable, char *followed, int code);
+void	ft_err_printf(char *msg, int code);
+void	ft_not_found(char *cmd, char *msg, int code);
+void	ft_error(int code);
 
 /*----------LINKED_LIST----------*/
 void	ft_print_this_node(t_env **env, char *value);

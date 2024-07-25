@@ -65,11 +65,11 @@ static bool	check_if_number(const char *cmd)
 
 void	ft_exit(t_glob *glob, t_input *cmd)
 {
-	int				code;
+	//int				code;
 	unsigned char	exit_code;
 
 	if (!cmd)
-		return (printf("no cmd \n"), (void)0);
+		return (ft_err_printf("no cmd", 1));
 	if (glob->cmd->args == 1)
 	{
 		printf("exit\n");
@@ -78,18 +78,19 @@ void	ft_exit(t_glob *glob, t_input *cmd)
 	}
 	if (!check_if_number(cmd->argv[1]))
 	{
-		printf("MinisHell: exit: %s: numeric argument required\n", \
+		ft_derror("exit", cmd->argv[1], "numeric argument required", 2);
+		/*printf("MinisHell: exit: %s: numeric argument required\n", \
 			cmd->argv[1]);
-		code = 255;
+		code = 2;*/
 	}
 	else
-		code = ft_atoi(cmd->argv[1]);
+		g_error_code = ft_atoi(cmd->argv[1]);
 	if (glob->cmd->args > 2)
 	{
-		code = 255;
-		return (printf("MinisHell: exit: too many arguments\n"), (void) 0);
+		g_error_code = 1;
+		return (printf("minisHell: exit: too many arguments\n"), (void) 0);
 	}
-	exit_code = (unsigned char)(code % 256);
+	exit_code = (unsigned char)(g_error_code % 256);
 	ft_free_all(glob);
 	exit(exit_code);
 }

@@ -63,7 +63,7 @@ static char	**ft_write_infile(char *word)
 		if (input == NULL)
 			return (NULL);
 		if (ft_comp_str(input, word) == 1)
-			break ;
+			break;
 		tab = add_tab(input, tab, &size);
 		free(input);
 	}

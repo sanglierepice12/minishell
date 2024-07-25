@@ -87,6 +87,7 @@ static char	*parse_word(char *input, int *i, t_glob *glob)
 static int	print_redir_error(char *c)
 {
 	printf("minisHell: syntax error near unexpected token `%s'\n", c);
+	g_error_code = 2;
 	return (0);
 }
 

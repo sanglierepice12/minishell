@@ -38,14 +38,14 @@ void	ft_update_pwd(t_env **env, char *value, char *path)
 	t_env	*temp;
 
 	if (!*env)
-		return (perror("MinisHell"), (void)0);
+		return (perror("minisHell"), (void)0);
 	if (!path)
 	{
 		temp = *env;
 		temp = ft_find_thing_in_env(&temp, "PWD");
 		path = ft_dup(temp->path);
 		if (!path)
-			return (perror("MinisHell PWD"), (void) 0);
+			return (perror("minisHell PWD"), (void) 0);
 	}
 	temp = *env;
 	while (temp)
@@ -72,22 +72,22 @@ void	ft_cd(t_glob *glob, t_input *cmd)
 {
 	t_env	*temp;
 
+	g_error_code = 0;
 	if (!cmd->args)
-		return (printf("pas dargv \n"), (void)0);
-	if (cmd->args > 1)
-		return (printf("minisHell: cd: too many arguments\n"), (void)0);
+		return (printf("no argv \n"), (void)0);
+	if (cmd->args > 2)
+		return (ft_err_printf("minisHell: cd: too many arguments", 1));
 	if (cmd->args == 1 || ft_comp_str(cmd->argv[1], "~") || \
 			ft_comp_str(cmd->argv[1], "--"))
 		return (chdir("/"), ft_update_pwd(&glob->env, \
-			"PWD", getcwd(NULL, 0)), (void) 0);
+			"PWD", getcwd(NULL, 0)));
 	else if (ft_comp_str(cmd->argv[1], "-"))
 	{
 		temp = ft_find_thing_in_env(&glob->env, "OLDPWD");
 		if (temp)
 		{
 			if (chdir(temp->path) != 0)
-				dprintf(2, "minisHell: cd: %s: No such file or directory\n", \
-					temp->path);
+				ft_derror("cd", temp->path, "no such file or directory", 1);
 		}
 		else
 			ft_lst_add_back(&glob->env, ft_new_node("PWD", getcwd(NULL, 0), 0));
@@ -96,6 +96,7 @@ void	ft_cd(t_glob *glob, t_input *cmd)
 	{
 		if (cmd->argv[1][1] != 'L' && cmd->argv[1][1] != 'P')
 		{
+			g_error_code = 2;
 			dprintf(2, "minisHell: cd: %c%c: invalid option\n" \
 					"cd: usage: [-L|[-P [-e]] [-@]] [dir]\n", \
 						cmd->argv[1][0], cmd->argv[1][1]);
@@ -106,8 +107,7 @@ void	ft_cd(t_glob *glob, t_input *cmd)
 	else
 	{
 		if (chdir(cmd->argv[1]) != 0)
-			dprintf(2, "minisHell: cd: %s: No such file or directory\n", \
-				cmd->argv[1]);
+			ft_derror("cd", cmd->argv[1], "no such file or directory", 1);
 	}
 	ft_update_pwd(&glob->env, "PWD", getcwd(NULL, 0));
 }

@@ -36,8 +36,7 @@ bool	ft_is_minus(char *c)
 {
 	if (c[0] == '-' && c[1] == '=')
 	{
-		printf("minisHell: export: `%s': invalid option\n", \
-                c);
+		printf("minisHell: export: `%s': invalid option\n", c);
 		return (0);
 	}
 	return (1);

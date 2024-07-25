@@ -15,7 +15,7 @@
 void	ft_free_here_doc(t_heredoc *heredoc)
 {
 	if (heredoc->file_infile)
-		free(heredoc->file_infile);
+		ft_free_double_tab(heredoc->file_infile);
 	if (heredoc->file_outfile)
 		free(heredoc->file_outfile);
 	/*if (heredoc->type_infile)

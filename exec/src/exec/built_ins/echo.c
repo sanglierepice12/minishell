@@ -38,7 +38,10 @@ void	ft_echo(t_input *cmd)
 	while (i < cmd->args)
 	{
 		if (/*cmd->argv[i][0] == '$' && */cmd->argv[i][0] == '?')
-			return (printf("%d\n", g_error_code), (void)0);
+		{
+			printf("%d\n", g_error_code);
+			return (g_error_code = 0, (void)0);
+		}
 		if (cmd->argv[i][0] == '-' && cmd->argv[i][1] == 'n' && flag)
 		{
 			j = 1;

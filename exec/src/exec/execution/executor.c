@@ -41,10 +41,10 @@ void	ft_executor(t_glob *glob)
 	while (i < glob->count_cmd)
 	{
 		if (i < glob->count_cmd - 1 && pipe(pipefd) == -1)
-			return (perror("MinisHell"), (void)0);
+			return (perror("minisHell"), (void)0);
 		pid = fork();
 		if (pid == -1)
-			return (perror("MinisHell"), (void)0);
+			return (perror("minisHell"), (void)0);
 		if (pid == 0)
 			ft_children(glob, pipefd, &i);
 		if (pipefd[1] > 2)

@@ -57,7 +57,8 @@ SRCS =	main.c 										\
 		utils/linked_list.c							\
 		utils/linked_follow.c						\
 		utils/ft_split.c							\
-		utils/ft_lib.c
+		utils/ft_lib.c								\
+		utils/error.c
 
 # Objet files
 OBJS =	$(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))

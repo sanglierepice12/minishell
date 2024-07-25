@@ -36,7 +36,7 @@ int	main(int arc, char **argv, char **env)
 
 	(void)argv;
 	if (arc > 1)
-		return (printf("To much args\n"), g_error_code);
+		return (printf("To much args\n"), 1);
 	ft_handle_signal();
 	glob.env = NULL;
 	if (env && *env)
