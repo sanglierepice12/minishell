@@ -31,7 +31,7 @@ void	remove_heredoc(char **argv, int pos, t_input *cmd)
 	cmd->args -= 2;
 }
 
-static char **add_tab(char *input, char **tab, size_t *size)
+static char	**add_tab(char *input, char **tab, size_t *size)
 {
 	char	**new_tab;
 	size_t	i;
@@ -49,7 +49,7 @@ static char **add_tab(char *input, char **tab, size_t *size)
 	return (new_tab);
 }
 
-static char **ft_write_infile(char *word)
+static char	**ft_write_infile(char *word)
 {
 	char	*input;
 	char	**tab;
@@ -65,8 +65,6 @@ static char **ft_write_infile(char *word)
 		if (ft_comp_str(input, word) == 1)
 			break ;
 		tab = add_tab(input, tab, &size);
-		//if (*input)
-		//	add_history(input);
 		free(input);
 	}
 
