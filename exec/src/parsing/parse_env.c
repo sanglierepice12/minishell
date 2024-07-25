@@ -116,7 +116,7 @@ static char	*find_env_var(char *word, t_glob *glob, int i, char *temp)
 	check_sup = 5;
 	if (ft_comp_str(temp, "?") == 1)
 	{
-		word = replace_env_word(word, i, "0", temp);
+		word = replace_env_word(word, i, "$", temp);
 		return (word);
 	}
 	if (ft_comp_str(temp, "$") == 1)
