@@ -33,9 +33,9 @@ bool	ft_here_doc_tester(t_input *cmd)
 	{
 		cmd->fd = open(cmd->heredoc.file_outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (cmd->fd == -1)
-			return (perror("MiniHello"), true);
+			return (perror("MiniHell"), true);
 		if (dup2(cmd->fd, 1) == -1)
-			return (perror("MiniHella"), true);
+			return (perror("MiniHell"), true);
 		close(cmd->fd);
 	}
 	if (ft_comp_str(cmd->heredoc.type_outfile, ">>"))

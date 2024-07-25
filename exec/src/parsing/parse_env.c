@@ -118,7 +118,7 @@ static char	*find_env_var(char *word, t_glob *glob, int i, char *temp)
 	{
 		word = replace_env_word(word, i, "0", temp);
 		return (word);
-    }
+	}
 	if (ft_comp_str(temp, "$") == 1)
 	{
 		pid = ft_cal_loc(7, sizeof(char));
@@ -128,9 +128,9 @@ static char	*find_env_var(char *word, t_glob *glob, int i, char *temp)
 			pid_num /= 10;
 			check_sup--;
 		}
-    	word = replace_env_word(word, i, pid, temp);
+		word = replace_env_word(word, i, pid, temp);
 		return (word);
-    }
+	}
 	check_sup = 1;
 	env = glob->env;
 	while (env != NULL)

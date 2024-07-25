@@ -59,18 +59,21 @@ static char	**rs_heredoc(char **argv, t_input *cmd, int i)
 void	remove_and_stock_all_heredoc(char **argv, t_input *cmd)
 {
 	int	i;
+	int	fd;
 
 	i = cmd->args - 2;
 	while (i > 0)
 	{
 		if (ft_comp_str(argv[i], ">") == 1)
 		{
-			cmd->heredoc.rest_heredoc = rs_heredoc(argv, cmd, i);
+			fd = open(argv[i + 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			close(fd);
 			remove_heredoc(argv, i, cmd);
 		}
 		else if (ft_comp_str(argv[i], ">>") == 1)
 		{
-			cmd->heredoc.rest_heredoc = rs_heredoc(argv, cmd, i);
+			fd = open(cmd->heredoc.file_outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
+			close(fd);
 			remove_heredoc(argv, i, cmd);
 		}
 		if (ft_comp_str(argv[i], "<") == 1)

@@ -84,72 +84,104 @@ static char	*parse_word(char *input, int *i, t_glob *glob)
 	return (word);
 }
 
-static int check_redir(char **argv, t_glob *glob, unsigned long num)
+static int	check_redir(char **argv, t_glob *glob, unsigned long num)
 {
-	int		i;
-	size_t	y;
-	int 	count_right;
-	int 	count_left;
+	int	size;
+	int	i;
+	int	y;
+	int	redir_right;
+	int	redir_left;
 
-	i = glob->cmd->args - 1;
-	if (ft_comp_str(argv[glob->cmd->args - 1], ">") == 1 || ft_comp_str(argv[glob->cmd->args - 1], ">>") == 1 \
-		|| ft_comp_str(argv[glob->cmd->args - 1], "<") == 1 || ft_comp_str(argv[glob->cmd->args - 1], "<<") == 1)
-	{
-		if (num == glob->count_cmd - 2)
-			return (printf("MinisHell: syntax error near unexpected token `|'\n"), 0);
-		else
-			return (printf("MinisHell: syntax error near unexpected token `newline'\n"), 0);
-	}
-	while (i >= 0)
+	size = glob->cmd[num].args;
+	i = 0;
+	redir_right = 0;
+	redir_left = 0;
+	while (i != size)
 	{
 		y = 0;
-		count_right = 0;
-		count_left = 0;
-		while (y != ft_strlen(argv[i]))
+		while (argv[i][y] != 0)
 		{
 			if (argv[i][y] == '>')
-				count_right++;
-			else
 			{
-				if (count_right > 2)
-					return (printf("MinisHell: syntax error near unexpected token `>>'\n"), 0);
-				else if (count_right == 2)
-					return (printf("MinisHell: syntax error near unexpected token `>'\n"), 0);
-				else
-					count_right = 0;
+				if (redir_right == 1 && y == 0)
+				{
+					if (argv[i][y + 1] == '>')
+						return (printf("minisHell: syntax error near unexpected token `>>'\n"), 0);
+					else
+						return (printf("minisHell: syntax error near unexpected token `>'\n"), 0);
+				}
+				if (redir_left == 1 && y == 0)
+				{
+					if (argv[i][y + 1] == '>')
+						return (printf("minisHell: syntax error near unexpected token `>>'\n"), 0);
+					else
+						return (printf("minisHell: syntax error near unexpected token `>'\n"), 0);
+				}
+				redir_right++;
 			}
-			if (argv[i][y] == '<')
-				count_left++;
+			else if (argv[i][y] == '<')
+			{
+				if (redir_right == 1 && y == 0)
+				{
+					if (argv[i][y + 1] == '<')
+						return (printf("minisHell: syntax error near unexpected token `<<'\n"), 0);
+					else
+						return (printf("minisHell: syntax error near unexpected token `<'\n"), 0);
+				}
+				if (redir_left == 1 && y == 0)
+				{
+					if (argv[i][y + 1] == '<')
+						return (printf("minisHell: syntax error near unexpected token `<<'\n"), 0);
+					else
+						return (printf("minisHell: syntax error near unexpected token `<'\n"), 0);
+				}
+				redir_left++;
+			}
 			else
 			{
-				if (count_left > 2)
-					return (printf("MinisHell: syntax error near unexpected token `<<'\n"), 0);
-				else if (count_left == 2)
-					return (printf("MinisHell: syntax error near unexpected token `<'\n"), 0);
-				else
-					count_left = 0;
+				if ((redir_left >= 2 || redir_right >= 2) && argv[i][y] == '|')
+					return (printf("minisHell: syntax error near unexpected token `|'\n"), 0);
+				else if (redir_right > 3)
+					return (printf("minisHell: syntax error near unexpected token `>>'\n"), 0);
+				else if (redir_right == 3)
+					return (printf("minisHell: syntax error near unexpected token `>'\n"), 0);
+				else if (redir_right == 2 && redir_left == 1)
+					return (printf("minisHell: syntax error near unexpected token `<'\n"), 0);
+				else if (redir_right == 2 && redir_left >= 2 && argv[i][y - 1] == '<')
+					return (printf("minisHell: syntax error near unexpected token `<<'\n"), 0);
+				else if (redir_left > 3)
+					return (printf("minisHell: syntax error near unexpected token `<<'\n"), 0);
+				else if (redir_left == 3)
+					return (printf("minisHell: syntax error near unexpected token `<'\n"), 0);
+				else if (redir_left == 2 && redir_right == 1)
+					return (printf("minisHell: syntax error near unexpected token `>'\n"), 0);
+				else if (redir_left == 2 && redir_right >= 2)
+					return (printf("minisHell: syntax error near unexpected token `>>'\n"), 0);
+				redir_left = 0;
+				redir_right = 0;
 			}
 			y++;
 		}
-		if (count_right > 3)
-			return (printf("MinisHell: syntax error near unexpected token `>>'\n"), 0);
-		else if (count_right == 3)
-			return (printf("MinisHell: syntax error near unexpected token `>'\n"), 0);
-		else
-			count_right = 0;
-		if (argv[i][y] == '<')
-			count_left++;
-		else
-		{
-			if (count_left > 3)
-				return (printf("MinisHell: syntax error near unexpected token `<<'\n"), 0);
-			else if (count_left == 3)
-				return (printf("MinisHell: syntax error near unexpected token `<'\n"), 0);
-			else
-				count_left = 0;
-			}
-		i--;
+		if (redir_right > 3)
+			return (printf("minisHell: syntax error near unexpected token `>>'\n"), 0);
+		else if (redir_right == 3)
+			return (printf("minisHell: syntax error near unexpected token `>'\n"), 0);
+		else if (redir_right == 2 && redir_left == 1)
+			return (printf("minisHell: syntax error near unexpected token `<'\n"), 0);
+		else if (redir_right == 2 && redir_left >= 2 && argv[i][y - 1] == '<')
+			return (printf("minisHell: syntax error near unexpected token `<<'\n"), 0);
+		else if (redir_left > 3)
+			return (printf("minisHell: syntax error near unexpected token `<<'\n"), 0);
+		else if (redir_left == 3)
+			return (printf("minisHell: syntax error near unexpected token `<'\n"), 0);
+		else if (redir_left == 2 && redir_right == 1)
+			return (printf("minisHell: syntax error near unexpected token `>'\n"), 0);
+		else if (redir_left == 2 && redir_right >= 2)
+			return (printf("minisHell: syntax error near unexpected token `>>'\n"), 0);
+		i++;
 	}
+	if (redir_right == 2 || redir_left == 2 || redir_right == 1 || redir_left == 1)
+		return (printf("minisHell: syntax error near unexpected token `newline'\n"), 0);
 	return (1);
 }
 
@@ -158,6 +190,7 @@ char	**set_argv(char *input, unsigned long num, t_glob *glob)
 	char	**argv;
 	int		i;
 	int		lenght;
+
 ////////////////////////////////////
 	if (!glob->cmd[num].args)
 		return (NULL);

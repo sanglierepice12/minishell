@@ -36,25 +36,28 @@ static int	check_quote(char *str, int len, int *checkquote, char c)
 	}
 	return (0);
 }
-/*
+
 static int	check_char_spec(char *str, int len, int i)
 {
+	int size;
+
+	size = 0;
 	if (str[len + i] == '>')
 	{
-		if (str[len + i + 1] == '>')
-			return (2);
-		return (1);
+		while (str[len + i + size] == '>')
+			size++;
+		return (size);
 	}
 	if (str[len + i] == '<')
 	{
-		if (str[len + i + 1] == '<')
-			return (2);
-		return (1);
+		while (str[len + i + size] == '<')
+			size++;
+		return (size);
 	}
 	if (str[len + i] == '|')
 		return (1);
 	return (0);
-}*/
+}
 
 int	ft_strlen_quote(char *str, int len, int *quote)
 {
@@ -63,8 +66,8 @@ int	ft_strlen_quote(char *str, int len, int *quote)
 
 	checkquote = 0;
 	i = 0;
-	//if (check_char_spec(str, len, i) != 0)
-	//	return (check_char_spec(str, len, i));
+	if (check_char_spec(str, len, i) != 0)
+		return (check_char_spec(str, len, i));
 	while (str[len + i])
 	{
 		if (check_quote(str, len + i, &checkquote, 34) == 1)
