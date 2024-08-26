@@ -76,6 +76,7 @@ char	*expend_env_var(char *word, t_glob *glob);
 char	**check_apply_heredoc(char **argv, t_input *command);
 void	remove_and_stock_all_heredoc(char **argv, t_input *command);
 void	remove_heredoc(char **argv, int pos, t_input *command);
+char	*ft_itoa(int num);
 
 void	show_struct(t_input *command);
 

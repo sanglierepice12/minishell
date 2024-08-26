@@ -108,27 +108,30 @@ static char	*find_env_var(char *word, t_glob *glob, int i, char *temp)
 {
 	t_env	*env;
 	int		check_sup;
-	char	*pid;
+	char	*tab;
 	int		pid_num;
 
-	pid = NULL;
+	tab = NULL;
 	pid_num = getpid();
 	check_sup = 5;
 	if (ft_comp_str(temp, "?") == 1)
 	{
-		word = replace_env_word(word, i, "$", temp);
+		tab = ft_itoa(g_error_code);
+		word = replace_env_word(word, i, tab, temp);
+		free(tab);
 		return (word);
 	}
 	if (ft_comp_str(temp, "$") == 1)
 	{
-		pid = ft_cal_loc(7, sizeof(char));
+		tab = ft_cal_loc(7, sizeof(char));
 		while (pid_num != 0)
 		{
-			pid[check_sup] = pid_num % 10 + 48;
+			tab[check_sup] = pid_num % 10 + 48;
 			pid_num /= 10;
 			check_sup--;
 		}
-		word = replace_env_word(word, i, pid, temp);
+		word = replace_env_word(word, i, tab, temp);
+		free(tab);
 		return (word);
 	}
 	check_sup = 1;

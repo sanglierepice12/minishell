@@ -82,6 +82,7 @@ int	ft_strlen_quote(char *str, int len, int *quote)
 	{
 		*quote = -1;
 		printf("minishell: syntax error with open quotes\n");
+		g_error_code = 2;
 		return (-1);
 	}
 	return (i);
