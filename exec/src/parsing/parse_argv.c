@@ -77,9 +77,6 @@ static char	*parse_word(char *input, int *i, t_glob *glob)
 	word = expend_env_var(word, glob);
 	if (!word)
 		return (word);
-	word = delete_quote(word, 0);
-	if (!word)
-		return (word);
 	*i += ft_strlen_quote(input, *i, &temp);
 	return (word);
 }
@@ -108,7 +105,9 @@ static int	check_redir(char **argv, t_glob *glob, unsigned long num)
 		y = 0;
 		while (argv[i][y] != 0)
 		{
-			if (argv[i][y] == '>')
+			if (if_in_quote(argv[i], y) == 1 || if_in_quote(argv[i], y) == 2)
+				y++;
+			else if (argv[i][y] == '>')
 			{
 				if (redir_right == 1 && y == 0)
 				{
@@ -166,8 +165,8 @@ static int	check_redir(char **argv, t_glob *glob, unsigned long num)
 					return (print_redir_error(">>"));
 				redir_left = 0;
 				redir_right = 0;
+				y++;
 			}
-			y++;
 		}
 		if ((redir_left >= 2 || redir_right >= 2) && argv[i][y] == '|')
 			return (print_redir_error("|"));
@@ -192,6 +191,12 @@ static int	check_redir(char **argv, t_glob *glob, unsigned long num)
 	if (redir_right == 2 || redir_left == 2 \
 		|| redir_right == 1 || redir_left == 1)
 		return (print_redir_error("newline"));
+	i = 0;
+	while (argv[i])
+	{
+		argv[i] = delete_quote(argv[i], 0);
+		i++;
+	}
 	return (1);
 }
 

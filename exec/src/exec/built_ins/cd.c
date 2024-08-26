@@ -87,7 +87,7 @@ void	ft_cd(t_glob *glob, t_input *cmd)
 		if (temp)
 		{
 			if (chdir(temp->path) != 0)
-				ft_derror("cd", temp->path, "no such file or directory", 1);
+				ft_derror("cd", temp->path, "No such file or directory", 1);
 		}
 		else
 			ft_lst_add_back(&glob->env, ft_new_node("PWD", getcwd(NULL, 0), 0));
@@ -107,7 +107,7 @@ void	ft_cd(t_glob *glob, t_input *cmd)
 	else
 	{
 		if (chdir(cmd->argv[1]) != 0)
-			ft_derror("cd", cmd->argv[1], "no such file or directory", 1);
+			ft_derror("cd", cmd->argv[1], "No such file or directory", 1);
 	}
 	ft_update_pwd(&glob->env, "PWD", getcwd(NULL, 0));
 }
