@@ -1,8 +1,0 @@
-Commande qui ne sont pas bien parse
-
-echo $?
-
-Truc a faire demain
-
-Finir parse env
-Faire la gestion d'erreur
