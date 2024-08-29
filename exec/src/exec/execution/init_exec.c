@@ -52,8 +52,11 @@ bool	ft_access(t_input *cmd)
 
 	if (!cmd)
 		return (ft_err_printf("no cmd", 1), 1);
-	if (!access(cmd->command, F_OK | X_OK))
-		return (0);
+	if (cmd->command[0] == '/' || cmd->command[0] == '.')
+	{
+		if (!access(cmd->command, F_OK | X_OK))
+			return (0);
+	}
 	if (ft_is_builtin(cmd->command))
 		return (0);
 	i = 0;
@@ -77,7 +80,7 @@ bool	ft_access(t_input *cmd)
 			free(temp_cmd);
 		}
 	}
-	if (access(cmd->argv[0], F_OK))
+	if (access(ft_str_join(cmd->argv[0], "/"), X_OK))
 		return (ft_not_found(cmd->argv[0], ": command not found", 127), 1);
 	return (0);
 }

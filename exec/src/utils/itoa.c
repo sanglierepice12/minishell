@@ -27,7 +27,7 @@ char	*ft_itoa(int num)
 	tab[size--] = '\0';
 	while (num > 9)
 	{
-		tab[size] = num + 48;
+		tab[size] = (num % 10) + 48;
 		size--;
 		num /= 10;
 	}
