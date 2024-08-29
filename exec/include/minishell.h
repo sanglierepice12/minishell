@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arbenois <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 03:29:49 by arbenois          #+#    #+#             */
-/*   Updated: 2024/07/03 13:53:13 by gostr            ###   ########.fr       */
+/*   Updated: 2024/08/29 20:20:54 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int		count_args(char *input, int lenght);
 int		get_length_num(char *input, int number);
 char	*expend_env_var(char *word, t_glob *glob);
 char	**check_apply_heredoc(char **argv, t_input *command);
-void	remove_and_stock_all_heredoc(char **argv, t_input *command);
+int		remove_and_stock_all_heredoc(char **argv, t_input *cmd);
 void	remove_heredoc(char **argv, int pos, t_input *command);
 char	*ft_itoa(int num);
 

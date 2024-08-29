@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gostr <gostr@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 17:44:23 by gostr             #+#    #+#             */
-/*   Updated: 2024/06/19 17:44:23 by gostr            ###   ########.fr       */
+/*   Updated: 2024/08/29 20:35:57 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,8 @@ void	ft_exit(t_glob *glob, t_input *cmd)
 	if (!check_if_number(cmd->argv[1]))
 	{
 		ft_derror("exit", cmd->argv[1], "numeric argument required", 2);
-		/*printf("MinisHell: exit: %s: numeric argument required\n", \
-			cmd->argv[1]);
-		code = 2;*/
+		ft_free_all(glob);
+		exit(2);
 	}
 	else
 		g_error_code = ft_atoi(cmd->argv[1]);

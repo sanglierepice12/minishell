@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remove_heredoc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arbenois <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 01:35:22 by arbenois          #+#    #+#             */
-/*   Updated: 2024/06/25 01:35:23 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/08/29 20:33:40 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,27 +56,39 @@ static char	**rs_heredoc(char **argv, t_input *cmd, int i)
 	return (temp);
 }
 
-void	remove_and_stock_all_heredoc(char **argv, t_input *cmd)
+int	remove_and_stock_all_heredoc(char **argv, t_input *cmd)
 {
-	int	i;
+	unsigned long	i;
 	int	fd;
 
-	i = cmd->args - 2;
-	while (i > 0)
+	i = 1;
+	while (i < cmd->args)
 	{
 		if (ft_comp_str(argv[i], ">") == 1)
 		{
 			fd = open(argv[i + 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			if (fd == -1)
+			{
+				perror("minisHell");
+				g_error_code = 1;
+				return (1);
+			}
 			close(fd);
 			remove_heredoc(argv, i, cmd);
 		}
 		else if (ft_comp_str(argv[i], ">>") == 1)
 		{
 			fd = open(cmd->heredoc.file_outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
+			if (fd == -1)
+			{
+				perror("minisHell");
+				g_error_code = 1;
+				return (1);
+			}
 			close(fd);
 			remove_heredoc(argv, i, cmd);
 		}
-		if (ft_comp_str(argv[i], "<") == 1)
+		else if (ft_comp_str(argv[i], "<") == 1)
 		{
 			cmd->heredoc.rest_heredoc = rs_heredoc(argv, cmd, i);
 			remove_heredoc(argv, i, cmd);
@@ -86,6 +98,8 @@ void	remove_and_stock_all_heredoc(char **argv, t_input *cmd)
 			cmd->heredoc.rest_heredoc = rs_heredoc(argv, cmd, i);
 			remove_heredoc(argv, i, cmd);
 		}
-		i--;
+		else
+			i++;
 	}
+	return (0);
 }

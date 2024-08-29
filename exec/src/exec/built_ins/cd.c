@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsuter <gsuter@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:01:38 by gsuter            #+#    #+#             */
-/*   Updated: 2024/05/23 16:01:38 by gsuter           ###   ########.fr       */
+/*   Updated: 2024/08/29 20:34:56 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	ft_update_pwd(t_env **env, char *value, char *path)
 void	ft_cd(t_glob *glob, t_input *cmd)
 {
 	t_env	*temp;
+	char	*gcp;
 
 	g_error_code = 0;
 	if (!cmd->args)
@@ -88,6 +89,12 @@ void	ft_cd(t_glob *glob, t_input *cmd)
 		{
 			if (chdir(temp->path) != 0)
 				ft_derror("cd", temp->path, "No such file or directory", 1);
+			else
+			{
+				gcp = getcwd(NULL, 0);
+				printf("%s\n", gcp);
+				free(gcp);
+			}
 		}
 		else
 			ft_lst_add_back(&glob->env, ft_new_node("PWD", getcwd(NULL, 0), 0));

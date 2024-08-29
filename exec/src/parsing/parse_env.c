@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 04:21:46 by arbenois          #+#    #+#             */
-/*   Updated: 2024/08/29 19:54:31 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/08/29 19:54:59 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ static char	*alloc_new_word(char *word, char *path, char *temp)
 
 	length = ft_strlen(word) - ft_strlen(temp) - 1 \
 				+ ft_strlen(path);
-	printf("%d\n", length);
 	if (length == 0)
 	{
 		tab = calloc(1, sizeof(char));

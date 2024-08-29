@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_heredoc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arbenois <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 04:22:26 by arbenois          #+#    #+#             */
-/*   Updated: 2024/06/17 04:22:28 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/08/29 20:27:43 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,7 @@ char	**check_apply_heredoc(char **argv, t_input *cmd)
 	cmd->heredoc.is_there_any = 0;
 	get_heredoc_infile(argv, cmd);
 	get_heredoc_outfile(argv, cmd);
-	remove_and_stock_all_heredoc(argv, cmd);
+	if (remove_and_stock_all_heredoc(argv, cmd) == 1)
+		return (NULL);
 	return (argv);
 }
