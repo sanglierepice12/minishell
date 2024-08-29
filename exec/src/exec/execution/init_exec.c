@@ -49,6 +49,7 @@ bool	ft_access(t_input *cmd)
 {
 	size_t	i;
 	char	*temp_cmd;
+	char 	*tempo;
 
 	if (!cmd)
 		return (ft_err_printf("no cmd", 1), 1);
@@ -80,8 +81,13 @@ bool	ft_access(t_input *cmd)
 			free(temp_cmd);
 		}
 	}
-	if (access(ft_str_join(cmd->argv[0], "/"), X_OK))
+	tempo = ft_str_join(cmd->argv[0], "/");
+	if (access(tempo, X_OK))
+	{
+		free(tempo);
 		return (ft_not_found(cmd->argv[0], ": command not found", 127), 1);
+	}
+	free(tempo);
 	return (0);
 }
 
