@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_in_struct.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arbenois <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 03:30:09 by arbenois          #+#    #+#             */
-/*   Updated: 2024/05/29 03:30:10 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/08/29 19:42:20 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ static void	initialize_command(t_input *cmd)
 	cmd->args = 0;
 }
 
-/*static void	print_command_info(t_input *cmd)
+static void	print_command_info(t_input *cmd)
 {
 	size_t	temp;
 	size_t	size;
@@ -145,7 +145,7 @@ static void	initialize_command(t_input *cmd)
 		printf("Heredoc file Outfile = %s\n", cmd->heredoc.file_outfile);
 	}
 	printf("\n");
-}*/
+}
 
 int	parse_in_struct(t_glob *glob, char *input)
 {
@@ -175,13 +175,13 @@ int	parse_in_struct(t_glob *glob, char *input)
 		i++;
 	}
 	glob->cmd[num_args].command = NULL;
-	/*i = 0;
+	i = 0;
 	while (i != num_args)
 	{
 		printf("Liste %d\n", i);
 		print_command_info(&glob->cmd[i]);
 		i++;
-	}*/
+	}
 	ft_init_exec(glob);
 	ft_free_cmd(glob);
 	return (1);

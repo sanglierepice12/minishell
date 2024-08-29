@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arbenois <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 04:21:46 by arbenois          #+#    #+#             */
-/*   Updated: 2024/06/17 04:21:47 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/08/29 19:51:04 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,15 @@ static char	*alloc_new_word(char *word, char *path, char *temp)
 
 	length = ft_strlen(word) - ft_strlen(temp) - 1 \
 				+ ft_strlen(path);
+	printf("%d\n", length);
 	if (length == 0)
 	{
 		tab = calloc(1, sizeof(char));
 		if (!tab)
 			return (0);
-		tab[0] = 0;
 		return (tab);
 	}
-	tab = calloc(length, sizeof(char));
+	tab = calloc(length + 1, sizeof(char));
 	if (!tab)
 		return (0);
 	tab[length] = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_argv.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arbenois <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 00:22:47 by arbenois          #+#    #+#             */
-/*   Updated: 2024/06/15 00:22:48 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/08/29 19:43:20 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ static char	*parse_word(char *input, int *i, t_glob *glob)
 	if (!word)
 		return (word);
 	word = expend_env_var(word, glob);
+	word = delete_quote(word, 0);
 	if (!word)
 		return (word);
 	*i += ft_strlen_quote(input, *i, &temp);
@@ -165,8 +166,8 @@ static int	check_redir(char **argv, t_glob *glob, unsigned long num)
 					return (print_redir_error(">>"));
 				redir_left = 0;
 				redir_right = 0;
-				y++;
 			}
+			y++;
 		}
 		if ((redir_left >= 2 || redir_right >= 2) && argv[i][y] == '|')
 			return (print_redir_error("|"));
@@ -191,12 +192,12 @@ static int	check_redir(char **argv, t_glob *glob, unsigned long num)
 	if (redir_right == 2 || redir_left == 2 \
 		|| redir_right == 1 || redir_left == 1)
 		return (print_redir_error("newline"));
-	i = 0;
+	/*i = 0;
 	while (argv[i])
 	{
 		argv[i] = delete_quote(argv[i], 0);
 		i++;
-	}
+	}*/
 	return (1);
 }
 
