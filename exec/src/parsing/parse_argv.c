@@ -75,9 +75,11 @@ static char	*parse_word(char *input, int *i, t_glob *glob)
 	if (!word)
 		return (word);
 	word = expend_env_var(word, glob);
-	word = delete_quote(word, 0);
 	if (!word)
 		return (word);
+	//word = delete_quote(word, 0);
+	//if (!word)
+	//	return (word);
 	*i += ft_strlen_quote(input, *i, &temp);
 	return (word);
 }
@@ -107,7 +109,11 @@ static int	check_redir(char **argv, t_glob *glob, unsigned long num)
 		while (argv[i][y] != 0)
 		{
 			if (if_in_quote(argv[i], y) == 1 || if_in_quote(argv[i], y) == 2)
+			{
 				y++;
+				redir_left = 0;
+				redir_right = 0;
+			}
 			else if (argv[i][y] == '>')
 			{
 				if (redir_right == 1 && y == 0)
@@ -169,35 +175,17 @@ static int	check_redir(char **argv, t_glob *glob, unsigned long num)
 			}
 			y++;
 		}
-		if ((redir_left >= 2 || redir_right >= 2) && argv[i][y] == '|')
-			return (print_redir_error("|"));
-		else if (redir_right > 3)
-			return (print_redir_error(">>"));
-		else if (redir_right == 3)
-			return (print_redir_error(">"));
-		else if (redir_right == 2 && redir_left == 1)
-			return (print_redir_error("<"));
-		else if (redir_right == 2 && redir_left >= 2 && argv[i][y - 1] == '<')
-			return (print_redir_error("<<"));
-		else if (redir_left > 3)
-			return (print_redir_error("<<"));
-		else if (redir_left == 3)
-			return (print_redir_error("<"));
-		else if (redir_left == 2 && redir_right == 1)
-			return (print_redir_error(">"));
-		else if (redir_left == 2 && redir_right >= 2)
-			return (print_redir_error(">>"));
 		i++;
 	}
 	if (redir_right == 2 || redir_left == 2 \
 		|| redir_right == 1 || redir_left == 1)
 		return (print_redir_error("newline"));
-	/*i = 0;
+	i = 0;
 	while (argv[i])
 	{
 		argv[i] = delete_quote(argv[i], 0);
 		i++;
-	}*/
+	}
 	return (1);
 }
 
@@ -207,10 +195,8 @@ char	**set_argv(char *input, unsigned long num, t_glob *glob)
 	int		i;
 	int		lenght;
 
-////////////////////////////////////
 	if (!glob->cmd[num].args)
 		return (NULL);
-	///////////////////////////////args + 1
 	argv = ft_cal_loc(glob->cmd[num].args + 1, sizeof(*argv));
 	if (argv == NULL)
 		return (NULL);

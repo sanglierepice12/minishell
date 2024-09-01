@@ -90,6 +90,15 @@ int	remove_and_stock_all_heredoc(char **argv, t_input *cmd)
 		}
 		else if (ft_comp_str(argv[i], "<") == 1)
 		{
+			// faut open le fichier pour voir si il existe
+			fd = open(argv[i + 1], O_WRONLY | O_APPEND, 0644);
+			if (fd == -1)
+			{
+				fprintf(stderr, "minisHell: No such file or directory\n");
+				g_error_code = 1;
+				return (1);
+			}
+			close(fd);
 			cmd->heredoc.rest_heredoc = rs_heredoc(argv, cmd, i);
 			remove_heredoc(argv, i, cmd);
 		}
