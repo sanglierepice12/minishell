@@ -12,13 +12,6 @@
 
 #include "../../include/minishell.h"
 
-void	handle_sigpipe(int sig)
-{
-	(void)sig;
-	g_error_code = 141;
-	write(STDERR_FILENO, "Broken pipe\n", 12);
-}
-
 void	handle_sigint(int sig)
 {
 	(void)sig;
@@ -40,7 +33,6 @@ void	ft_handle_signal(void)
 {
 	struct sigaction	sa_int;
 	struct sigaction	sa_quit;
-	struct sigaction	sa_pipe;
 
 	sa_int.sa_handler = handle_sigint;
 	sigemptyset(&sa_int.sa_mask);
@@ -54,14 +46,6 @@ void	ft_handle_signal(void)
 	sigemptyset(&sa_quit.sa_mask);
 	sa_quit.sa_flags = SA_RESTART;
 	if (sigaction(SIGQUIT, &sa_quit, NULL) == -1)
-	{
-		ft_error(1);
-		exit(EXIT_FAILURE);
-	}
-	sa_pipe.sa_handler = handle_sigpipe;
-	sigemptyset(&sa_pipe.sa_mask);
-	sa_pipe.sa_flags = SA_RESTART;
-	if (sigaction(SIGPIPE, &sa_pipe, NULL) == -1)
 	{
 		ft_error(1);
 		exit(EXIT_FAILURE);

@@ -51,7 +51,7 @@ bool	ft_here_doc_tester(t_input *cmd)
 	{
 		cmd->fd = open(cmd->heredoc.file_outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (cmd->fd == -1)
-			return (ft_error(1), true);
+			return (ft_error(2), true);
 		if (dup2(cmd->fd, 1) == -1)
 			return (perror("miniHell"), true);
 		close(cmd->fd);
@@ -60,7 +60,7 @@ bool	ft_here_doc_tester(t_input *cmd)
 	{
 		cmd->fd = open(cmd->heredoc.file_outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (cmd->fd == -1)
-			return (ft_error(1), true);
+			return (ft_error(2), true);
 		if (dup2(cmd->fd, 1) == -1)
 			return (ft_error(2), true);
 		close(cmd->fd);
@@ -69,7 +69,7 @@ bool	ft_here_doc_tester(t_input *cmd)
 	{
 		cmd->fd = open(cmd->heredoc.file_infile[0], O_RDONLY);
 		if (cmd->fd == -1)
-			return (ft_error(1), true);
+			return (ft_error(2), true);
 		if (dup2(cmd->fd, STDIN_FILENO) == -1)
 		{
 			close(cmd->fd);
@@ -87,7 +87,7 @@ bool	ft_here_doc_tester(t_input *cmd)
 		ft_write_heredoc_to_file(cmd->heredoc.file_infile, temp_file);
 		cmd->fd = open(temp_file, O_RDONLY);
 		if (cmd->fd == -1)
-			ft_error(1);
+			ft_error(2);
 		if (dup2(cmd->fd, STDIN_FILENO) == -1)
 			ft_error(2);
 		close(cmd->fd);

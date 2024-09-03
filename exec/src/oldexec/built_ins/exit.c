@@ -85,7 +85,10 @@ void	ft_exit(t_glob *glob, t_input *cmd)
 	else
 		g_error_code = ft_atoi(cmd->argv[1]);
 	if (glob->cmd->args > 2)
-		return (ft_derror("exit", cmd->argv[1], "too many arguments", 1));
+	{
+		g_error_code = 1;
+		return (ft_err_printf("minisHell: exit: too many arguments\n", 1));
+	}
 	exit_code = (unsigned char)(g_error_code % 256);
 	ft_free_all(glob);
 	exit(exit_code);

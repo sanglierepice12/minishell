@@ -39,6 +39,7 @@ void	ft_exec_built_in(t_glob *glob)
 
 void	ft_children(t_glob *glob, int pipefd[2], size_t *i)
 {
+	ft_handle_signal();
 	if (*i > 0)
 	{
 		if (dup2(glob->cmd->fd, STDIN_FILENO) == -1)
