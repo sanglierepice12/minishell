@@ -61,7 +61,7 @@ int	remove_and_stock_all_heredoc(char **argv, t_input *cmd)
 	unsigned long	i;
 	int	fd;
 
-	i = 1;
+	i = 0;
 	while (i < cmd->args)
 	{
 		if (ft_comp_str(argv[i], ">") == 1)

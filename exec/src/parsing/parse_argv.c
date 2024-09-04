@@ -20,10 +20,7 @@ int	count_args(char *input, int lenght)
 
 	args = 0;
 	quote = 0;
-	if (lenght != 0)
-		i = get_length_num(input, lenght);
-	else
-		i = 0;
+	i = get_length_num(input, lenght);
 	while (input[i])
 	{
 		if (ft_isspace(input[i]) == 1)
@@ -35,7 +32,7 @@ int	count_args(char *input, int lenght)
 		}
 		if (ft_isspace(input[i]) == 0)
 			i++;
-		if (input[i] == '|' && input[i - 1] == ' ' && input[i + 1] == ' ')
+		if (input[i] == '|' && if_in_quote(input, i) == 3)
 			break ;
 	}
 	return (args);
@@ -213,10 +210,12 @@ char	**set_argv(char *input, unsigned long num, t_glob *glob)
 		}
 		if (ft_isspace(input[i]) == 0)
 			i++;
-		if (input[i] == '|' && (input[i - 1] == ' ' && input[i + 1] == ' '))
+		if (input[i] == '|' && if_in_quote(input, i) == 3)
 			break ;
 	}
 	if (check_redir(argv, glob, num) == 0)
 		return (NULL);
+	// Faut sup les args vide / whitespaces causé par l'env
+	//check_env(argv);
 	return (check_apply_heredoc(argv, &glob->cmd[num]));
 }

@@ -102,7 +102,7 @@ static void	get_heredoc_infile(char **argv, t_input *cmd)
 	}
 }
 
-static void	get_heredoc_outfile(char **argv, t_input *cmd)
+static int	get_heredoc_outfile(char **argv, t_input *cmd)
 {
 	int	i;
 
@@ -127,6 +127,7 @@ static void	get_heredoc_outfile(char **argv, t_input *cmd)
 		}
 		i--;
 	}
+	return(1);
 }
 
 int	ft_strlen_bis(char **tab)
@@ -145,7 +146,8 @@ char	**check_apply_heredoc(char **argv, t_input *cmd)
 {
 	cmd->heredoc.is_there_any = 0;
 	get_heredoc_infile(argv, cmd);
-	get_heredoc_outfile(argv, cmd);
+	if (get_heredoc_outfile(argv,cmd) == 0)
+		return (NULL);
 	if (remove_and_stock_all_heredoc(argv, cmd) == 1)
 		return (NULL);
 	return (argv);
