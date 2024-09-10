@@ -186,6 +186,50 @@ static int	check_redir(char **argv, t_glob *glob, unsigned long num)
 	return (1);
 }
 
+static int	check_tab(char *tab)
+{
+	int	i;
+
+	i = 0;
+	while(tab[i])
+	{
+		if(ft_isspace(tab[i]) == 1)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+static void remove_tab(char **argv, int size, t_glob *glob, unsigned long num)
+{
+	int		i;
+	int		temp;
+	
+	i = 0;
+	temp = 0;
+	while(i + temp <= ft_strlen_bis(argv))
+	{
+		if (i == size)
+			temp++;
+		argv[i] = argv[i + temp];
+		i++;
+	}
+	glob->cmd[num].args--;
+}
+
+static void	check_env(char **argv, t_glob *glob, unsigned long num)
+{
+	int	i;
+
+	i = 0;
+	while (argv[i])
+	{
+		if (check_tab(argv[i]) == 1)
+			remove_tab(argv, i, glob, num);
+		i++;
+	}
+}
+
 char	**set_argv(char *input, unsigned long num, t_glob *glob)
 {
 	char	**argv;
@@ -215,7 +259,6 @@ char	**set_argv(char *input, unsigned long num, t_glob *glob)
 	}
 	if (check_redir(argv, glob, num) == 0)
 		return (NULL);
-	// Faut sup les args vide / whitespaces causé par l'env
-	//check_env(argv);
+	check_env(argv, glob, num);
 	return (check_apply_heredoc(argv, &glob->cmd[num]));
 }

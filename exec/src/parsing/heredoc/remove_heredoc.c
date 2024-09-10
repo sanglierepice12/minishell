@@ -66,6 +66,7 @@ int	remove_and_stock_all_heredoc(char **argv, t_input *cmd)
 	{
 		if (ft_comp_str(argv[i], ">") == 1)
 		{
+			printf("INFO1 = %ld\n", i);
 			fd = open(argv[i + 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 			if (fd == -1)
 			{

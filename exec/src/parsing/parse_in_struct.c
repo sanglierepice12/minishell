@@ -108,7 +108,6 @@ static void	initialize_command(t_input *cmd)
 	cmd->command = NULL;
 	cmd->args = 0;
 }
-
 /*
 static void	print_command_info(t_input *cmd)
 {
@@ -180,8 +179,8 @@ int	parse_in_struct(t_glob *glob, char *input)
 			return (free_parse(glob, 1, i), 0);
 		i++;
 	}
-	glob->cmd[num_args].command = NULL;
-	/*i = 0;
+	/*glob->cmd[num_args].command = NULL;
+	i = 0;
 	while (i != num_args)
 	{
 		printf("Liste %d\n", i);
