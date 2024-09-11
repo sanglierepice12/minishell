@@ -16,9 +16,9 @@ RED = \033[0;31m
 NC = \033[0m
 
 # Compiler and flags
-CC = cc
+CC = cc -std=gnu99
 CFLAGS = -Wall -Wextra -Werror -g3
-LDFLAGS = -lreadline
+LDFLAGS = -L/opt/homebrew/opt/readline/lib -I/opt/homebrew/opt/readline/include -lreadline
 
 # Source and objet directories
 SRC_DIR = ./src

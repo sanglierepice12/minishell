@@ -25,6 +25,7 @@ extern int	g_error_code;
 # include <dirent.h>
 # include <fcntl.h>
 # include <sys/wait.h>
+# include <signal.h>
 
 typedef struct s_env
 {
