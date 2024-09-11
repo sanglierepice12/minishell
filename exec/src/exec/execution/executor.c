@@ -40,6 +40,11 @@ void	ft_executor(t_glob *glob)
 		return (ft_exec_built_in(glob));
 	while (i < glob->count_cmd)
 	{
+		/*if (ft_here_doc_tester(&glob->cmd[i]) == true)
+		{
+			ft_free_all(glob);
+			return ;
+		}*/
 		if (i < glob->count_cmd - 1 && pipe(pipefd) == -1)
 			return (perror("minisHell"), (void)0);
 		pid = fork();

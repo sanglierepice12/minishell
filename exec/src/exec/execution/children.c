@@ -24,8 +24,8 @@ void	ft_exec_built_in(t_glob *glob)
 		temp_fd_out = dup(STDOUT_FILENO);
 		temp_fd_in = dup(STDIN_FILENO);
 	}
-	ft_here_doc_tester(&glob->cmd[0]);
-	ft_call_builtins(glob, glob->cmd[0]);
+	if (ft_here_doc_tester(glob->cmd) == false)
+		ft_call_builtins(glob, glob->cmd[0]);
 	if (glob->cmd->heredoc.is_there_any)
 	{
 		if (dup2(temp_fd_out, STDOUT_FILENO) == -1)
@@ -63,15 +63,16 @@ void	ft_children(t_glob *glob, int pipefd[2], size_t *i)
 		close(pipefd[1]);
 	if (ft_here_doc_tester(&glob->cmd[*i]))
 	{
+		close(glob->cmd->fd);
 		ft_free_all(glob);
-		exit(EXIT_FAILURE);
+		exit(g_error_code);
 	}
 	if (ft_is_builtin(glob->cmd[*i].command))
 	{
 		ft_call_builtins(glob, glob->cmd[*i]);
 		close(glob->cmd->fd);
 		ft_free_all(glob);
-		exit(EXIT_SUCCESS);
+		exit(g_error_code);
 	}
 	execve(glob->cmd[*i].argv[0], glob->cmd[*i].argv, glob->cmd[*i].path);
 	ft_not_found(glob->cmd[*i].argv[0], ": Permission denied", 126);
