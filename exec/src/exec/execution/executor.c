@@ -22,6 +22,8 @@ void	ft_wait()
 		g_error_code = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
 		g_error_code = 128 + WTERMSIG(status);
+	/*if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+		write(STDOUT_FILENO, "\n", 1);*/
 }
 
 void	ft_executor(t_glob *glob)
@@ -40,11 +42,6 @@ void	ft_executor(t_glob *glob)
 		return (ft_exec_built_in(glob));
 	while (i < glob->count_cmd)
 	{
-		/*if (ft_here_doc_tester(&glob->cmd[i]) == true)
-		{
-			ft_free_all(glob);
-			return ;
-		}*/
 		if (i < glob->count_cmd - 1 && pipe(pipefd) == -1)
 			return (perror("minisHell"), (void)0);
 		pid = fork();
