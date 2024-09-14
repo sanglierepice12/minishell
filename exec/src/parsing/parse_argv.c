@@ -74,9 +74,6 @@ static char	*parse_word(char *input, int *i, t_glob *glob)
 	word = expend_env_var(word, glob);
 	if (!word)
 		return (word);
-	//word = delete_quote(word, 0);
-	//if (!word)
-	//	return (word);
 	*i += ft_strlen_quote(input, *i, &temp);
 	return (word);
 }
@@ -88,95 +85,35 @@ static int	print_redir_error(char *c)
 	return (0);
 }
 
-static int	check_redir(char **argv, t_glob *glob, unsigned long num)
+static int	check_more_redir(char **argv, t_redir *redir, int i, int y)
 {
-	int	size;
-	int	i;
-	int	y;
-	int	redir_right;
-	int	redir_left;
+	if ((redir->left >= 2 || redir->right >= 2) && argv[i][y] == '|')
+		return (print_redir_error("|"));
+	else if (redir->right > 3)
+		return (print_redir_error(">>"));
+	else if (redir->right == 3)
+		return (print_redir_error(">"));
+	else if (redir->right == 2 && redir->left == 1)
+		return (print_redir_error("<"));
+	else if (redir->right == 2 && redir->left >= 2 && argv[i][y - 1] == '<')
+		return (print_redir_error("<<"));
+	else if (redir->left > 3)
+		return (print_redir_error("<<"));
+	else if (redir->left == 3)
+		return (print_redir_error("<"));
+	else if (redir->left == 2 && redir->right == 1)
+		return (print_redir_error(">"));
+	else if (redir->left == 2 && redir->right >= 2)
+		return (print_redir_error(">>"));
+	redir->left = 0;
+	redir->right = 0;
+	return (1);
+}
 
-	size = glob->cmd[num].args;
-	i = 0;
-	redir_right = 0;
-	redir_left = 0;
-	while (i != size)
-	{
-		y = 0;
-		while (argv[i][y] != 0)
-		{
-			if (if_in_quote(argv[i], y) == 1 || if_in_quote(argv[i], y) == 2)
-			{
-				y++;
-				redir_left = 0;
-				redir_right = 0;
-			}
-			else if (argv[i][y] == '>')
-			{
-				if (redir_right == 1 && y == 0)
-				{
-					if (argv[i][y + 1] == '>')
-						return (print_redir_error(">>"));
-					else
-						return (print_redir_error(">"));
-				}
-				if (redir_left == 1 && y == 0)
-				{
-					if (argv[i][y + 1] == '>')
-						return (print_redir_error(">>"));
-					else
-						return (print_redir_error(">"));
-				}
-				redir_right++;
-			}
-			else if (argv[i][y] == '<')
-			{
-				if (redir_right == 1 && y == 0)
-				{
-					if (argv[i][y + 1] == '<')
-						return (print_redir_error("<<"));
-					else
-						return (print_redir_error("<"));
-				}
-				if (redir_left == 1 && y == 0)
-				{
-					if (argv[i][y + 1] == '<')
-						return (print_redir_error("<<"));
-					else
-						return (print_redir_error("<"));
-				}
-				redir_left++;
-			}
-			else
-			{
-				if ((redir_left >= 2 || redir_right >= 2) && argv[i][y] == '|')
-					return (print_redir_error("|"));
-				else if (redir_right > 3)
-					return (print_redir_error(">>"));
-				else if (redir_right == 3)
-					return (print_redir_error(">"));
-				else if (redir_right == 2 && redir_left == 1)
-					return (print_redir_error("<"));
-				else if (redir_right == 2 && redir_left >= 2 && argv[i][y - 1] == '<')
-					return (print_redir_error("<<"));
-				else if (redir_left > 3)
-					return (print_redir_error("<<"));
-				else if (redir_left == 3)
-					return (print_redir_error("<"));
-				else if (redir_left == 2 && redir_right == 1)
-					return (print_redir_error(">"));
-				else if (redir_left == 2 && redir_right >= 2)
-					return (print_redir_error(">>"));
-				redir_left = 0;
-				redir_right = 0;
-			}
-			y++;
-		}
-		i++;
-	}
-	if (redir_right == 2 || redir_left == 2 \
-		|| redir_right == 1 || redir_left == 1)
-		return (print_redir_error("newline"));
+static int	remove_all_quote(char **argv)
+{
+	int	i;
+
 	i = 0;
 	while (argv[i])
 	{
@@ -186,28 +123,80 @@ static int	check_redir(char **argv, t_glob *glob, unsigned long num)
 	return (1);
 }
 
+static int	handle_redir(char **argv, t_redir *redir, int i, int y)
+{
+	if (argv[i][y] == '>')
+	{
+		if (redir->right == 1 || redir->left == 1)
+		{
+			if (argv[i][y + 1] == '>')
+				return (print_redir_error(">>"));
+			return (print_redir_error(">"));
+		}
+		redir->right++;
+	}
+	else if (argv[i][y] == '<')
+	{
+		if (redir->right == 1 || redir->left == 1)
+		{
+			if (argv[i][y + 1] == '<')
+				return (print_redir_error("<<"));
+			return (print_redir_error("<"));
+		}
+		redir->left++;
+	}
+	return (1);
+}
+
+static int	check_redir(char **argv, t_glob *glob, unsigned long num)
+{
+	size_t	i;
+	int		y;
+	t_redir	redir;
+
+	i = -1;
+	redir.left = 0;
+	redir.right = 0;
+	while (++i != glob->cmd[num].args)
+	{
+		y = -1;
+		while (argv[i][++y])
+		{
+			if (if_in_quote(argv[i], y) != 0)
+				continue ;
+			if (!handle_redir(argv, &redir, i, y))
+				return (0);
+			if (!check_more_redir(argv, &redir, i, y))
+				return (0);
+		}
+	}
+	if (redir.right > 0 || redir.left > 0)
+		return (print_redir_error("newline"));
+	return (remove_all_quote(argv));
+}
+
 static int	check_tab(char *tab)
 {
 	int	i;
 
 	i = 0;
-	while(tab[i])
+	while (tab[i])
 	{
-		if(ft_isspace(tab[i]) == 1)
+		if (ft_isspace(tab[i]) == 1)
 			return (0);
 		i++;
 	}
 	return (1);
 }
 
-static void remove_tab(char **argv, int size, t_glob *glob, unsigned long num)
+static void	remove_tab(char **argv, int size, t_glob *glob, unsigned long num)
 {
 	int		i;
 	int		temp;
-	
+
 	i = 0;
 	temp = 0;
-	while(i + temp <= ft_strlen_bis(argv))
+	while (i + temp <= ft_strlen_bis(argv))
 	{
 		if (i == size)
 			temp++;
@@ -230,33 +219,51 @@ static void	check_env(char **argv, t_glob *glob, unsigned long num)
 	}
 }
 
+static int	handle_word(char **argv, t_input_data *data, t_glob *glob)
+{
+	argv[data->lenght] = parse_word(data->input, &(data->i), glob);
+	if (data->lenght == -1 || argv[data->lenght] == NULL)
+	{
+		free_tab(argv, data->lenght);
+		return (0);
+	}
+	data->lenght++;
+	return (1);
+}
+
+static int	process_input(char **argv, t_input_data *data, t_glob *glob)
+{
+	while (data->input[data->i])
+	{
+		if (ft_isspace(data->input[data->i]) == 1)
+		{
+			if (!handle_word(argv, data, glob))
+				return (0);
+		}
+		if (ft_isspace(data->input[data->i]) == 0)
+			data->i++;
+		if (data->input[data->i] == '|' \
+			&& if_in_quote(data->input, data->i) == 3)
+			break ;
+	}
+	return (1);
+}
+
 char	**set_argv(char *input, unsigned long num, t_glob *glob)
 {
-	char	**argv;
-	int		i;
-	int		lenght;
+	char			**argv;
+	t_input_data	data;
 
 	if (!glob->cmd[num].args)
 		return (NULL);
 	argv = ft_cal_loc(glob->cmd[num].args + 1, sizeof(*argv));
 	if (argv == NULL)
 		return (NULL);
-	lenght = 0;
-	i = get_length_num(input, num);
-	while (input[i])
-	{
-		if (ft_isspace(input[i]) == 1)
-			argv[lenght++] = parse_word(input, &i, glob);
-		if (lenght == -1 || (lenght && (argv[lenght - 1] == NULL)))
-		{
-			free_tab(argv, lenght);
-			return (0);
-		}
-		if (ft_isspace(input[i]) == 0)
-			i++;
-		if (input[i] == '|' && if_in_quote(input, i) == 3)
-			break ;
-	}
+	data.input = input;
+	data.i = get_length_num(input, num);
+	data.lenght = 0;
+	if (!process_input(argv, &data, glob))
+		return (NULL);
 	if (check_redir(argv, glob, num) == 0)
 		return (NULL);
 	check_env(argv, glob, num);

@@ -64,6 +64,19 @@ typedef struct s_glob
 	t_heredoc	heredoc;
 }				t_glob;
 
+typedef struct	s_redir
+{
+	int	left;
+	int	right;
+}				t_redir;
+
+typedef struct	s_input_data
+{
+	char	*input;
+	int		i;
+	int		lenght;
+}				t_input_data;
+
 /*----------PARSE----------*/
 int		check_command(char *input);
 int 	parse_in_struct(t_glob *glob, char *input);

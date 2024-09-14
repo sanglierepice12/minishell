@@ -103,36 +103,34 @@ static char	*replace_env_word(char *word, int i, char *path, char *temp)
 	return (tab);
 }
 
+static int handle_special_cases(char **word, int i, char *temp)
+{
+	char	*tab;
+
+	if (ft_comp_str(temp, "?") == 1)
+	{
+		tab = ft_itoa(g_error_code);
+		*word = replace_env_word(*word, i, tab, temp);
+		free(tab);
+		return (1);
+	}
+	else if (ft_comp_str(temp, "$") == 1)
+	{
+		tab = ft_itoa(getpid());
+		*word = replace_env_word(*word, i, tab, temp);
+		free(tab);
+		return (1);
+	}
+	return (0);
+}
+
 static char	*find_env_var(char *word, t_glob *glob, int i, char *temp)
 {
 	t_env	*env;
 	int		check_sup;
-	char	*tab;
-	int		pid_num;
 
-	tab = NULL;
-	pid_num = getpid();
-	check_sup = 5;
-	if (ft_comp_str(temp, "?") == 1)
-	{
-		tab = ft_itoa(g_error_code);
-		word = replace_env_word(word, i, tab, temp);
-		free(tab);
+	if (handle_special_cases(&word, i, temp) == 1)
 		return (word);
-	}
-	if (ft_comp_str(temp, "$") == 1)
-	{
-		tab = ft_cal_loc(7, sizeof(char));
-		while (pid_num != 0)
-		{
-			tab[check_sup] = pid_num % 10 + 48;
-			pid_num /= 10;
-			check_sup--;
-		}
-		word = replace_env_word(word, i, tab, temp);
-		free(tab);
-		return (word);
-	}
 	check_sup = 1;
 	env = glob->env;
 	while (env != NULL)

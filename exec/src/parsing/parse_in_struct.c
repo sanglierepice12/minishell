@@ -149,12 +149,27 @@ static void	initialize_command(t_input *cmd)
 	printf("\n");
 }*/
 
+static int	setup_command(t_glob *glob, char *input, int i)
+{
+	initialize_command(&glob->cmd[i]);
+	glob->cmd[i].args = count_args(input, i);
+	if ((ssize_t)glob->cmd[i].args == -1)
+		return (0);
+	glob->cmd[i].argv = set_argv(input, i, glob);
+	if (glob->cmd[i].argv == NULL)
+		return (ft_free_cmd(glob), 0);
+	if (glob->cmd[i].args)
+		glob->cmd[i].command = glob->cmd[i].argv[0];
+	if (glob->cmd[i].command == NULL)
+		return (free_parse(glob, 1, i), 0);
+	return (1);
+}
+
 int	parse_in_struct(t_glob *glob, char *input)
 {
 	int	num_args;
 	int	i;
 
-	i = 0;
 	num_args = get_num_args(input);
 	if (num_args == -1)
 		return (0);
@@ -162,30 +177,13 @@ int	parse_in_struct(t_glob *glob, char *input)
 	glob->cmd = ft_cal_loc((num_args + 1), sizeof(t_input));
 	if (!glob->cmd)
 		return (0);
+	i = 0;
 	while (i != num_args)
 	{
-		initialize_command(&glob->cmd[i]);
-		glob->cmd[i].args = count_args(input, i);
-		if ((ssize_t)glob->cmd[i].args == -1)
+		if (!setup_command(glob, input, i))
 			return (0);
-		glob->cmd[i].argv = set_argv(input, i, glob);
-		if (glob->cmd[i].argv == NULL)
-			return (ft_free_cmd(glob), 0);
-			/*return (free_parse(glob, 2, i), 0);*/
-		if (glob->cmd[i].args)
-			glob->cmd[i].command = glob->cmd[i].argv[0];
-		if (glob->cmd[i].command == NULL)
-			return (free_parse(glob, 1, i), 0);
 		i++;
 	}
-	glob->cmd[num_args].command = NULL;
-	/*i = 0;
-	while (i != num_args)
-	{
-		printf("Liste %d\n", i);
-		print_command_info(&glob->cmd[i]);
-		i++;
-	}*/
 	ft_init_exec(glob);
 	ft_free_cmd(glob);
 	return (1);
