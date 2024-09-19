@@ -25,6 +25,7 @@ extern int	g_error_code;
 # include <dirent.h>
 # include <fcntl.h>
 # include <sys/wait.h>
+# include <sys/ioctl.h>
 # include <signal.h>
 
 /*********ENUM**********/
@@ -105,6 +106,7 @@ void	show_struct(t_input *command);
 
 /*----------LIB----------*/
 int		ft_isspace(char c);
+void	*ft_memset(void *s, int c, size_t n);
 
 /*----------UTILS----------*/
 int		ft_strncmp(const char *s1, const char *s2, size_t n);

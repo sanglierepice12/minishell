@@ -12,12 +12,6 @@
 
 #include "../../../include/minishell.h"
 
-/*void	handle_child_sigint(int sig)
-{
-	(void)sig;
-	exit(130);
-}*/
-
 void	ft_exec_built_in(t_glob *glob)
 {
 	int		temp_fd_in;
@@ -45,7 +39,6 @@ void	ft_exec_built_in(t_glob *glob)
 
 void	ft_children(t_glob *glob, int pipefd[2], size_t *i)
 {
-	//signal(SIGINT, handle_child_sigint);
 	if (*i > 0)
 	{
 		if (dup2(glob->cmd->fd, STDIN_FILENO) == -1)

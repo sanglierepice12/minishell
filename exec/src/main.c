@@ -37,7 +37,6 @@ int	main(int arc, char **argv, char **env)
 	(void)argv;
 	if (arc > 1)
 		return (printf("To much args\n"), 1);
-	ft_handle_signal();
 	glob.env = NULL;
 	if (env && *env)
 		ft_get_env(&glob, env);
@@ -45,6 +44,7 @@ int	main(int arc, char **argv, char **env)
 		ft_main_get_env(&glob);
 	while (1)
 	{
+		ft_handle_signal(PARENT);
 		input = readline("minisHell-1.0$ ");
 		if (input == NULL)
 			return (ft_free_env(glob.env), g_error_code);
