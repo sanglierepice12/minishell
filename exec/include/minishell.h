@@ -88,7 +88,7 @@ int		count_args(char *input, int lenght);
 int		get_length_num(char *input, int number);
 char	*expend_env_var(char *word, t_glob *glob);
 char	**check_apply_heredoc(char **argv, t_input *command);
-int		remove_and_stock_all_heredoc(char **argv, t_input *cmd);
+int		remove_and_stock_all_heredoc(char **argv, t_input *cmd, unsigned long i);
 void	remove_heredoc(char **argv, int pos, t_input *command);
 char	*ft_itoa(int num);
 

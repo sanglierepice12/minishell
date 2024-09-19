@@ -56,58 +56,83 @@ static char	**rs_heredoc(char **argv, t_input *cmd, int i)
 	return (temp);
 }
 
-int	remove_and_stock_all_heredoc(char **argv, t_input *cmd)
+static int	handle_single_right_redir(char **argv, t_input *cmd, int i)
 {
-	unsigned long	i;
 	int	fd;
 
-	i = 0;
+	fd = open(argv[i + 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd == -1)
+	{
+		perror("minisHell");
+		g_error_code = 1;
+		return (1);
+	}
+	close(fd);
+	remove_heredoc(argv, i, cmd);
+	return (0);
+}
+
+static int	handle_double_right_redir(char **argv, t_input *cmd, int i)
+{
+	int	fd;
+
+	fd = open(argv[i + 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (fd == -1)
+	{
+		perror("minisHell");
+		g_error_code = 1;
+		return (1);
+	}
+	close(fd);
+	remove_heredoc(argv, i, cmd);
+	return (0);
+}
+
+static int	handle_single_left_redir(char **argv, t_input *cmd, int i)
+{
+	int	fd;
+
+	fd = open(argv[i + 1], O_WRONLY, O_RDONLY, 0644);
+	if (fd == -1)
+	{
+		fprintf(stderr, "minisHell: No such file or directory\n");
+		g_error_code = 1;
+		return (1);
+	}
+	close(fd);
+	cmd->heredoc.rest_heredoc = rs_heredoc(argv, cmd, i);
+	remove_heredoc(argv, i, cmd);
+	return (0);
+}
+
+static int	handle_double_left_redir(char **argv, t_input *cmd, int i)
+{
+	cmd->heredoc.rest_heredoc = rs_heredoc(argv, cmd, i);
+	remove_heredoc(argv, i, cmd);
+	return (0);
+}
+
+int	remove_and_stock_all_heredoc(char **argv, t_input *cmd, unsigned long i)
+{
 	while (i < cmd->args)
 	{
 		if (ft_comp_str(argv[i], ">") == 1)
 		{
-			printf("INFO1 = %ld\n", i);
-			fd = open(argv[i + 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			if (fd == -1)
-			{
-				perror("minisHell");
-				g_error_code = 1;
+			if (handle_single_right_redir(argv, cmd, i) == 1)
 				return (1);
-			}
-			close(fd);
-			remove_heredoc(argv, i, cmd);
 		}
 		else if (ft_comp_str(argv[i], ">>") == 1)
 		{
-			fd = open(cmd->heredoc.file_outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
-			if (fd == -1)
-			{
-				perror("minisHell");
-				g_error_code = 1;
+			if (handle_double_right_redir(argv, cmd, i) == 1)
 				return (1);
-			}
-			close(fd);
-			remove_heredoc(argv, i, cmd);
 		}
 		else if (ft_comp_str(argv[i], "<") == 1)
 		{
-			// faut open le fichier pour voir si il existe
-			fd = open(argv[i + 1], O_WRONLY | O_APPEND, 0644);
-			if (fd == -1)
-			{
-				fprintf(stderr, "minisHell: No such file or directory\n");
-				g_error_code = 1;
+			if (handle_single_left_redir(argv, cmd, i) == 1)
 				return (1);
-			}
-			close(fd);
-			cmd->heredoc.rest_heredoc = rs_heredoc(argv, cmd, i);
-			remove_heredoc(argv, i, cmd);
 		}
 		else if (ft_comp_str(argv[i], "<<") == 1)
-		{
-			cmd->heredoc.rest_heredoc = rs_heredoc(argv, cmd, i);
-			remove_heredoc(argv, i, cmd);
-		}
+			handle_double_left_redir(argv, cmd, i);
 		else
 			i++;
 	}

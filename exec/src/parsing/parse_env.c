@@ -12,45 +12,54 @@
 
 #include "../../include/minishell.h"
 
-static char	*copy_word_env(char *input, int i)
+static char	*allocate_special_char(char c)
 {
 	char	*tab;
-	int		lenght;
 
-	lenght = 0;
-	if (input[i] == '?')
-	{
-		tab = calloc(2, sizeof(char));
-		tab[0] = '?';
-		return (tab);
-	}
-	if (input[i] == '$')
-	{
-		tab = calloc(2, sizeof(char));
-		tab[0] = '$';
-		return (tab);
-	}
-	while (input[i + lenght] && lenght >= 0)
-	{
-		if (input[i + lenght] == ' ' || input[i + lenght] == 39 \
-			|| input[i + lenght] == 34 || input[i + lenght] == '$')
-			break ;
-		lenght++;
-	}
-	tab = calloc(lenght + 1, sizeof(char));
+	tab = calloc(2, sizeof(char));
 	if (!tab)
 		return (NULL);
-	tab[lenght] = 0;
-	lenght = 0;
-	while (input[i + lenght])
+	tab[0] = c;
+	return (tab);
+}
+
+static int	get_word_length(char *input, int i)
+{
+	int	length;
+
+	length = 0;
+	while (input[i + length] && input[i + length] != ' ' && \
+		input[i + length] != 39 && input[i + length] != 34 && \
+		input[i + length] != '$')
+		length++;
+	return (length);
+}
+
+static char	*allocate_and_copy_word(char *input, int i, int length)
+{
+	char	*tab;
+	int		j;
+
+	tab = calloc(length + 1, sizeof(char));
+	if (!tab)
+		return (NULL);
+	j = 0;
+	while (j < length)
 	{
-		if (input[i + lenght] == ' ' || input[i + lenght] == 39 \
-			|| input[i + lenght] == 34 || input[i + lenght] == '$')
-			break ;
-		tab[lenght] = input[i + lenght];
-		lenght++;
+		tab[j] = input[i + j];
+		j++;
 	}
 	return (tab);
+}
+
+static char	*copy_word_env(char *input, int i)
+{
+	int	length;
+
+	if (input[i] == '?' || input[i] == '$')
+		return (allocate_special_char(input[i]));
+	length = get_word_length(input, i);
+	return (allocate_and_copy_word(input, i, length));
 }
 
 static char	*alloc_new_word(char *word, char *path, char *temp)
@@ -103,7 +112,7 @@ static char	*replace_env_word(char *word, int i, char *path, char *temp)
 	return (tab);
 }
 
-static int handle_special_cases(char **word, int i, char *temp)
+static int	handle_special_cases(char **word, int i, char *temp)
 {
 	char	*tab;
 
@@ -152,9 +161,22 @@ static char	*find_env_var(char *word, t_glob *glob, int i, char *temp)
 	return (word);
 }
 
-char	*expend_env_var(char *word, t_glob *glob)
+static char	*expand_single_var(char *word, t_glob *glob, int *i)
 {
 	char	*temp;
+
+	temp = copy_word_env(word, *i + 1);
+	if (!temp)
+		return (free(word), NULL);
+	word = find_env_var(word, glob, *i, temp);
+	free(temp);
+	if (!word)
+		return (NULL);
+	return (word);
+}
+
+char	*expend_env_var(char *word, t_glob *glob)
+{
 	int		i;
 
 	i = 0;
@@ -166,13 +188,9 @@ char	*expend_env_var(char *word, t_glob *glob)
 			if (ft_isspace(word[i + 1]) == 1 && \
 				word[i + 1] != '"' && word[i + 1] != 0)
 			{
-				temp = copy_word_env(word, i + 1);
-				if (!temp)
-					return (free(word), NULL);
-				word = find_env_var(word, glob, i, temp);
+				word = expand_single_var(word, glob, &i);
 				if (!word)
-					return (free(temp), NULL);
-				free(temp);
+					return (NULL);
 			}
 			else
 				i++;

@@ -39,7 +39,7 @@ static int	check_quote(char *str, int len, int *checkquote, char c)
 
 static int	check_char_spec(char *str, int len, int i)
 {
-	int size;
+	int	size;
 
 	size = 0;
 	if (str[len + i] == '>')
