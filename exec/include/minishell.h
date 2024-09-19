@@ -27,6 +27,15 @@ extern int	g_error_code;
 # include <sys/wait.h>
 # include <signal.h>
 
+/*********ENUM**********/
+typedef enum	s_sig
+{
+	PARENT,
+	CHILD,
+	HEREDOC
+}	t_sig;
+
+/********STRUCT********/
 typedef struct s_env
 {
 	char			*value;
@@ -126,7 +135,6 @@ void	ft_call_builtins(t_glob *glob, t_input cmd);
 void	ft_pwd(t_input *cmd, t_env **env);
 void	ft_cd(t_glob *glob, t_input *cmd);
 void	ft_echo(t_input *cmd);
-void	ft_ls();
 void	ft_get_env(t_glob *glob, char **env);
 void	ft_unset(t_glob *glob, t_input *cmd);
 void	ft_export(t_env **env, t_input *cmd);
@@ -144,7 +152,7 @@ void	ft_exec_built_in(t_glob *glob);
 void	ft_children(t_glob *glob, int pipefd[2], size_t *i);
 
 /*----------SIGNALS----------*/
-void	ft_handle_signal();
+void	ft_handle_signal(t_sig SIG);
 void	ft_handle_execution_signal(void);
 
 /*----------FREE&&ALLOC----------*/

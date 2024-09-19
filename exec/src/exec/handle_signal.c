@@ -42,7 +42,7 @@ void	handle_sigquit(int sig)
 	}
 }
 
-void	ft_handle_signal(void)
+void	ft_handle_signal(t_sig SIG)
 {
 	struct sigaction	sa_int;
 	struct sigaction	sa_quit;
