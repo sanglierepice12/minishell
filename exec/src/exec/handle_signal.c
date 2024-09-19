@@ -36,7 +36,10 @@ void	handle_sigint(int sig)
 void	handle_sigchild(int sig)
 {
 	if (sig == SIGINT)
+	{
+		write(2, "\n", 1);
 		g_error_code = 130;
+	}
 	if (sig == SIGQUIT)
 	{
 		g_error_code = 131;
