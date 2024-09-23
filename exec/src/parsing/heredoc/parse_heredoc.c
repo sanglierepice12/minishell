@@ -64,6 +64,9 @@ static char	**ft_write_infile(char *word)
 			return (NULL);
 		if (ft_comp_str(input, word) == 1)
 			break ;
+		/*ft_handle_signal(HEREDOC);
+		if (g_error_code == 130)
+			return (tab);*/
 		tab = add_tab(input, tab, &size);
 		free(input);
 	}

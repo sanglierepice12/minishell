@@ -47,6 +47,8 @@ void	ft_write_heredoc_to_file(char **lines, const char *filename)
 
 bool	ft_here_doc_tester(t_input *cmd)
 {
+	char	*temp_file;
+
 	if (ft_comp_str(cmd->heredoc.type_outfile, ">"))
 	{
 		cmd->fd = open(cmd->heredoc.file_outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
@@ -79,9 +81,7 @@ bool	ft_here_doc_tester(t_input *cmd)
 	}
 	if (ft_comp_str(cmd->heredoc.type_infile, "<<"))
 	{
-		char *temp_file;
-
-		temp_file = ft_dup("/tmp/heredoc_temp_file");
+		temp_file = ft_dup("/tmp/gbnrozahgulbazilbgebahjgb");
 		if (!temp_file)
 			ft_err_printf("nothing in temp file\n", 1);
 		ft_write_heredoc_to_file(cmd->heredoc.file_infile, temp_file);

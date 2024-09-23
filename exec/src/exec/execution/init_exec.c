@@ -32,15 +32,16 @@ void	ft_reset_in_out(t_glob *glob)
 
 bool	ft_is_builtin(char *cmd)
 {
-	if ((ft_comp_str(cmd, "cd"))	\
-	|| (ft_comp_str(cmd, "pwd"))	\
-	|| (ft_comp_str(cmd, "echo"))	\
-	|| (ft_comp_str(cmd, "env"))	\
-	|| (ft_comp_str(cmd, "unset"))	\
-	|| (ft_comp_str(cmd, "export"))	\
-	|| (ft_comp_str(cmd, "exit"))	\
-	|| (ft_comp_str(cmd, "clear")))	\
-		return (1);
+	if ((ft_comp_str(cmd, "cd")) \
+		|| (ft_comp_str(cmd, "pwd")) \
+		|| (ft_comp_str(cmd, "echo")) \
+		|| (ft_comp_str(cmd, "env")) \
+		|| (ft_comp_str(cmd, "printenv"))
+		|| (ft_comp_str(cmd, "unset")) \
+		|| (ft_comp_str(cmd, "export")) \
+		|| (ft_comp_str(cmd, "exit")) \
+		|| (ft_comp_str(cmd, "clear"))) \
+			return (1);
 	else
 		return (0);
 }
@@ -49,7 +50,7 @@ bool	ft_access(t_input *cmd)
 {
 	size_t	i;
 	char	*temp_cmd;
-	char 	*tempo;
+	char	*tempo;
 
 	if (!cmd)
 		return (ft_err_printf("no cmd", 1), 1);

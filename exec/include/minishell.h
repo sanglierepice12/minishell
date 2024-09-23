@@ -138,6 +138,7 @@ void	ft_pwd(t_input *cmd, t_env **env);
 void	ft_cd(t_glob *glob, t_input *cmd);
 void	ft_echo(t_input *cmd);
 void	ft_get_env(t_glob *glob, char **env);
+void	ft_get_env_follow(char **env, t_glob *glob);
 void	ft_unset(t_glob *glob, t_input *cmd);
 void	ft_export(t_env **env, t_input *cmd);
 void	ft_exit(t_glob *glob, t_input *cmd);
@@ -146,12 +147,13 @@ void	ft_env(t_glob *glob, t_input *cmd);
 /*----------EXECUTION----------*/
 void	ft_init_exec(t_glob *glob);
 char	**ft_get_all_path(t_env	**env);
+void	ft_get_all_path_follow(t_env *temp, size_t *len);
 void	ft_reset_in_out(t_glob *glob);
 void	ft_unlink_cmd(t_glob *glob);
 bool	ft_here_doc_tester(t_input *cmd);
 void	ft_executor(t_glob *glob);
 void	ft_exec_built_in(t_glob *glob);
-void	ft_children(t_glob *glob, int pipefd[2], size_t *i);
+void	ft_children(t_glob *glob, int pipefd[2], const size_t *i);
 
 /*----------SIGNALS----------*/
 void	ft_handle_signal(t_sig SIG);
@@ -186,5 +188,24 @@ void	bubble_sort(t_env **head);
 void	ft_swap_nodes(t_env *a, t_env *b);
 t_env	*copy_node(t_env *head);
 t_env	*copy_list(t_env *head);
+
+/*----------COLORS----------*/
+#define RESET   "\033[0m"
+#define BLACK   "\033[30m"      /* Black */
+#define RED     "\033[31m"      /* Red */
+#define GREEN   "\033[32m"      /* Green */
+#define YELLOW  "\033[33m"      /* Yellow */
+#define BLUE    "\033[34m"      /* Blue */
+#define MAGENTA "\033[35m"      /* Magenta */
+#define CYAN    "\033[36m"      /* Cyan */
+#define WHITE   "\033[37m"      /* White */
+#define BOLDBLACK   "\033[1m\033[30m"      /* Bold Black */
+#define BOLDRED     "\033[1m\033[31m"      /* Bold Red */
+#define BOLDGREEN   "\033[1m\033[32m"      /* Bold Green */
+#define BOLDYELLOW  "\033[1m\033[33m"      /* Bold Yellow */
+#define BOLDBLUE    "\033[1m\033[34m"      /* Bold Blue */
+#define BOLDMAGENTA "\033[1m\033[35m"      /* Bold Magenta */
+#define BOLDCYAN    "\033[1m\033[36m"      /* Bold Cyan */
+#define BOLDWHITE   "\033[1m\033[37m"      /* Bold White */
 
 #endif

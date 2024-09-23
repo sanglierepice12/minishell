@@ -12,7 +12,7 @@
 
 #include "../../../include/minishell.h"
 
-void	ft_wait()
+void	ft_wait(void)
 {
 	int	status;
 
@@ -22,6 +22,8 @@ void	ft_wait()
 		g_error_code = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
 		g_error_code = 128 + WTERMSIG(status);
+	if (g_error_code == 141)
+		g_error_code = 0;
 }
 
 void	ft_executor(t_glob *glob)

@@ -36,7 +36,7 @@ static void	ft_check_export_args(char *cmd, size_t	flag, size_t *j, char *env)
 
 static char	*ft_find_value(char *env, int flag, char *temp, size_t *j)
 {
-	size_t	i;
+	ssize_t	i;
 	size_t	k;
 	size_t	len;
 	char	*value;
@@ -44,8 +44,8 @@ static char	*ft_find_value(char *env, int flag, char *temp, size_t *j)
 	len = ft_strlen(env);
 	k = *j;
 	value = NULL;
-	i = 0;
-	while (env[i])
+	i = -1;
+	while (i++, env[i])
 	{
 		if (len > 1 && env[i + 1] && env[i] == '=' && !flag)
 		{
@@ -72,7 +72,6 @@ static char	*ft_find_value(char *env, int flag, char *temp, size_t *j)
 			}
 			break ;
 		}
-		i++;
 	}
 	if (!env[i] && !value)
 	{

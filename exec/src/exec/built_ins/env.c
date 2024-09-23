@@ -23,14 +23,7 @@ char	**ft_get_all_path(t_env	**env)
 		return (ft_err_printf("no env", 1), NULL);
 	temp = *env;
 	len = 0;
-	while (temp->next)
-	{
-		if (temp->path)
-			len += 1;
-		temp = temp->next;
-	}
-	while (temp->prev)
-		temp = temp->prev;
+	ft_get_all_path_follow(temp, &len);
 	test = ft_cal_loc(len + 1, sizeof(char *));
 	if (!test)
 		return (ft_err_printf("error malloc", 1), NULL);
@@ -90,38 +83,12 @@ static void	ft_get_first_node(t_glob *glob, char **env)
 
 void	ft_get_env(t_glob *glob, char **env)
 {
-	int			i;
-	int			j;
-	char		*value;
-	char		*path;
 	t_env		*temp;
 
 	ft_get_first_node(glob, env);
 	if (!env)
 		return (ft_err_printf("no env", 1));
-	i = 1;
-	while (env[i])
-	{
-		j = 0;
-		while (env[i][j])
-		{
-			if (env[i][j] == '=')
-			{
-				path = ft_dup(env[i] + j + 1);
-				if (!path)
-					return (ft_err_printf("error malloc", 1));
-				value = ft_str_copy_n(env[i], j);
-				if (!value)
-					return (ft_err_printf("error malloc", 1));
-				ft_lst_add_back(&glob->env, ft_new_node(value, path, 0));
-				free(path);
-				free(value);
-				break ;
-			}
-			j++;
-		}
-		i++;
-	}
+	ft_get_env_follow(env, glob);
 	temp = glob->env;
 	if (!ft_find_thing_in_env(&temp, "PATH"))
 		ft_main_get_env(glob);

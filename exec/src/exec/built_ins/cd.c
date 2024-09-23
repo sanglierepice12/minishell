@@ -55,7 +55,7 @@ char	*ft_get_pwd_path(t_env **env, char *path)
 		path = ft_dup(temp->path);
 		if (!path)
 		{
-			perror("minisHell PWD");
+			perror("minisHell");
 			return (NULL);
 		}
 	}

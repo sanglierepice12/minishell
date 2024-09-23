@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
 int	g_error_code = 0;
 
 void	show_struct(t_input *command)

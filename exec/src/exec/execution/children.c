@@ -23,21 +23,23 @@ void	ft_exec_built_in(t_glob *glob)
 	{
 		temp_fd_out = dup(STDOUT_FILENO);
 		temp_fd_in = dup(STDIN_FILENO);
+		if (temp_fd_in == -1 || temp_fd_out == -1)
+			return (ft_error(1));
 	}
 	if (ft_here_doc_tester(glob->cmd) == false)
 		ft_call_builtins(glob, glob->cmd[0]);
 	if (glob->cmd->heredoc.is_there_any)
 	{
 		if (dup2(temp_fd_out, STDOUT_FILENO) == -1)
-			return (perror("dup"), (void) 0);
+			return (ft_error(1));
 		if (dup2(temp_fd_in, STDIN_FILENO))
-			return (perror("dup"), (void) 0);
+			return (ft_error(1));
 	}
 	close(temp_fd_in);
 	close(temp_fd_out);
 }
 
-void	ft_children(t_glob *glob, int pipefd[2], size_t *i)
+void	ft_children(t_glob *glob, int pipefd[2], const size_t *i)
 {
 	if (*i > 0)
 	{

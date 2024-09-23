@@ -41,6 +41,7 @@ SRCS =	main.c 										\
 		exec/built_ins/cd.c							\
 		exec/built_ins/echo.c						\
 		exec/built_ins/env.c						\
+		exec/built_ins/env_part2.c					\
 		exec/built_ins/unset.c						\
 		exec/built_ins/export.c						\
 		exec/built_ins/exit.c						\

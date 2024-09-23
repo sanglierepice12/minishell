@@ -24,7 +24,7 @@ void	ft_call_builtins(t_glob *glob, t_input cmd)
 		ft_echo(&cmd);
 	if (ft_strncmp(cmd.command, "clear", 5) == 0)
 		printf("\033[2J\033[H");
-	if (ft_strncmp(cmd.command, "env", 3) == 0)
+	if (ft_comp_str(cmd.command, "env") || ft_comp_str(cmd.command, "printenv"))
 		ft_env(glob, &cmd);
 	if (ft_strncmp(cmd.command, "unset", 5) == 0)
 		ft_unset(glob, &cmd);
