@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsuter <gsuter@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 16:38:16 by gsuter            #+#    #+#             */
-/*   Updated: 2024/05/21 16:38:16 by gsuter           ###   ########.fr       */
+/*   Updated: 2024/09/23 05:48:48 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,31 +28,36 @@ void	ft_print_this_node(t_env **env, char *value)
 	ft_err_printf("no value found", 1);
 }
 
+static char	*get_path_from_env(t_env **env)
+{
+	t_env	*temp;
+
+	temp = *env;
+	temp = ft_find_thing_in_env(&temp, "PWD");
+	if (!temp)
+		return (NULL);
+	return (ft_dup(temp->path));
+}
+
 void	ft_pwd(t_input *cmd, t_env **env)
 {
 	char	*path;
-	t_env	*temp;
 
 	g_error_code = 0;
-	path = NULL;
 	if (*env && cmd->args < 2)
 	{
 		path = getcwd(NULL, 0);
 		if (!path)
-		{
-			temp = *env;
-			temp = ft_find_thing_in_env(&temp, "PWD");
-			path = ft_dup(temp->path);
-			if (!path)
-				return (ft_err_printf("no path in PWD", 1));
-		}
+			path = get_path_from_env(env);
+		if (!path)
+			return (ft_err_printf("no path in PWD", 1));
 		printf("%s\n", path);
 		free(path);
 	}
 	else if (cmd->argv[1] && cmd->argv[1][0] == '-' && cmd->argv[1][1])
 	{
 		dprintf(2, "bash: pwd: %c%c: invalid option\n", cmd->argv[1][0],
-				cmd->argv[1][1]);
+			cmd->argv[1][1]);
 		ft_err_printf("pwd: usage: pwd [-LP]", 2);
 	}
 	else

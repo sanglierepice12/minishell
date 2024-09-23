@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 17:44:23 by gostr             #+#    #+#             */
-/*   Updated: 2024/08/29 20:35:57 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/23 05:47:40 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ static bool	check_if_number(const char *cmd)
 
 void	ft_exit(t_glob *glob, t_input *cmd)
 {
-	//int				code;
 	unsigned char	exit_code;
 
 	if (!cmd)

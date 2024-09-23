@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   compare.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsuter <gsuter@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:48:37 by gsuter            #+#    #+#             */
-/*   Updated: 2024/06/03 16:48:37 by gsuter           ###   ########.fr       */
+/*   Updated: 2024/09/23 05:39:12 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ bool	ft_export_is_printable(char *c)
 		if (!c[i])
 			return (0);
 		if ((c[i] < 'a' || c[i] > 'z') && (c[i] < 'A' || c[i] > 'Z')
-			&& (c[i] < '0' || c[i] > '9') && c[i] != '=' && c[i] != '/' && c[i] != '+' \
+			&& (c[i] < '0' || c[i] > '9') \
+			&& c[i] != '=' && c[i] != '/' && c[i] != '+' \
 			&& c[i] != '_')
 			return (1);
 		if (c[i] == '-' && c[i + 1] == '=')
@@ -44,7 +45,8 @@ bool	ft_is_minus(char *c)
 
 bool	ft_is_numbalpha(char c)
 {
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c == '_') || (c == '-'))
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') \
+		|| (c == '_') || (c == '-'))
 		return (1);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsuter <gsuter@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 17:39:16 by gsuter            #+#    #+#             */
-/*   Updated: 2024/05/31 17:39:16 by gsuter           ###   ########.fr       */
+/*   Updated: 2024/09/23 05:47:25 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ static void	ft_check_export_args(char *cmd, size_t	flag, size_t *j, char *env)
 	if (!ft_is_numbalpha(cmd[0]) && !flag)
 	{
 		ft_env_derror("export", env, "not a valid identifier", 1);
-		/*printf("minisHell: export: `%s': not a valid identifier\n", \
-				env);*/
 		*j = *j + 1;
 		return ;
 	}
@@ -68,7 +66,7 @@ static char	*ft_find_value(char *env, int flag, char *temp, size_t *j)
 			{
 				ft_env_derror("export", env, "invalid option", 2);
 				printf("export: usage: export \\"
-					   "[-fn] [name[=value] ...] or export -p \n");
+					"[-fn] [name[=value] ...] or export -p \n");
 				k += 1;
 				*j = k;
 			}
@@ -101,7 +99,7 @@ static void	ft_create_env_nodes(t_env **env, t_input *cmd, int flag)
 		if (j_copy + 1 == j)
 		{
 			free(value);
-			continue;
+			continue ;
 		}
 		temp = ft_find_thing_in_env(env, value);
 		if (ft_str_chr(cmd->argv[j], '='))

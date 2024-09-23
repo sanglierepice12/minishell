@@ -3,71 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   linked_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsuter <gsuter@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:19:11 by gsuter            #+#    #+#             */
-/*   Updated: 2024/05/23 17:19:11 by gsuter           ###   ########.fr       */
+/*   Updated: 2024/09/23 05:42:39 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+static void	print_env_var(t_env *temp, int flag)
+{
+	if (flag == 0)
+	{
+		if (temp->flag == 0)
+			printf("%s=%s\n", temp->value, temp->path);
+	}
+	else
+	{
+		if (temp->flag == 1 && !temp->path)
+			printf("declare -x %s\n", temp->value);
+		else
+			printf("declare -x %s=\"%s\"\n", temp->value, temp->path);
+	}
+}
+
 void	print_env(t_env **head, int flag)
 {
 	t_env	*temp;
 
-	if (*head)
+	if (!*head)
 	{
-		temp = *head;
-		while (temp->next)
-		{
-			if (flag == 0)
-			{
-				if (temp->flag == 0)
-					printf("%s=%s\n", temp->value, temp->path);
-			}
-			else
-			{
-				if (temp->flag == 1 && !temp->path)
-					printf("declare -x %s\n", temp->value);
-				else
-					printf("declare -x %s=\"%s\"\n", temp->value, temp->path);
-			}
-			temp = temp->next;
-		}
-		if (flag == 0)
-		{
-			if (temp->flag == 0)
-				printf("%s=%s\n", temp->value, temp->path);
-		}
-		else
-		{
-			if (temp->flag == 1 && !temp->path)
-				printf("declare -x %s\n", temp->value);
-			else
-				printf("declare -x %s=\"%s\"\n", temp->value, temp->path);
-		}
-	}
-	else
 		printf("\n");
-}
-/*void	ft_free_lst(t_env **lst)
-{
-	t_env	*temp;
-
-	while (*lst)
-	{
-		temp = (*lst)->next;
-		(*lst)->flag = 0;
-		if ((*lst)->path)
-			free((*lst)->path);
-		if ((*lst)->value)
-			free((*lst)->value);
-		free(*lst);
-		*lst = temp;
+		return ;
 	}
-	free(*lst);
-}*/
+	temp = *head;
+	while (temp->next)
+	{
+		print_env_var(temp, flag);
+		temp = temp->next;
+	}
+	print_env_var(temp, flag);
+}
 
 char	*ft_dup(const char *s)
 {

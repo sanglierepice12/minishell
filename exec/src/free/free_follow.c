@@ -14,19 +14,20 @@
 
 void	free_parse(t_glob *glob, int i, ssize_t size_cmd)
 {
-	ssize_t	size_argv;
+	size_t	size;
 
+	size = 0;
 	if (i >= 2)
 	{
-		size_cmd--;
 		while (size_cmd != -1)
 		{
-			size_argv = glob->cmd[size_cmd].args - 1;
-			while (size_argv != -1)
+			size = 0;
+			while (size != glob->cmd[size_cmd].args)
 			{
-				free(glob->cmd[size_cmd].argv[size_argv]);
-				size_argv--;
+				free(glob->cmd[size_cmd].argv[size]);
+				size++;
 			}
+			printf("%ld %ld\n", size_cmd, size);
 			free(glob->cmd[size_cmd].argv);
 			size_cmd--;
 		}
@@ -41,6 +42,12 @@ void	free_tab(char **tab, int lenght)
 {
 	if (!tab)
 		return ;
+	if (lenght == 0)
+	{
+		free(tab[0]);
+		free(tab);
+		return ;
+	}
 	while (lenght != 0)
 	{
 		lenght--;

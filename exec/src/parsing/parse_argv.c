@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 00:22:47 by arbenois          #+#    #+#             */
-/*   Updated: 2024/08/29 19:43:20 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/23 05:43:16 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,24 +189,34 @@ static int	check_tab(char *tab)
 	return (1);
 }
 
-static void	remove_tab(char **argv, int size, t_glob *glob, unsigned long num)
+static char	**remove_tab(char **argv, int size, t_glob *glob, unsigned long num)
 {
 	int		i;
 	int		temp;
+	char	**tab;
+	int		argc;
 
 	i = 0;
 	temp = 0;
-	while (i + temp <= ft_strlen_bis(argv))
+	argc = ft_strlen_bis(argv);
+	if (argc == 1)
+		return (free_tab(argv, argc), NULL);
+	tab = ft_cal_loc(argc, sizeof(char *));
+	if (!tab)
+		return (free_tab(argv, argc), NULL);
+	while (i + temp <= argc - 1)
 	{
 		if (i == size)
 			temp++;
-		argv[i] = argv[i + temp];
+		tab[i] = argv[i + temp];
 		i++;
 	}
 	glob->cmd[num].args--;
+	free_tab(argv, argc);
+	return (tab);
 }
 
-static void	check_env(char **argv, t_glob *glob, unsigned long num)
+static int	check_env(char **argv, t_glob *glob, unsigned long num)
 {
 	int	i;
 
@@ -214,9 +224,16 @@ static void	check_env(char **argv, t_glob *glob, unsigned long num)
 	while (argv[i])
 	{
 		if (check_tab(argv[i]) == 1)
-			remove_tab(argv, i, glob, num);
+		{
+			argv = remove_tab(argv, i, glob, num);
+			if (!argv)
+				return (0);
+			if (argv[i] == NULL)
+				return (1);
+		}
 		i++;
 	}
+	return (1);
 }
 
 static int	handle_word(char **argv, t_input_data *data, t_glob *glob)
@@ -266,6 +283,7 @@ char	**set_argv(char *input, unsigned long num, t_glob *glob)
 		return (NULL);
 	if (check_redir(argv, glob, num) == 0)
 		return (NULL);
-	check_env(argv, glob, num);
+	if (check_env(argv, glob, num) == 0)
+		return (NULL);
 	return (check_apply_heredoc(argv, &glob->cmd[num]));
 }

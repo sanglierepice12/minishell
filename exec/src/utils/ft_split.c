@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gostr <gostr@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 16:13:32 by gostr             #+#    #+#             */
-/*   Updated: 2024/07/10 16:13:38 by gostr            ###   ########.fr       */
+/*   Updated: 2024/09/23 05:42:58 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 		i++;
 	return (i);
 }
-
 
 static size_t	ft_count_words(const char *str, char c)
 {
