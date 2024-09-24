@@ -35,31 +35,46 @@ static int	check_tab(char *tab)
 	return (1);
 }
 
+//changed this function. now remove the line it is asked to remove,
+//then moved all element in the array up one rank.
+//as the function is called in a loop, you will come back to it to remove all other whitespace only string
 static void remove_tab(char **argv, int size, t_glob *glob, unsigned long num)
 {
-	int		i;
-	int		temp;
-	int		argc;
-
-	i = 0;
-	temp = 0;
-	argc = ft_strlen_bis(argv);
-	while (i + temp < argc)
-	{
-		if (i == size)
-			temp++;
-		//added this free
-		free(argv[i]);
-		//you didn't free what was at argv[i] before moving the pointer,
-		// so what was there was definitly lost
-		argv[i] = argv[i + temp];
-		i++;
+	free(argv[size]);
+	while (argv[size +1]){
+		argv[size] = argv[size + 1];
+		size++;
 	}
-	//old pos, most certainly an invalid free as argv[i++] has been moved to argv[i]
-//	free(argv[i]);
-	argv[i] = 0;
+	argv[size] = 0;
 	glob->cmd[num].args--;
 }
+
+
+//static void remove_tab(char **argv, int size, t_glob *glob, unsigned long num)
+//{
+//	int		i;
+//	int		temp;
+//	int		argc;
+//
+//	i = 0;
+//	temp = 0;
+//	argc = ft_strlen_bis(argv);
+//	while (i + temp < argc)
+//	{
+//		if (i == size)
+//			temp++;
+//		//added this free
+//		free(argv[i]);
+//		//you didn't free what was at argv[i] before moving the pointer,
+//		// so what was there was definitly lost
+//		argv[i] = argv[i + temp];
+//		i++;
+//	}
+//	//old pos, most certainly an invalid free as argv[i++] has been moved to argv[i]
+////	free(argv[i]);
+//	argv[i] = 0;
+//	glob->cmd[num].args--;
+//}
 
 int	count_args(char *input, int lenght)
 {
