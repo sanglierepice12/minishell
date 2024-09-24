@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   free_follow.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gostr <gostr@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 12:28:30 by gostr             #+#    #+#             */
-/*   Updated: 2024/07/17 12:29:33 by gostr            ###   ########.fr       */
+/*   Updated: 2024/09/24 10:37:59 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	free_parse(t_glob *glob, int i, ssize_t size_cmd)
+/*void	free_parse(t_glob *glob, int i, ssize_t size_cmd)
 {
 	size_t	size;
 
@@ -36,12 +36,13 @@ void	free_parse(t_glob *glob, int i, ssize_t size_cmd)
 		ft_free_double_tab(glob->cmd[i].path);
 	if (i >= 1)
 		free(glob->cmd);
-}
+}*/
 
 void	free_tab(char **tab, int lenght)
 {
 	if (!tab)
 		return ;
+	printf("info lenght = %d\n", lenght);
 	if (lenght == 0)
 	{
 		free(tab[0]);

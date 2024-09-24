@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 00:22:47 by arbenois          #+#    #+#             */
-/*   Updated: 2024/09/24 10:03:51 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/24 10:32:43 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,13 @@ static int	check_tab(char *tab)
 	int	i;
 
 	i = 0;
+	if (!tab)
+		return (0);
 	while (tab[i])
 	{
 		if (ft_isspace(tab[i]) == 1)
+			return (0);
+		if (tab[i] == 0)
 			return (0);
 		i++;
 	}
@@ -35,8 +39,6 @@ static void remove_tab(char **argv, int size, t_glob *glob, unsigned long num)
 	i = 0;
 	temp = 0;
 	argc = ft_strlen_bis(argv);
-	if (argc == 1)
-		return (free_tab(argv, argc), (void)NULL);
 	while (i + temp < argc)
 	{
 		if (i == size)
@@ -226,8 +228,7 @@ static int	check_env(char **argv, t_glob *glob, unsigned long num)
 			remove_tab(argv, i, glob, num);
 			if (!argv)
 				return (0);
-			if (argv[i] == NULL)
-				return (1);
+			i = -1;
 		}
 		i++;
 	}
