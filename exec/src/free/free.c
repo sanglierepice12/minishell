@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 17:09:48 by gsuter            #+#    #+#             */
-/*   Updated: 2024/09/24 10:45:17 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/24 12:09:41 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ void	ft_free_cmd(t_glob *glob)
 	i = 0;
 	while (i < glob->count_cmd && &glob->cmd[i])
 	{
-		if (glob->cmd[i].initargs && glob->cmd[i].argv)
-			free_tab(glob->cmd[i].argv, glob->cmd[i].initargs);
+		if (glob->cmd[i].args && glob->cmd[i].argv)
+			free_tab(glob->cmd[i].argv, glob->cmd[i].args);
 		if (glob->cmd[i].args && glob->cmd[i].path)
 			ft_free_double_tab(glob->cmd[i].path);
 		ft_free_here_doc(&glob->cmd[i].heredoc);
