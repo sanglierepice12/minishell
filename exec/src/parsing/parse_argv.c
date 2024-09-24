@@ -6,11 +6,46 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 00:22:47 by arbenois          #+#    #+#             */
-/*   Updated: 2024/09/23 05:43:16 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/24 08:41:32 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+static int	check_tab(char *tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		if (ft_isspace(tab[i]) == 1)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+static void remove_tab(char **argv, int size, t_glob *glob, unsigned long num)
+{
+	int		i;
+	int		temp;
+	int		argc;
+
+	i = 0;
+	temp = 0;
+	argc = ft_strlen_bis(argv);
+	if (argc == 1)
+		return (free_tab(argv, argc), (void)NULL);
+	while (i + temp < argc)
+	{
+		if (i == size)
+			temp++;
+		argv[i] = argv[i + temp];
+		i++;
+	}
+	glob->cmd[num].args--;
+}
 
 int	count_args(char *input, int lenght)
 {
@@ -110,14 +145,18 @@ static int	check_more_redir(char **argv, t_redir *redir, int i, int y)
 	return (1);
 }
 
-static int	remove_all_quote(char **argv)
+static int	remove_all_quote(char **argv, t_glob *glob, unsigned long num)
 {
 	int	i;
 
 	i = 0;
+	(void) glob;
+	(void) num;
 	while (argv[i])
 	{
 		argv[i] = delete_quote(argv[i], 0);
+		if (!argv)
+			return (0);
 		i++;
 	}
 	return (1);
@@ -172,48 +211,7 @@ static int	check_redir(char **argv, t_glob *glob, unsigned long num)
 	}
 	if (redir.right > 0 || redir.left > 0)
 		return (print_redir_error("newline"));
-	return (remove_all_quote(argv));
-}
-
-static int	check_tab(char *tab)
-{
-	int	i;
-
-	i = 0;
-	while (tab[i])
-	{
-		if (ft_isspace(tab[i]) == 1)
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-static char	**remove_tab(char **argv, int size, t_glob *glob, unsigned long num)
-{
-	int		i;
-	int		temp;
-	char	**tab;
-	int		argc;
-
-	i = 0;
-	temp = 0;
-	argc = ft_strlen_bis(argv);
-	if (argc == 1)
-		return (free_tab(argv, argc), NULL);
-	tab = ft_cal_loc(argc, sizeof(char *));
-	if (!tab)
-		return (free_tab(argv, argc), NULL);
-	while (i + temp <= argc - 1)
-	{
-		if (i == size)
-			temp++;
-		tab[i] = argv[i + temp];
-		i++;
-	}
-	glob->cmd[num].args--;
-	free_tab(argv, argc);
-	return (tab);
+	return (remove_all_quote(argv, glob, num));
 }
 
 static int	check_env(char **argv, t_glob *glob, unsigned long num)
@@ -225,7 +223,7 @@ static int	check_env(char **argv, t_glob *glob, unsigned long num)
 	{
 		if (check_tab(argv[i]) == 1)
 		{
-			argv = remove_tab(argv, i, glob, num);
+			remove_tab(argv, i, glob, num);
 			if (!argv)
 				return (0);
 			if (argv[i] == NULL)
@@ -273,7 +271,7 @@ char	**set_argv(char *input, unsigned long num, t_glob *glob)
 
 	if (!glob->cmd[num].args)
 		return (NULL);
-	argv = ft_cal_loc(glob->cmd[num].args + 1, sizeof(*argv));
+	argv = ft_cal_loc(glob->cmd[num].args + 1, sizeof(char *));
 	if (argv == NULL)
 		return (NULL);
 	data.input = input;
