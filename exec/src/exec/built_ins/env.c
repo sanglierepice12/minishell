@@ -30,8 +30,8 @@ char	**ft_get_all_path(t_env	**env)
 	i = -1;
 	while (++i, temp->next)
 	{
-		if (temp->path)
-			test[i] = ft_dup(temp->path);
+		if (temp->value)
+			test[i] = ft_dup(temp->value);
 		temp = temp->next;
 	}
 	return (test);
@@ -46,7 +46,7 @@ t_env	*ft_find_thing_in_env(t_env **env, char *value)
 	temp = *env;
 	while (temp)
 	{
-		if (ft_comp_str(temp->value, value))
+		if (ft_comp_str(temp->key, value))
 			return (temp);
 		temp = temp->next;
 	}

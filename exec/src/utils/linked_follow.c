@@ -17,12 +17,12 @@ void	ft_change_node(t_env **temp, char *value, char *path)
 	t_env	*temp2;
 
 	temp2 = *temp;
-	if (temp2->path)
-		free(temp2->path);
 	if (temp2->value)
 		free(temp2->value);
-	temp2->value = ft_dup(value);
-	temp2->path = ft_dup(path);
+	if (temp2->key)
+		free(temp2->key);
+	temp2->key = ft_dup(value);
+	temp2->value = ft_dup(path);
 }
 
 void	ft_swap_nodes(t_env *a, t_env *b)
@@ -31,14 +31,14 @@ void	ft_swap_nodes(t_env *a, t_env *b)
 	char	*temp_path;
 	bool	temp_flag;
 
-	temp_value = a->value;
-	temp_path = a->path;
+	temp_value = a->key;
+	temp_path = a->value;
 	temp_flag = a->flag;
+	a->key = b->key;
 	a->value = b->value;
-	a->path = b->path;
 	a->flag = b->flag;
-	b->value = temp_value;
-	b->path = temp_path;
+	b->key = temp_value;
+	b->value = temp_path;
 	b->flag = temp_flag;
 }
 
@@ -58,7 +58,7 @@ void	bubble_sort(t_env **head)
 		ptr1 = *head;
 		while (ptr1->next != lptr)
 		{
-			if (ft_comp_str_for_alpha(ptr1->value, ptr1->next->value) > 0)
+			if (ft_comp_str_for_alpha(ptr1->key, ptr1->next->key) > 0)
 			{
 				ft_swap_nodes(ptr1, ptr1->next);
 				swapped = true;
@@ -76,11 +76,11 @@ t_env	*copy_node(t_env *head)
 	new_node = (t_env *)malloc(sizeof(t_env));
 	if (!new_node)
 		return (fprintf(stderr, "Malloc new node error.\n"), NULL);
-	new_node->value = ft_dup(head->value);
-	if (head->path)
-		new_node->path = ft_dup(head->path);
+	new_node->key = ft_dup(head->key);
+	if (head->value)
+		new_node->value = ft_dup(head->value);
 	else
-		new_node->path = NULL;
+		new_node->value = NULL;
 	new_node->flag = head->flag;
 	new_node->next = NULL;
 	new_node->prev = NULL;

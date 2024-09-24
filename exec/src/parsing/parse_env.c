@@ -144,9 +144,9 @@ static char	*find_env_var(char *word, t_glob *glob, size_t i, char *temp)
 	env = glob->env;
 	while (env != NULL)
 	{
-		if (ft_comp_str_for_alpha(env->value, temp) == 0)
+		if (ft_comp_str_for_alpha(env->key, temp) == 0)
 		{
-			word = replace_env_word(word, i, env->path, temp);
+			word = replace_env_word(word, i, env->value, temp);
 			if (!word)
 				return (NULL);
 			check_sup = 2;
@@ -156,10 +156,10 @@ static char	*find_env_var(char *word, t_glob *glob, size_t i, char *temp)
 	}
 	if (check_sup == 1)
 		word = replace_env_word(word, i, "\t", temp);
-	dprintf(2, "je passe par ici\n");
+//	dprintf(2, "je passe par ici\n");
 	if (!word)
 	{
-		dprintf(2, "je passe par la\n");
+//		dprintf(2, "je passe par la\n");
 		return (NULL);
 	}
 	return (word);

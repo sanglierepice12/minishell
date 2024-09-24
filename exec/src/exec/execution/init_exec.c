@@ -108,7 +108,7 @@ bool	ft_init_path(t_glob *glob, t_env *temp)
 			i++;
 			continue ;
 		}
-		glob->cmd[i].path = ft_split(temp->path, ':');
+		glob->cmd[i].path = ft_split(temp->value, ':');
 		if (!glob->cmd[i].path)
 			return (ft_err_printf("nothing in path", 1), 1);
 		j = 0;
@@ -142,7 +142,7 @@ void	ft_init_exec(t_glob *glob)
 	if (glob->env)
 		temp = glob->env;
 	temp = ft_find_thing_in_env(&glob->env, "PATH");
-	if (temp && ft_comp_str(temp->value, "PATH"))
+	if (temp && ft_comp_str(temp->key, "PATH"))
 	{
 		if (ft_init_path(glob, temp))
 			return ;

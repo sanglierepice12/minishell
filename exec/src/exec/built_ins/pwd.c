@@ -21,8 +21,8 @@ void	ft_print_this_node(t_env **env, char *value)
 	temp = *env;
 	while (temp)
 	{
-		if (!ft_strncmp(temp->value, value, ft_strlen(value)))
-			return (printf("%s\n", temp->path), (void)0);
+		if (!ft_strncmp(temp->key, value, ft_strlen(value)))
+			return (printf("%s\n", temp->value), (void)0);
 		temp = temp->next;
 	}
 	ft_err_printf("no value found", 1);
@@ -36,7 +36,7 @@ static char	*get_path_from_env(t_env **env)
 	temp = ft_find_thing_in_env(&temp, "PWD");
 	if (!temp)
 		return (NULL);
-	return (ft_dup(temp->path));
+	return (ft_dup(temp->value));
 }
 
 void	ft_pwd(t_input *cmd, t_env **env)

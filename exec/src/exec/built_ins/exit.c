@@ -67,24 +67,26 @@ void	ft_exit(t_glob *glob, t_input *cmd)
 {
 	unsigned char	exit_code;
 
-	if (!cmd)
-		return (ft_err_printf("no cmd", 1));
-	if (glob->cmd->args == 1)
+	if (cmd)
 	{
-		printf("exit\n");
-		ft_free_all(glob);
-		exit(g_error_code);
+		if (glob->cmd->args == 1)
+		{
+			printf("exit\n");
+			ft_free_all(glob);
+			exit(g_error_code);
+		}
+		if (!check_if_number(cmd->argv[1]))
+		{
+			ft_derror("exit", cmd->argv[1], "numeric argument required", 2);
+			ft_free_all(glob);
+			exit(2);
+		}
+		else
+			g_error_code = ft_atoi(cmd->argv[1]);
+		if (glob->cmd->args > 2)
+			return (ft_derror("exit", cmd->argv[1], "too many arguments", 1));
 	}
-	if (!check_if_number(cmd->argv[1]))
-	{
-		ft_derror("exit", cmd->argv[1], "numeric argument required", 2);
-		ft_free_all(glob);
-		exit(2);
-	}
-	else
-		g_error_code = ft_atoi(cmd->argv[1]);
-	if (glob->cmd->args > 2)
-		return (ft_derror("exit", cmd->argv[1], "too many arguments", 1));
+//		return (ft_err_printf("no cmd", 1));
 	exit_code = (unsigned char)(g_error_code % 256);
 	ft_free_all(glob);
 	exit(exit_code);

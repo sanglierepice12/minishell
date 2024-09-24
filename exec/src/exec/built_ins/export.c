@@ -104,7 +104,7 @@ static void	ft_create_env_nodes(t_env **env, t_input *cmd, int flag)
 		if (ft_str_chr(cmd->argv[j], '='))
 		{
 			if (temp)
-				path = ft_find_value(cmd->argv[j], 1, temp->path, &j);
+				path = ft_find_value(cmd->argv[j], 1, temp->value, &j);
 			else
 				path = ft_find_value(cmd->argv[j], 1, NULL, &j);
 		}
@@ -140,9 +140,9 @@ void	ft_export(t_env **env, t_input *cmd)
 		{
 			tmp = printer;
 			printer = printer->next;
-			free(tmp->value);
-			if (tmp->path)
-				free(tmp->path);
+			free(tmp->key);
+			if (tmp->value)
+				free(tmp->value);
 			free(tmp);
 		}
 	}

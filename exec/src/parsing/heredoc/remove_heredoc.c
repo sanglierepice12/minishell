@@ -116,7 +116,7 @@ int	remove_and_stock_all_heredoc(char **argv, t_input *cmd, unsigned long i)
 {
 	while (i < cmd->args)
 	{
-		printf("%ld %ld %s\n", i, cmd->args, argv[i]);
+//		printf("%ld %ld %s\n", i, cmd->args, argv[i]);
 		if (ft_comp_str(argv[i], ">") == 1)
 		{
 			if (handle_single_right_redir(argv, cmd, i) == 1)

@@ -58,10 +58,10 @@ void	ft_free_env(t_env *env)
 	{
 		tmp = env;
 		env = env->next;
+		if (tmp->key)
+			free(tmp->key);
 		if (tmp->value)
 			free(tmp->value);
-		if (tmp->path)
-			free(tmp->path);
 		free(tmp);
 	}
 }

@@ -15,10 +15,10 @@
 void	ft_free_this_node(t_env *head)
 {
 	head->flag = 0;
-	if (head->path)
-		free(head->path);
 	if (head->value)
 		free(head->value);
+	if (head->key)
+		free(head->key);
 	free(head);
 }
 
@@ -48,12 +48,12 @@ static void	unset_variable(t_env **head, char *input)
 	temp = *head;
 	while (temp && temp->next)
 	{
-		if (ft_strlen(temp->value) == len && ft_comp_str(temp->value, input))
+		if (ft_strlen(temp->key) == len && ft_comp_str(temp->key, input))
 			return (ft_dell_node(&temp, head), (void) 0);
 		temp = temp->next;
 	}
-	if (temp && ft_strlen(temp->value) == len && \
-			ft_comp_str(temp->value, input))
+	if (temp && ft_strlen(temp->key) == len && \
+			ft_comp_str(temp->key, input))
 		ft_dell_node(&temp, head);
 }
 

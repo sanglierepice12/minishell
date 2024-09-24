@@ -39,8 +39,8 @@ typedef enum	s_sig
 /********STRUCT********/
 typedef struct s_env
 {
+	char			*key;
 	char			*value;
-	char			*path;
 	bool			flag;
 	struct s_env	*next;
 	struct s_env	*prev;

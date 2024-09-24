@@ -42,7 +42,7 @@ void	free_tab(char **tab, size_t lenght)
 {
 	if (!tab)
 		return ;
-	printf("info lenght = %zu\n", lenght);
+//	printf("info lenght = %zu\n", lenght);
 	if (lenght == 0)
 	{
 		free(tab[0]);

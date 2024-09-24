@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:01:38 by gsuter            #+#    #+#             */
-/*   Updated: 2024/09/23 05:54:29 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/24 17:23:20 by gsuter           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ void	ft_update_old_pwd(t_env **env, char *value, char *path)
 	temp = *env;
 	while (temp)
 	{
-		if (ft_comp_str(temp->value, value))
+		if (ft_comp_str(temp->key, value))
 		{
-			if (temp->path)
-				free(temp->path);
-			temp->path = ft_dup(path);
+			if (temp->value)
+				free(temp->value);
+			temp->value = ft_dup(path);
 			return ;
 		}
 		temp = temp->next;
@@ -35,12 +35,12 @@ void	ft_update_old_pwd(t_env **env, char *value, char *path)
 
 void	ft_update_env_value(t_env *temp, char *path, t_env **env)
 {
-	if (temp->path[0])
+	if (temp->value[0])
 	{
-		ft_update_old_pwd(env, "OLDPWD", temp->path);
-		free(temp->path);
+		ft_update_old_pwd(env, "OLDPWD", temp->value);
+		free(temp->value);
 	}
-	temp->path = ft_dup(path);
+	temp->value = ft_dup(path);
 }
 
 char	*ft_get_pwd_path(t_env **env, char *path)
@@ -52,7 +52,7 @@ char	*ft_get_pwd_path(t_env **env, char *path)
 		temp = ft_find_thing_in_env(env, "PWD");
 		if (!temp)
 			return (NULL);
-		path = ft_dup(temp->path);
+		path = ft_dup(temp->value);
 		if (!path)
 		{
 			perror("minisHell");
@@ -74,7 +74,7 @@ void	ft_update_pwd(t_env **env, char *value, char *path)
 	temp = *env;
 	while (temp)
 	{
-		if (ft_comp_str(temp->value, value))
+		if (ft_comp_str(temp->key, value))
 		{
 			ft_update_env_value(temp, path, env);
 			free(path);
@@ -101,8 +101,8 @@ void	ft_cd_to_oldpwd(t_glob *glob)
 	if (!temp)
 		return (ft_lst_add_back(&glob->env, \
 			ft_new_node("PWD", getcwd(NULL, 0), 0)));
-	if (chdir(temp->path) != 0)
-		ft_derror("cd", temp->path, "No such file or directory", 1);
+	if (chdir(temp->value) != 0)
+		ft_derror("cd", temp->value, "No such file or directory", 1);
 	else
 	{
 		gcp = getcwd(NULL, 0);
@@ -128,7 +128,7 @@ void	ft_cd(t_glob *glob, t_input *cmd)
 		return (ft_err_printf("minisHell: cd: too many arguments", 1));
 	if (cmd->args == 1 || ft_comp_str(cmd->argv[1], "~") \
 		|| ft_comp_str(cmd->argv[1], "--"))
-		ft_cd_to_home(glob);
+		ft_cd_to_home(glob); //pas demande, tej moi ca il cree des leaks
 	else if (ft_comp_str(cmd->argv[1], "-"))
 		ft_cd_to_oldpwd(glob);
 	else if (cmd->argv[1][0] == '-' && (cmd->argv[1][1] != 'L' \

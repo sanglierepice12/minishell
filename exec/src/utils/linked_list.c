@@ -17,14 +17,14 @@ static void	print_env_var(t_env *temp, int flag)
 	if (flag == 0)
 	{
 		if (temp->flag == 0)
-			printf("%s=%s\n", temp->value, temp->path);
+			printf("%s=%s\n", temp->key, temp->value);
 	}
 	else
 	{
-		if (temp->flag == 1 && !temp->path)
-			printf("declare -x %s\n", temp->value);
+		if (temp->flag == 1 && !temp->value)
+			printf("declare -x %s\n", temp->key);
 		else
-			printf("declare -x %s=\"%s\"\n", temp->value, temp->path);
+			printf("declare -x %s=\"%s\"\n", temp->key, temp->value);
 	}
 }
 
@@ -106,9 +106,9 @@ t_env	*ft_new_node(char *value, char *path, bool flag)
 	if (!env)
 		return (NULL);
 	if (value)
-		env->value = ft_dup(value);
+		env->key = ft_dup(value);
 	if (path)
-		env->path = ft_dup(path);
+		env->value = ft_dup(path);
 	if (flag)
 		env->flag = flag;
 	env->next = NULL;
