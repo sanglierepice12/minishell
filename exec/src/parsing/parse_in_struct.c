@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 03:30:09 by arbenois          #+#    #+#             */
-/*   Updated: 2024/09/24 10:44:50 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/24 12:51:06 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ static void	initialize_command(t_input *cmd)
 	cmd->command = NULL;
 	cmd->args = 0;
 }
+
 static void	print_command_info(t_input *cmd)
 {
 	size_t	temp;
@@ -155,7 +156,7 @@ static int	setup_command(t_glob *glob, char *input, int i)
 	glob->cmd[i].initargs = glob->cmd[i].args;
 	glob->cmd[i].argv = set_argv(input, i, glob);
 	if (glob->cmd[i].argv == NULL)
-		return (ft_free_cmd(glob), 0);
+		return (0);
 	if (glob->cmd[i].args)
 		glob->cmd[i].command = glob->cmd[i].argv[0];
 	return (1);
@@ -169,7 +170,7 @@ static int	check_command_null(t_glob *glob, int num_args)
 	while (i != num_args)
 	{
 		if (glob->cmd[i].command == NULL)
-			return (ft_free_cmd(glob), 0);
+			return (0);
 		i++;
 	}
 	return (1);
@@ -196,7 +197,7 @@ int	parse_in_struct(t_glob *glob, char *input)
 	}
 	print_command_info(glob->cmd);
 	if (check_command_null(glob, num_args) == 0)
-		return (0);
+		return (ft_free_cmd(glob), 0);
 	ft_init_exec(glob);
 	ft_free_cmd(glob);
 	return (1);
