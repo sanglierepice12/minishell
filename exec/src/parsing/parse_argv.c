@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 00:22:47 by arbenois          #+#    #+#             */
-/*   Updated: 2024/09/24 10:32:43 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/24 13:33:35 by gsuter           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,16 @@ static void remove_tab(char **argv, int size, t_glob *glob, unsigned long num)
 	{
 		if (i == size)
 			temp++;
+		//added this free
+		free(argv[i]);
+		//you didn't free what was at argv[i] before moving the pointer,
+		// so what was there was definitly lost
 		argv[i] = argv[i + temp];
 		i++;
 	}
+	//old pos, most certainly an invalid free as argv[i++] has been moved to argv[i]
+//	free(argv[i]);
+	argv[i] = 0;
 	glob->cmd[num].args--;
 }
 
@@ -80,7 +87,7 @@ int	count_args(char *input, int lenght)
 	return (args);
 }
 
-static char	*copy_word(char *input, int *i)
+static char	*copy_word(char *input, const int *i)
 {
 	char	*tab;
 	int		lenght;
