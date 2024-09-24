@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsuter <gsuter@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 17:09:48 by gsuter            #+#    #+#             */
-/*   Updated: 2024/05/21 17:09:48 by gsuter           ###   ########.fr       */
+/*   Updated: 2024/09/24 10:07:02 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,9 @@ void	ft_free_cmd(t_glob *glob)
 	i = 0;
 	while (i < glob->count_cmd && &glob->cmd[i])
 	{
+		printf("info = %ld\n", glob->cmd[i].initargs);
 		if (glob->cmd[i].args && glob->cmd[i].argv)
-			free_tab(glob->cmd[i].argv, glob->cmd[i].args);
+			free_tab(glob->cmd[i].argv, glob->cmd[i].initargs);
 		if (glob->cmd[i].args && glob->cmd[i].path)
 			ft_free_double_tab(glob->cmd[i].path);
 		ft_free_here_doc(&glob->cmd[i].heredoc);

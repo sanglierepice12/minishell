@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 03:30:09 by arbenois          #+#    #+#             */
-/*   Updated: 2024/09/24 08:42:43 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/24 10:03:31 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ static int	get_num_args(char *input)
 static void	initialize_command(t_input *cmd)
 {
 	cmd->heredoc.type_outfile = NULL;
-	cmd->heredoc.file_outfile = NULL;
 	cmd->heredoc.type_infile = NULL;
 	cmd->heredoc.file_infile = NULL;
 	cmd->heredoc.rest_heredoc = NULL;
@@ -156,6 +155,7 @@ static int	setup_command(t_glob *glob, char *input, int i)
 	glob->cmd[i].args = count_args(input, i);
 	if ((ssize_t)glob->cmd[i].args == -1)
 		return (0);
+	glob->cmd[i].initargs = glob->cmd[i].args;
 	glob->cmd[i].argv = set_argv(input, i, glob);
 	if (glob->cmd[i].argv == NULL)
 		return (ft_free_cmd(glob), 0);

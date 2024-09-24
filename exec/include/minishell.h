@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 03:29:49 by arbenois          #+#    #+#             */
-/*   Updated: 2024/09/24 08:37:38 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/24 10:01:34 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef struct s_input
 	char		**path;
 	int			fd;
 	size_t		args;
+	size_t		initargs;
 	t_heredoc	heredoc;
 }				t_input;
 

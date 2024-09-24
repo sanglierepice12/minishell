@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 04:22:26 by arbenois          #+#    #+#             */
-/*   Updated: 2024/09/24 08:02:04 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/24 10:09:01 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,10 @@ static int	get_heredoc_outfile(char **argv, t_input *cmd)
 			cmd->heredoc.is_there_any = 1;
 			cmd->heredoc.type_outfile = ">";
 			cmd->heredoc.file_outfile = ft_super_dup(argv[i + 1], NULL);
+			cmd->fd = open(argv[i + 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			if (cmd->fd == -1)
+				return (ft_error(1), 0);
+			close(cmd->fd),
 			remove_heredoc(argv, i, cmd);
 			break ;
 		}
@@ -142,6 +146,10 @@ static int	get_heredoc_outfile(char **argv, t_input *cmd)
 			cmd->heredoc.is_there_any = 1;
 			cmd->heredoc.type_outfile = ">>";
 			cmd->heredoc.file_outfile = ft_super_dup(argv[i + 1], NULL);
+			cmd->fd = open(argv[i + 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
+			if (cmd->fd == -1)
+				return (ft_error(1), true);
+			close(cmd->fd);
 			remove_heredoc(argv, i, cmd);
 			break ;
 		}
