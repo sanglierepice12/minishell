@@ -106,7 +106,7 @@ static void	initialize_command(t_input *cmd)
 	cmd->args = 0;
 }
 
-static void	print_command_info(t_input *cmd)
+/*static void	print_command_info(t_input *cmd)
 {
 	size_t	temp;
 	size_t	size;
@@ -145,7 +145,7 @@ static void	print_command_info(t_input *cmd)
 		printf("Heredoc file Outfile = %s\n", cmd->heredoc.file_outfile);
 	}
 	printf("\n");
-}
+}*/
 
 static int	setup_command(t_glob *glob, char *input, int i)
 {
@@ -195,7 +195,7 @@ int	parse_in_struct(t_glob *glob, char *input)
 			return (0);
 		i++;
 	}
-	print_command_info(glob->cmd);
+//	print_command_info(glob->cmd);
 	if (check_command_null(glob, num_args) == 0)
 		return (ft_free_cmd(glob), 0);
 	ft_init_exec(glob);

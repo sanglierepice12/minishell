@@ -48,7 +48,7 @@ char	*allocate_newtab(char *input, int i, int *lenght)
 		return (NULL);
 	if (temp >= 1)
 		*lenght -= temp * 2;
-	printf("lenght quote newtab = %d\n", *lenght);
+	//printf("lenght quote newtab = %d\n", *lenght);
 	newtab = ft_cal_loc((*lenght + 1), sizeof(char));
 	if (newtab == NULL)
 		return (NULL);
