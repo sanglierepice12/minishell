@@ -17,7 +17,7 @@ NC = \033[0m
 
 # Compiler and flags
 CC = cc -std=gnu99
-CFLAGS = -Wall -Wextra -Werror -g3
+CFLAGS = -Wall -Wextra -Werror #-fsanitize=leak -fsanitize=address
 LDFLAGS = -L/opt/homebrew/opt/readline/lib -I/opt/homebrew/opt/readline/include -lreadline
 
 # Source and objet directories

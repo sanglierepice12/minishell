@@ -23,9 +23,9 @@ static char	*allocate_special_char(char c)
 	return (tab);
 }
 
-static int	get_word_length(char *input, int i)
+static size_t	get_word_length(const char *input, size_t i)
 {
-	int	length;
+	size_t	length;
 
 	length = 0;
 	while (input[i + length] && input[i + length] != ' ' && \
@@ -35,10 +35,10 @@ static int	get_word_length(char *input, int i)
 	return (length);
 }
 
-static char	*allocate_and_copy_word(char *input, int i, int length)
+static char	*allocate_and_copy_word(const char *input, size_t i, size_t length)
 {
 	char	*tab;
-	int		j;
+	size_t		j;
 
 	tab = calloc(length + 1, sizeof(char));
 	if (!tab)
@@ -52,9 +52,9 @@ static char	*allocate_and_copy_word(char *input, int i, int length)
 	return (tab);
 }
 
-static char	*copy_word_env(char *input, int i)
+static char	*copy_word_env(char *input, size_t i)
 {
-	int	length;
+	size_t	length;
 
 	if (input[i] == '?' || input[i] == '$')
 		return (allocate_special_char(input[i]));
@@ -64,30 +64,30 @@ static char	*copy_word_env(char *input, int i)
 
 static char	*alloc_new_word(char *word, char *path, char *temp)
 {
-	char	*tab;
-	int		length;
+	char		*tab;
+	size_t		length;
 
 	length = ft_strlen(word) - ft_strlen(temp) - 1 \
 				+ ft_strlen(path);
 	if (length == 0)
 	{
-		tab = calloc(1, sizeof(char));
+		tab = ft_cal_loc(1, sizeof(char));
 		if (!tab)
 			return (0);
 		return (tab);
 	}
-	tab = calloc(length + 1, sizeof(char));
+	tab = ft_cal_loc(length + 1, sizeof(char));
 	if (!tab)
 		return (0);
 	tab[length] = 0;
 	return (tab);
 }
 
-static char	*replace_env_word(char *word, int i, char *path, char *temp)
+static char	*replace_env_word(char *word, size_t i, char *path, char *temp)
 {
-	char	*tab;
-	int		size;
-	int		index;
+	char		*tab;
+	size_t		size;
+	size_t		index;
 
 	tab = alloc_new_word(word, path, temp);
 	if (!tab)
@@ -99,7 +99,7 @@ static char	*replace_env_word(char *word, int i, char *path, char *temp)
 		size++;
 	}
 	index = ft_strlen(path) - 1;
-	while (index != -1)
+	while ((ssize_t)index != -1)
 	{
 		tab[size + index] = path[index];
 		index--;
@@ -112,7 +112,7 @@ static char	*replace_env_word(char *word, int i, char *path, char *temp)
 	return (tab);
 }
 
-static int	handle_special_cases(char **word, int i, char *temp)
+static int	handle_special_cases(char **word, size_t i, char *temp)
 {
 	char	*tab;
 
@@ -133,7 +133,7 @@ static int	handle_special_cases(char **word, int i, char *temp)
 	return (0);
 }
 
-static char	*find_env_var(char *word, t_glob *glob, int i, char *temp)
+static char	*find_env_var(char *word, t_glob *glob, size_t i, char *temp)
 {
 	t_env	*env;
 	int		check_sup;
@@ -155,13 +155,17 @@ static char	*find_env_var(char *word, t_glob *glob, int i, char *temp)
 		env = env->next;
 	}
 	if (check_sup == 1)
-		word = replace_env_word(word, i, "", temp);
+		word = replace_env_word(word, i, "\t", temp);
+	dprintf(2, "je passe par ici\n");
 	if (!word)
+	{
+		dprintf(2, "je passe par la\n");
 		return (NULL);
+	}
 	return (word);
 }
 
-static char	*expand_single_var(char *word, t_glob *glob, int *i)
+static char	*expand_single_var(char *word, t_glob *glob, const size_t *i)
 {
 	char	*temp;
 
@@ -177,7 +181,7 @@ static char	*expand_single_var(char *word, t_glob *glob, int *i)
 
 char	*expend_env_var(char *word, t_glob *glob)
 {
-	int		i;
+	size_t		i;
 
 	i = 0;
 	while (word[i])
@@ -191,6 +195,7 @@ char	*expend_env_var(char *word, t_glob *glob)
 				word = expand_single_var(word, glob, &i);
 				if (!word)
 					return (NULL);
+				i++;
 			}
 			else
 				i++;

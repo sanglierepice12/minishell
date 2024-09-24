@@ -19,6 +19,11 @@ static int	check_tab(char *tab)
 	i = 0;
 	if (!tab)
 		return (0);
+	if (ft_comp_str("\t", tab))
+	{
+		free(tab);
+		return (1);
+	}
 	while (tab[i])
 	{
 		if (ft_isspace(tab[i]) == 1)
@@ -122,7 +127,7 @@ static int	print_redir_error(char *c)
 	return (0);
 }
 
-static int	check_more_redir(char **argv, t_redir *redir, int i, int y)
+static int	check_more_redir(char **argv, t_redir *redir, size_t i, int y)
 {
 	if ((redir->left >= 2 || redir->right >= 2) && argv[i][y] == '|')
 		return (print_redir_error("|"));
@@ -157,14 +162,14 @@ static int	remove_all_quote(char **argv, t_glob *glob, unsigned long num)
 	while (argv[i])
 	{
 		argv[i] = delete_quote(argv[i], 0);
-		if (!argv)
+		if (!argv[i])
 			return (0);
 		i++;
 	}
 	return (1);
 }
 
-static int	handle_redir(char **argv, t_redir *redir, int i, int y)
+static int	handle_redir(char **argv, t_redir *redir, size_t i, int y)
 {
 	if (argv[i][y] == '>')
 	{
@@ -226,8 +231,6 @@ static int	check_env(char **argv, t_glob *glob, unsigned long num)
 		if (check_tab(argv[i]) == 1)
 		{
 			remove_tab(argv, i, glob, num);
-			if (!argv)
-				return (0);
 			i = -1;
 		}
 		i++;

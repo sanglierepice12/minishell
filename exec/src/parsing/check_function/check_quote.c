@@ -88,10 +88,10 @@ int	ft_strlen_quote(char *str, int len, int *quote)
 	return (i);
 }
 
-int	if_in_quote(char *str, int i)
+int	if_in_quote(const char *str, size_t i)
 {
-	int	lenght;
-	int	quote;
+	size_t	lenght;
+	int		quote;
 
 	lenght = 0;
 	quote = 0;

@@ -12,9 +12,9 @@
 
 #include "../../include/minishell.h"
 
-int	get_length_num(char *input, int number)
+int	get_length_num(char *input, unsigned long number)
 {
-	int	num_args;
+	unsigned long	num_args;
 	int	i;
 
 	num_args = 0;
@@ -24,9 +24,7 @@ int	get_length_num(char *input, int number)
 	while (input[i])
 	{
 		if (input[i] == '|' && if_in_quote(input, i) == 3)
-		{
 			num_args++;
-		}
 		i++;
 		if (num_args == number)
 			break ;
@@ -107,7 +105,6 @@ static void	initialize_command(t_input *cmd)
 	cmd->command = NULL;
 	cmd->args = 0;
 }
-/*
 static void	print_command_info(t_input *cmd)
 {
 	size_t	temp;
@@ -147,7 +144,7 @@ static void	print_command_info(t_input *cmd)
 		printf("Heredoc file Outfile = %s\n", cmd->heredoc.file_outfile);
 	}
 	printf("\n");
-}*/
+}
 
 static int	setup_command(t_glob *glob, char *input, int i)
 {
@@ -197,6 +194,7 @@ int	parse_in_struct(t_glob *glob, char *input)
 			return (0);
 		i++;
 	}
+	print_command_info(glob->cmd);
 	if (check_command_null(glob, num_args) == 0)
 		return (0);
 	ft_init_exec(glob);
