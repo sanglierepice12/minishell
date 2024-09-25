@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 00:22:47 by arbenois          #+#    #+#             */
-/*   Updated: 2024/09/25 06:49:05 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/25 11:25:52 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ int	count_args(char *input, int lenght)
 	return (args);
 }
 
-static int	handle_word(char **argv, t_input_data *data, t_glob *glob)
+static int	handle_word(char **argv, t_input_data *data)
 {
-	argv[data->lenght] = parse_word(data->input, &(data->i), glob);
+	argv[data->lenght] = parse_word(data->input, &(data->i));
 	if (data->lenght == -1 || argv[data->lenght] == NULL)
 	{
 		free_tab(argv, data->lenght);
@@ -50,13 +50,13 @@ static int	handle_word(char **argv, t_input_data *data, t_glob *glob)
 	return (1);
 }
 
-static int	process_input(char **argv, t_input_data *data, t_glob *glob)
+static int	process_input(char **argv, t_input_data *data)
 {
 	while (data->input[data->i])
 	{
 		if (ft_isspace(data->input[data->i]) == 1)
 		{
-			if (!handle_word(argv, data, glob))
+			if (!handle_word(argv, data))
 				return (0);
 		}
 		if (ft_isspace(data->input[data->i]) == 0)
@@ -79,9 +79,10 @@ char	**set_argv(char *input, unsigned long num, t_glob *glob)
 	if (argv == NULL)
 		return (NULL);
 	data.input = input;
+	input = expend_env_var(input, glob);
 	data.i = get_length_num(input, num);
 	data.lenght = 0;
-	if (!process_input(argv, &data, glob))
+	if (!process_input(argv, &data))
 		return (NULL);
 	if (check_redir(argv, glob, num) == 0)
 		return (NULL);

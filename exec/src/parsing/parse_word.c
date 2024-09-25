@@ -6,13 +6,13 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 05:00:41 by arbenois          #+#    #+#             */
-/*   Updated: 2024/09/25 05:12:10 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/25 11:20:22 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static char	*expend_env_var(char *word, t_glob *glob)
+char	*expend_env_var(char *word, t_glob *glob)
 {
 	size_t		i;
 
@@ -63,16 +63,13 @@ static char	*copy_word(char *input, const int *i)
 	return (tab);
 }
 
-char	*parse_word(char *input, int *i, t_glob *glob)
+char	*parse_word(char *input, int *i)
 {
 	int		temp;
 	char	*word;
 
 	temp = 0;
 	word = copy_word(input, i);
-	if (!word)
-		return (word);
-	word = expend_env_var(word, glob);
 	if (!word)
 		return (word);
 	*i += ft_strlen_quote(input, *i, &temp);

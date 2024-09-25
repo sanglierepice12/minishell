@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 03:29:49 by arbenois          #+#    #+#             */
-/*   Updated: 2024/09/25 07:40:52 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/25 11:20:34 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,12 +107,14 @@ void	remove_heredoc(char **argv, int pos, t_input *command);
 char	*ft_itoa(int num);
 int		check_env(char **argv, t_glob *glob, unsigned long num);
 int		check_redir(char **argv, t_glob *glob, unsigned long num);
-char	*parse_word(char *input, int *i, t_glob *glob);
+char	*parse_word(char *input, int *i);
 char	*copy_word_env(char *input, size_t i);
 int		get_heredoc_infile(char **argv, t_input *cmd);
 char	**add_tab(char *input, char **tab, size_t *size);
 int		get_heredoc_outfile(char **argv, t_input *cmd);
 char	**rs_heredoc(char **argv, t_input *cmd, int i);
+int		has_quote(char *str);
+char	*expend_env_var(char *word, t_glob *glob);
 
 void	show_struct(t_input *command);
 

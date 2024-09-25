@@ -6,11 +6,25 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 00:22:35 by arbenois          #+#    #+#             */
-/*   Updated: 2024/09/25 04:55:31 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/25 10:26:50 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+int	has_quote(char *str)
+{
+	size_t	i;
+
+	i = 0;
+	while(str[i])
+	{
+		if (str[i] == 34|| str[i] == 39)
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 int	should_skip_quote(char c, int *checkquote)
 {
