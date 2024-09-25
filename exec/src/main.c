@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 03:29:57 by arbenois          #+#    #+#             */
-/*   Updated: 2024/09/25 15:07:17 by gsuter           ###   ########.fr       */
+/*   Updated: 2024/09/25 15:39:48 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	main(int arc, char **argv, char **env)
 	char		*input;
 	t_glob		glob;
 
-	printf("main = %d\n", getpid());
 	(void)argv;
 	if (arc > 1)
 		return (printf("To much args\n"), 1);

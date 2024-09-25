@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 05:14:16 by arbenois          #+#    #+#             */
-/*   Updated: 2024/09/25 13:54:49 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/25 17:19:11 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ int	get_heredoc_infile(char **argv, t_input *cmd)
 		}
 		i--;
 	}
-	i = 0;
 	while (cmd->args >= i)
 	{
 		if (ft_comp_str(argv[i], "<<") == 1)

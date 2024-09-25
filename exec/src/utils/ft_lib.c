@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lib.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gostr <gostr@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:10:44 by gostr             #+#    #+#             */
-/*   Updated: 2024/09/19 18:37:47 by gostr            ###   ########.fr       */
+/*   Updated: 2024/09/25 17:19:49 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,24 @@ void	*ft_memset(void *s, int c, size_t n)
 		i++;
 	}
 	return (s);
+}
+
+int	get_length_num(char *input, unsigned long number)
+{
+	unsigned long	num_args;
+	int				i;
+
+	num_args = 0;
+	i = 0;
+	if (number == 0)
+		return (0);
+	while (input[i])
+	{
+		if (input[i] == '|' && if_in_quote(input, i) == 3)
+			num_args++;
+		i++;
+		if (num_args == number)
+			break ;
+	}
+	return (i);
 }

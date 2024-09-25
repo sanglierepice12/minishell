@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_command.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arbenois <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 03:30:04 by arbenois          #+#    #+#             */
-/*   Updated: 2024/05/29 03:30:06 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/25 16:18:00 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,40 @@ int	check_command(char *input)
 	else if (ft_strncmp(input, "exit", 4) == 0)
 		return (check_input(input, 4));
 	return (0);
+}
+
+int	check_command_null(t_glob *glob, int num_args)
+{
+	int	i;
+
+	i = 0;
+	while (i != num_args)
+	{
+		if (glob->cmd[i].command == NULL)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+void	check_tab_quote(char *tab, int check)
+{
+	size_t	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		if (check == 1)
+		{
+			if (tab[i] == -39)
+				tab[i] *= -1;
+		}
+		else
+		{
+			if (tab[i] == 39)
+				tab[i] *= -1;
+		}
+		i++;
+	}
+	return ;
 }

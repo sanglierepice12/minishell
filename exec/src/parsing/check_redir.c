@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 05:00:34 by arbenois          #+#    #+#             */
-/*   Updated: 2024/09/25 14:05:49 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/25 16:28:23 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static int	remove_all_quote(char **argv, t_glob *glob, unsigned long num)
 	{
 		if (has_quote(argv[i]) == 0)
 			argv[i] = delete_quote(argv[i], 0);
-		parse_tab(argv[i]);
+		check_tab_quote(argv[i], 1);
 		if (!argv[i])
 			return (0);
 		i++;
@@ -72,7 +72,7 @@ static int	handle_redir(char **argv, t_redir *redir, size_t i, int y)
 	{
 		if (redir->right == 1 || redir->left == 1)
 		{
-			if (argv[i][y + 1] == '>')
+			if (argv[i][y + 1] == '>' || argv[i][y + 1] == '|')
 				return (print_redir_error());
 		}
 		redir->right++;
@@ -81,7 +81,7 @@ static int	handle_redir(char **argv, t_redir *redir, size_t i, int y)
 	{
 		if (redir->right == 1 || redir->left == 1)
 		{
-			if (argv[i][y + 1] == '<')
+			if (argv[i][y + 1] == '<' || argv[i][y + 1] == '|')
 				return (print_redir_error());
 		}
 		redir->left++;
@@ -112,7 +112,7 @@ int	check_redir(char **argv, t_glob *glob, unsigned long num)
 			}
 		}
 	}
-	if (redir.right > 2 || redir.left > 2)
+	if (redir.right > 0 || redir.left > 0)
 		return (print_redir_error());
 	return (remove_all_quote(argv, glob, num));
 }

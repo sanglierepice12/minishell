@@ -6,11 +6,17 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 04:58:00 by arbenois          #+#    #+#             */
-/*   Updated: 2024/09/25 07:06:38 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/25 15:32:27 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+void	ft_env_derror(char *cmd, char *variable, char *followed, int code)
+{
+	g_error_code = code;
+	dprintf(2, "minisHell : %s: `%s': %s\n", cmd, variable, followed);
+}
 
 static int	check_tab(char *tab)
 {

@@ -6,31 +6,11 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 03:30:09 by arbenois          #+#    #+#             */
-/*   Updated: 2024/09/25 14:10:34 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/25 17:19:42 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-int	get_length_num(char *input, unsigned long number)
-{
-	unsigned long	num_args;
-	int				i;
-
-	num_args = 0;
-	i = 0;
-	if (number == 0)
-		return (0);
-	while (input[i])
-	{
-		if (input[i] == '|' && if_in_quote(input, i) == 3)
-			num_args++;
-		i++;
-		if (num_args == number)
-			break ;
-	}
-	return (i);
-}
 
 static int	get_num_args(char *input)
 {
@@ -66,6 +46,7 @@ static void	initialize_command(t_input *cmd, t_glob *glob)
 	cmd->args = 0;
 	cmd->check_m = &glob->check_mes;
 }
+
 /*
 static void	print_command_info(t_input *cmd)
 {
@@ -125,44 +106,10 @@ static int	setup_command(t_glob *glob, char *input, int i)
 	return (1);
 }
 
-static int	check_command_null(t_glob *glob, int num_args)
+static int	initialize_glob(t_glob *glob, char *tab)
 {
-	int	i;
+	ssize_t		num_args;
 
-	i = 0;
-	while (i != num_args)
-	{
-		if (glob->cmd[i].command == NULL)
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-void	parse_tab(char *tab)
-{
-	size_t	i;
-
-	i = 0;
-	while(tab[i])
-	{
-		if (tab[i] == -39)
-			tab[i] *= -1;
-		else if (tab[i] == 39)
-			tab[i] *= -1;
-		i++;
-	}
-}
-
-int	parse_in_struct(t_glob *glob, char *input)
-{
-	int	num_args;
-	int	i;
-	char	*tab;
-
-	tab = ft_strdup(input);
-	tab = expend_env_var(tab, glob);
-	parse_tab(tab);
 	num_args = get_num_args(tab);
 	if (num_args == -1)
 		return (0);
@@ -170,16 +117,27 @@ int	parse_in_struct(t_glob *glob, char *input)
 	glob->cmd = ft_cal_loc((num_args + 1), sizeof(t_input));
 	if (!glob->cmd)
 		return (0);
-	glob->check_mes = 0;
+	return (1);
+}
+
+int	parse_in_struct(t_glob *glob, char *input)
+{
+	size_t		i;
+	char		*tab;
+
+	tab = ft_strdup(input);
+	tab = expend_env_var(tab, glob);
+	if (!initialize_glob(glob, tab))
+		return (0);
 	i = 0;
-	while (i != num_args)
+	while (i != glob->count_cmd)
 	{
 		if (!setup_command(glob, tab, i))
 			return (ft_free_cmd(glob), free(tab), 0);
 		i++;
 	}
 	//print_command_info(glob->cmd);
-	if (check_command_null(glob, num_args) == 0)
+	if (check_command_null(glob, glob->count_cmd) == 0)
 		return (ft_free_cmd(glob), free(tab), 0);
 	free(tab);
 	ft_init_exec(glob);

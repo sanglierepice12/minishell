@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 10:34:11 by gostr             #+#    #+#             */
-/*   Updated: 2024/09/23 05:38:48 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/25 15:32:23 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,4 @@ void	ft_not_found(char *cmd, char *msg, int code)
 {
 	g_error_code = code;
 	dprintf(2, "%s%s\n", cmd, msg);
-}
-
-void	ft_env_derror(char *cmd, char *variable, char *followed, int code)
-{
-	g_error_code = code;
-	dprintf(2, "minisHell : %s: `%s': %s\n", cmd, variable, followed);
 }
