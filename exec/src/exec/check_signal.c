@@ -40,6 +40,7 @@ void	handle_sigchild(int sig)
 	{
 		write(2, "\n", 1);
 		g_error_code = 130;
+		exit(g_error_code);
 	}
 	if (sig == SIGQUIT)
 	{

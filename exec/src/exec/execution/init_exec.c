@@ -47,7 +47,7 @@ bool	ft_access(t_input *cmd)
 	size_t	i;
 	char	*temp_cmd;
 	char	*tempo;
-	DIR		*dir;
+	//DIR		*dir;
 
 	if (!cmd)
 		return (ft_err_printf("no cmd", 1), 1);
@@ -61,6 +61,17 @@ bool	ft_access(t_input *cmd)
 	i = 0;
 	while (cmd->path[i])
 	{
+		/*dir = opendir(cmd->argv[0]);
+		if (dir)
+		{
+			printf("la\n");
+			return (closedir(dir), ft_error(1), 1);
+		}
+		else if (cmd->argv[0][0] == '/')
+		{
+			printf("ici\n");
+			return (ft_error_dir(cmd->argv[0]), 1);
+		}*/
 		temp_cmd = ft_str_join(cmd->command, cmd->path[i]);
 		if (!temp_cmd)
 			return (ft_err_printf("no cmd", 1), 1);
@@ -79,20 +90,16 @@ bool	ft_access(t_input *cmd)
 			free(temp_cmd);
 		}
 	}
-	dir = opendir(cmd->argv[0])
-	if (dir)
-		return (closedir(dir), ft_error(1), 1);
-	else if (cmd->argv[0][0] == '/')
-		return (ft_error_dir(cmd->argv[0]), 1);
-	printf("ici\n");
-	/*tempo = ft_str_join(cmd->argv[0], "/");
+
+	//printf("ici\n");
+	tempo = ft_str_join(cmd->argv[0], "/");
 	if (access(tempo, X_OK))
 	{
 		free(tempo);
 		return (ft_not_found(cmd->argv[0], ": biche command not found", 127), 1);
 	}
-	free(tempo);*/
-	(void)tempo;
+	free(tempo);
+	//(void)tempo;
 	return (0);
 }
 

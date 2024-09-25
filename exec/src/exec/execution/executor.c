@@ -50,6 +50,7 @@ void	ft_executor(t_glob *glob)
 		ft_handle_signal(CHILD);
 		if (pid == 0)
 			ft_children(glob, pipefd, &i);
+		printf("parent = %d\n", getpid());
 		if (pipefd[1] > 2)
 			close(pipefd[1]);
 		if (i < glob->count_cmd - 1)
@@ -65,4 +66,5 @@ void	ft_executor(t_glob *glob)
 	ft_wait();
 	if (glob->cmd->fd != 0)
 		close(glob->cmd->fd);
+	ft_handle_signal(PARENT);
 }

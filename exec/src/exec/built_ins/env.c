@@ -6,7 +6,7 @@
 /*   By: gsuter <gsuter@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:39:13 by gsuter            #+#    #+#             */
-/*   Updated: 2024/05/23 16:39:13 by gsuter           ###   ########.fr       */
+/*   Updated: 2024/09/25 15:12:24 by gsuter           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,11 @@ static void	ft_get_first_node(t_glob *glob, char **env)
 			if (!value)
 				return (ft_err_printf("error malloc", 1));
 			glob->env = ft_new_node(value, path, 0);
+			if (!glob->env)
+			{
+				glob->env = NULL;
+				return ;
+			}
 			free(path);
 			free(value);
 			break ;
@@ -86,6 +91,8 @@ void	ft_get_env(t_glob *glob, char **env)
 	t_env		*temp;
 
 	ft_get_first_node(glob, env);
+	if (!glob->env)
+		return (ft_err_printf("error malloc", 1));
 	if (!env)
 		return (ft_err_printf("no env", 1));
 	ft_get_env_follow(env, glob);
