@@ -18,6 +18,12 @@ void	ft_error(int code)
 	perror("minisHell");
 }
 
+void	ft_error_dir(char *cmd)
+{
+	g_error_code = 127;
+	dprintf(2, "minisHell : %s: No such file or directory\n", cmd);
+}
+
 void	ft_derror(char *cmd, char *variable, char *followed, int code)
 {
 	g_error_code = code;

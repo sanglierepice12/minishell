@@ -47,6 +47,7 @@ bool	ft_access(t_input *cmd)
 	size_t	i;
 	char	*temp_cmd;
 	char	*tempo;
+	DIR		*dir;
 
 	if (!cmd)
 		return (ft_err_printf("no cmd", 1), 1);
@@ -78,13 +79,20 @@ bool	ft_access(t_input *cmd)
 			free(temp_cmd);
 		}
 	}
-	tempo = ft_str_join(cmd->argv[0], "/");
+	dir = opendir(cmd->argv[0])
+	if (dir)
+		return (closedir(dir), ft_error(1), 1);
+	else if (cmd->argv[0][0] == '/')
+		return (ft_error_dir(cmd->argv[0]), 1);
+	printf("ici\n");
+	/*tempo = ft_str_join(cmd->argv[0], "/");
 	if (access(tempo, X_OK))
 	{
 		free(tempo);
-		return (ft_not_found(cmd->argv[0], ": command not found", 127), 1);
+		return (ft_not_found(cmd->argv[0], ": biche command not found", 127), 1);
 	}
-	free(tempo);
+	free(tempo);*/
+	(void)tempo;
 	return (0);
 }
 

@@ -77,7 +77,8 @@ void	ft_children(t_glob *glob, int pipefd[2], const size_t *i)
 		exit(g_error_code);
 	}
 	execve(glob->cmd[*i].argv[0], glob->cmd[*i].argv, glob->cmd[*i].path);
-	ft_not_found(glob->cmd[*i].argv[0], ": Permission denied", 126);
+	//ft_not_found(glob->cmd[*i].argv[0], ": Permission denied", 126);
+	perror("");
 	ft_free_all(glob);
 	exit(g_error_code);
 }
