@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 04:22:26 by arbenois          #+#    #+#             */
-/*   Updated: 2024/09/25 02:27:52 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/25 04:39:25 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ static int	check_infile_type(char **argv, t_input *cmd, int i)
 			return (0);
 		return (1);
 	}
-	if (ft_comp_str(argv[i], "<<") == 1)
+	else if (ft_comp_str(argv[i], "<<") == 1)
 	{
 		if (!handle_double_infile(argv, cmd, i))
 			return (0);
@@ -119,10 +119,10 @@ static int	get_heredoc_infile(char **argv, t_input *cmd)
 {
 	int	i;
 
-	i = cmd->args - 2;
+	i = cmd->args;
 	while (i >= 0)
 	{
-		if (check_infile_type(argv, cmd, i))
+		if (check_infile_type(argv, cmd, i) == 1)
 			break ;
 		else if (check_infile_type(argv, cmd, i) == 0)
 			return (0);
@@ -143,9 +143,11 @@ static int	get_heredoc_outfile(char **argv, t_input *cmd)
 			cmd->heredoc.is_there_any = 1;
 			cmd->heredoc.type_outfile = ">";
 			cmd->heredoc.file_outfile = ft_super_dup(argv[i + 1], NULL);
+			if (!cmd->heredoc.file_outfile)
+				return (0);
 			cmd->fd = open(argv[i + 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 			if (cmd->fd == -1)
-				return (ft_error(1), 0);
+				return (ft_error(1), free(cmd->heredoc.file_outfile), 0);
 			close(cmd->fd),
 			remove_heredoc(argv, i, cmd);
 			break ;
@@ -181,7 +183,7 @@ int	ft_strlen_bis(char **tab)
 
 char	**check_apply_heredoc(char **argv, t_input *cmd)
 {
-	unsigned long	i;
+	ssize_t	i;
 
 	i = 0;
 	cmd->heredoc.is_there_any = 0;
@@ -193,7 +195,7 @@ char	**check_apply_heredoc(char **argv, t_input *cmd)
 		return (free_tab(argv, ft_strlen_bis(argv)), NULL);
 	}
 	if (remove_and_stock_all_heredoc(argv, cmd, i) == 1)
-	{
+	{	
 		ft_free_double_tab(cmd->heredoc.file_infile);
 		free(cmd->heredoc.file_outfile);
 		return (free_tab(argv, ft_strlen_bis(argv)), NULL);

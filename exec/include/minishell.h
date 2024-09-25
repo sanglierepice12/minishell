@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 03:29:49 by arbenois          #+#    #+#             */
-/*   Updated: 2024/09/24 10:01:34 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/25 03:39:10 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int		if_in_quote(const char *str, size_t i);
 char	*delete_quote(char *tab, int i);
 char	**set_argv(char *input, unsigned long num, t_glob *glob);
 int		count_args(char *input, int lenght);
-int	get_length_num(char *input, unsigned long number);
+int		get_length_num(char *input, unsigned long number);
 char	*expend_env_var(char *word, t_glob *glob);
 char	**check_apply_heredoc(char **argv, t_input *command);
 int		remove_and_stock_all_heredoc(char **argv, t_input *cmd, unsigned long i);

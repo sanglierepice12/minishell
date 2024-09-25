@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 01:35:22 by arbenois          #+#    #+#             */
-/*   Updated: 2024/09/25 02:18:57 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/25 03:49:01 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,12 +95,9 @@ static int	handle_single_left_redir(char **argv, t_input *cmd, int i)
 
 	fd = open(argv[i + 1], O_WRONLY, O_RDONLY, 0644);
 	if (fd == -1)
-	{
-		fprintf(stderr, "minisHell: %s: No such file or directory\n", argv[i + 1]);
 		g_error_code = 1;
-		return (1);
-	}
-	close(fd);
+	else
+		close(fd);
 	cmd->heredoc.rest_heredoc = rs_heredoc(argv, cmd, i);
 	remove_heredoc(argv, i, cmd);
 	return (0);
@@ -117,7 +114,6 @@ int	remove_and_stock_all_heredoc(char **argv, t_input *cmd, unsigned long i)
 {
 	while (i < cmd->args)
 	{
-//		printf("%ld %ld %s\n", i, cmd->args, argv[i]);
 		if (ft_comp_str(argv[i], ">") == 1)
 		{
 			if (handle_single_right_redir(argv, cmd, i) == 1)
