@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 00:22:47 by arbenois          #+#    #+#             */
-/*   Updated: 2024/09/25 11:25:52 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/25 11:36:10 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ char	**set_argv(char *input, unsigned long num, t_glob *glob)
 	if (argv == NULL)
 		return (NULL);
 	data.input = input;
-	input = expend_env_var(input, glob);
 	data.i = get_length_num(input, num);
 	data.lenght = 0;
 	if (!process_input(argv, &data))
