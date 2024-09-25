@@ -63,7 +63,7 @@ static bool	ft_access(t_input *cmd)
 	if (access(tempo, X_OK))
 	{
 		free(tempo);
-		return (ft_not_found(cmd->argv[0], ": baba command not found", 127), 1);
+		return (ft_not_found(cmd->argv[0], ": command not found", 127), 1);
 	}
 	free(tempo);
 	return (0);
@@ -107,6 +107,9 @@ void	ft_init_exec(t_glob *glob)
 		if (ft_init_path(glob, temp))
 			return ;
 	}
+	else if (!ft_is_builtin(glob->cmd[0].command))
+		return (ft_error_dir(glob->cmd[0].command));
+
 	ft_free_double_tab(glob->cmd->path);
 	glob->cmd->path = ft_get_all_path(&glob->env);
 	ft_executor(glob);
