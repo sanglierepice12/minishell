@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 04:22:26 by arbenois          #+#    #+#             */
-/*   Updated: 2024/09/25 07:59:22 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/25 12:42:25 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ char	**add_tab(char *input, char **tab, size_t *size)
 	while (i != *size - 1)
 	{
 		new_tab[i] = ft_super_dup(tab[i], NULL);
+		free(tab[i]);
 		i++;
 	}
 	new_tab[i] = ft_super_dup(input, NULL);

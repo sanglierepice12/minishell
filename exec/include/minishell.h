@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 03:29:49 by arbenois          #+#    #+#             */
-/*   Updated: 2024/09/25 11:20:34 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/25 14:06:10 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ int		get_heredoc_outfile(char **argv, t_input *cmd);
 char	**rs_heredoc(char **argv, t_input *cmd, int i);
 int		has_quote(char *str);
 char	*expend_env_var(char *word, t_glob *glob);
+void	parse_tab(char *tab);
 
 void	show_struct(t_input *command);
 

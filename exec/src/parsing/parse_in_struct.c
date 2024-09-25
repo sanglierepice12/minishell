@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 03:30:09 by arbenois          #+#    #+#             */
-/*   Updated: 2024/09/25 11:43:37 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/25 14:10:34 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,21 @@ static int	check_command_null(t_glob *glob, int num_args)
 	return (1);
 }
 
+void	parse_tab(char *tab)
+{
+	size_t	i;
+
+	i = 0;
+	while(tab[i])
+	{
+		if (tab[i] == -39)
+			tab[i] *= -1;
+		else if (tab[i] == 39)
+			tab[i] *= -1;
+		i++;
+	}
+}
+
 int	parse_in_struct(t_glob *glob, char *input)
 {
 	int	num_args;
@@ -147,14 +162,15 @@ int	parse_in_struct(t_glob *glob, char *input)
 
 	tab = ft_strdup(input);
 	tab = expend_env_var(tab, glob);
+	parse_tab(tab);
 	num_args = get_num_args(tab);
 	if (num_args == -1)
 		return (0);
 	glob->count_cmd = num_args;
 	glob->cmd = ft_cal_loc((num_args + 1), sizeof(t_input));
-	glob->check_mes = 0;
 	if (!glob->cmd)
 		return (0);
+	glob->check_mes = 0;
 	i = 0;
 	while (i != num_args)
 	{
@@ -165,9 +181,9 @@ int	parse_in_struct(t_glob *glob, char *input)
 	//print_command_info(glob->cmd);
 	if (check_command_null(glob, num_args) == 0)
 		return (ft_free_cmd(glob), free(tab), 0);
+	free(tab);
 	ft_init_exec(glob);
 	ft_free_cmd(glob);
-	free(tab);
 	glob->cmd = NULL;
 	return (1);
 }
