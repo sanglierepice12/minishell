@@ -14,6 +14,7 @@
 
 void	ft_main_get_env(t_glob *glob)
 {
+	glob->env = NULL;
 	ft_lst_add_back(&glob->env, ft_new_node("_", \
 		"/usr/bin/env", 0));
 	if (!glob->env)

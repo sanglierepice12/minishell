@@ -12,126 +12,89 @@
 
 #include "../../../include/minishell.h"
 
-static void	ft_check_export_args(char *cmd, size_t	flag, size_t *j, char *env)
+void	ft_chk_expt_args(char *cmd, size_t	flag, t_valuef *var, char *env)
 {
 	if (!ft_is_numbalpha(cmd[0]) && !flag)
 	{
 		ft_env_derror("export", env, "not a valid identifier", 1);
-		*j = *j + 1;
+		var->k = var->k + 1;
 		return ;
 	}
 	if (ft_export_is_printable(cmd))
 	{
 		ft_env_derror("export", env, "not a valid identifier", 1);
-		*j = *j + 1;
+		var->k = var->k + 1;
 		return ;
 	}
 	if (ft_comp_str(cmd, "="))
 	{
 		ft_env_derror("export", env, "not a valid identifier", 1);
-		*j = *j + 1;
+		var->k = var->k + 1;
 		return ;
 	}
 }
 
-static char	*ft_find_value(char *env, int flag, char *temp, size_t *j)
+char	*ft_find_value(char *env, int flag, char *temp, t_export *export)
 {
-	ssize_t	i;
-	size_t	k;
-	size_t	len;
-	char	*value;
+	t_valuef	var;
 
-	len = ft_strlen(env);
-	k = *j;
-	value = NULL;
-	i = -1;
-	while (i++, env[i])
+	ft_find_value_init(&var, flag, env, export);
+	while (var.i++, env[var.i])
 	{
-		if (len > 1 && env[i + 1] && env[i] == '=' && !flag)
+		if (var.len > 1 && env[var.i + 1] && env[var.i] == '=' && !var.flag)
 		{
-			if (env[i - 1] == '+')
-				value = ft_str_copy_n(env, i - 1);
+			if (env[var.i - 1] == '+')
+				var.value = ft_str_copy_n(env, var.i - 1);
 			else
-				value = ft_str_copy_n(env, i);
-			ft_check_export_args(value, flag, &k, env);
+				var.value = ft_str_copy_n(env, var.i);
+			ft_chk_expt_args(var.value, var.flag, &var, env);
 			break ;
 		}
-		else if (i != 0 && env[i] == '=')
+		else if (var.i != 0 && env[var.i] == '=')
 		{
-			if (env[i - 1] == '+' && temp)
-				value = ft_str_join(env + i + 1, temp);
-			else
-				value = ft_dup(env + i + 1);
-			if (env[i - 1] == '-' && !flag)
-			{
-				ft_env_derror("export", env, "invalid option", 2);
-				printf("export: usage: export \\"
-					"[-fn] [name[=value] ...] or export -p \n");
-				k += 1;
-				*j = k;
-			}
+			ft_equal_value(&var, temp, env, export);
 			break ;
 		}
 	}
-	if (!env[i] && !value)
-	{
-		value = ft_dup(env);
-		ft_check_export_args(value, flag, &k, env);
-	}
-	*j = k;
-	return (value);
+	ft_double_check_arg(&var, env);
+	return (export->j = var.k, var.value);
+}
+
+static void	ft_create_env_nodes_follow(t_export *export)
+{
+	if (export->value)
+		free(export->value);
+	if (export->path)
+		free(export->path);
+	export->j++;
 }
 
 static void	ft_create_env_nodes(t_env **env, t_input *cmd, int flag)
 {
-	size_t	j;
-	size_t	j_copy;
-	char	*value;
-	char	*path;
-	bool	equal;
-	t_env	*temp;
+	t_export	export;
 
-	j = 1;
-	equal = 0;
-	while (j <= cmd->args - 1)
+	export.j = 1;
+	export.equal = 0;
+	while (export.j <= cmd->args - 1)
 	{
-		j_copy = j;
-		value = ft_find_value(cmd->argv[j], 0, NULL, &j);
-		if (j_copy + 1 == j)
+		export.j_copy = export.j;
+		export.value = ft_find_value(cmd->argv[export.j], 0, NULL, &export);
+		if (export.j_copy + 1 == export.j)
 		{
-			free(value);
+			free(export.value);
 			continue ;
 		}
-		temp = ft_find_thing_in_env(env, value);
-		if (ft_str_chr(cmd->argv[j], '='))
-		{
-			equal = 1;
-			if (temp)
-				path = ft_find_value(cmd->argv[j], 1, temp->value, &j);
-			else
-				path = ft_find_value(cmd->argv[j], 1, NULL, &j);
-		}
+		export.temp = ft_find_thing_in_env(env, export.value);
+		ft_create_env_follow(&export, cmd);
+		if (ft_existant_key(&export, env))
+			return ;
+		if (flag == 1 && export.j == 1)
+			ft_new_node(export.value, export.path, 1);
+		else if (!export.temp && !export.path)
+			ft_lst_add_back(env, ft_new_node(export.value, export.path, 1));
 		else
-			path = NULL;
-		if (temp && equal == 1)
-			ft_dell_node(&temp, env);
-		else if (temp)
-		{
-			if (value)
-				free(value);
-			return (free(path));
-		}
-		if (flag == 1 && j == 1)
-			ft_new_node(value, path, 1);
-		else if (!temp && !path)
-			ft_lst_add_back(env, ft_new_node(value, path, 1));
-		else
-			ft_lst_add_back(env, ft_new_node(value, path, 0));
-		if (value)
-			free(value);
-		if (path)
-			free(path);
-		j++;
+			ft_lst_add_back(env, ft_new_node(export.value, export.path, 0));
+		ft_create_env_nodes_follow(&export);
 	}
 }
 

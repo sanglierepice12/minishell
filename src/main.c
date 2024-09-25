@@ -21,7 +21,7 @@ int	main(int arc, char **argv, char **env)
 
 	(void)argv;
 	if (arc > 1)
-		return (printf("To much args\n"), 1);
+		return (printf("Too much args\n"), 1);
 	if (env && *env)
 		ft_get_env(&glob, env);
 	else

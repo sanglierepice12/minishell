@@ -17,7 +17,7 @@ NC = \033[0m
 
 # Compiler and flags
 CC = cc -std=gnu99
-CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=leak -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g3 #-fsanitize=leak -fsanitize=address
 LDFLAGS = -L/opt/homebrew/opt/readline/lib -I/opt/homebrew/opt/readline/include -lreadline
 
 # Source and objet directories
@@ -50,8 +50,10 @@ SRCS =	main.c 										\
 		exec/built_ins/echo.c						\
 		exec/built_ins/env.c						\
 		exec/built_ins/env_part2.c					\
+		exec/built_ins/create_env_node_follow.c		\
 		exec/built_ins/unset.c						\
 		exec/built_ins/export.c						\
+		exec/built_ins/export_followed.c			\
 		exec/built_ins/exit.c						\
 		exec/execution/init_exec.c					\
 		exec/execution/init_exec_follow.c			\

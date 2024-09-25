@@ -37,6 +37,7 @@ typedef enum s_sig
 }				t_sig;
 
 /********STRUCT********/
+
 typedef struct s_env
 {
 	char			*key;
@@ -45,6 +46,25 @@ typedef struct s_env
 	struct s_env	*next;
 	struct s_env	*prev;
 }				t_env;
+
+typedef struct s_export
+{
+	size_t	j;
+	size_t	j_copy;
+	char	*value;
+	char	*path;
+	bool	equal;
+	t_env	*temp;
+}	t_export;
+
+typedef struct s_valuef
+{
+	ssize_t	i;
+	size_t	k;
+	size_t	len;
+	int		flag;
+	char	*value;
+}	t_valuef;
 
 typedef struct s_heredoc
 {
@@ -136,6 +156,12 @@ char	*ft_super_dup(char *src, char *msg);
 char	*ft_dup(const char *s);
 char	*ft_str_copy_n(const char *str, size_t n);
 t_env	*ft_find_thing_in_env(t_env **env, char *value);
+void	ft_find_value_init(t_valuef *var, int flag, char *env, t_export *export);
+bool	ft_existant_key(t_export *export, t_env **env);
+void	ft_double_check_arg(t_valuef *var, char *env);
+void	ft_chk_expt_args(char *cmd, size_t	flag, t_valuef *var, char *env);
+void	ft_create_env_follow(t_export *export, t_input *cmd);
+char	*ft_find_value(char *env, int flag, char *temp, t_export *export);
 void	ft_dell_node(t_env **temp, t_env **head);
 size_t	ft_strlen(const char *str);
 size_t	ft_strlen_double(char **str);
@@ -163,6 +189,7 @@ void	ft_get_env(t_glob *glob, char **env);
 void	ft_get_env_follow(char **env, t_glob *glob);
 void	ft_unset(t_glob *glob, t_input *cmd);
 void	ft_export(t_env **env, t_input *cmd);
+void	ft_equal_value(t_valuef *var, char *temp, char *env, t_export *export);
 void	ft_exit(t_glob *glob, t_input *cmd);
 void	ft_env(t_glob *glob, t_input *cmd);
 void	ft_update_old_pwd(t_env **env, char *value, char *path);
