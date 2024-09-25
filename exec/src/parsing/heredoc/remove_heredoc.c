@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 01:35:22 by arbenois          #+#    #+#             */
-/*   Updated: 2024/09/24 06:56:02 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/25 02:18:57 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ static char	**rs_heredoc(char **argv, t_input *cmd, int i)
 		tab[2] = NULL;
 	}
 	temp = ft_realloc(cmd->heredoc.rest_heredoc, tab);
+	free(tab);
 	return (temp);
 }
 
@@ -95,7 +96,7 @@ static int	handle_single_left_redir(char **argv, t_input *cmd, int i)
 	fd = open(argv[i + 1], O_WRONLY, O_RDONLY, 0644);
 	if (fd == -1)
 	{
-		fprintf(stderr, "minisHell: No such file or directory\n");
+		fprintf(stderr, "minisHell: %s: No such file or directory\n", argv[i + 1]);
 		g_error_code = 1;
 		return (1);
 	}

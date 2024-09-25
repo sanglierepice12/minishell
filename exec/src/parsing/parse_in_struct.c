@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 03:30:09 by arbenois          #+#    #+#             */
-/*   Updated: 2024/09/24 17:25:24 by gsuter           ###   ########.fr       */
+/*   Updated: 2024/09/25 02:14:24 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,8 @@ static void	initialize_command(t_input *cmd)
 	cmd->command = NULL;
 	cmd->args = 0;
 }
-
-/*static void	print_command_info(t_input *cmd)
+/*
+static void	print_command_info(t_input *cmd)
 {
 	size_t	temp;
 	size_t	size;
@@ -195,7 +195,7 @@ int	parse_in_struct(t_glob *glob, char *input)
 			return (free(glob->cmd), 0);
 		i++;
 	}
-//	print_command_info(glob->cmd);
+	//print_command_info(glob->cmd);
 	if (check_command_null(glob, num_args) == 0)
 		return (ft_free_cmd(glob), 0);
 	ft_init_exec(glob);

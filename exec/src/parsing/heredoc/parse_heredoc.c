@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 04:22:26 by arbenois          #+#    #+#             */
-/*   Updated: 2024/09/24 10:39:05 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/25 02:27:52 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,18 @@ static char	**ft_write_infile(char *word)
 	return (tab);
 }
 
-static void	handle_single_infile(char **argv, t_input *cmd, int i)
+static int	handle_single_infile(char **argv, t_input *cmd, int i)
 {
 	cmd->heredoc.is_there_any = 1;
 	cmd->heredoc.type_infile = "<";
 	cmd->heredoc.file_infile = ft_cal_loc(2, sizeof(char *));
+	if (!cmd->heredoc.file_infile)
+		return (0);
 	cmd->heredoc.file_infile[0] = ft_super_dup(argv[i + 1], NULL);
+	if (!cmd->heredoc.file_infile[0])
+		return (0);
 	remove_heredoc(argv, i, cmd);
+	return (1);
 }
 
 static int	handle_double_infile(char **argv, t_input *cmd, int i)
@@ -97,7 +102,8 @@ static int	check_infile_type(char **argv, t_input *cmd, int i)
 {
 	if (ft_comp_str(argv[i], "<") == 1)
 	{
-		handle_single_infile(argv, cmd, i);
+		if (!handle_single_infile(argv, cmd, i))
+			return (0);
 		return (1);
 	}
 	if (ft_comp_str(argv[i], "<<") == 1)
@@ -106,10 +112,10 @@ static int	check_infile_type(char **argv, t_input *cmd, int i)
 			return (0);
 		return (1);
 	}
-	return (0);
+	return (2);
 }
 
-static void	get_heredoc_infile(char **argv, t_input *cmd)
+static int	get_heredoc_infile(char **argv, t_input *cmd)
 {
 	int	i;
 
@@ -118,8 +124,11 @@ static void	get_heredoc_infile(char **argv, t_input *cmd)
 	{
 		if (check_infile_type(argv, cmd, i))
 			break ;
+		else if (check_infile_type(argv, cmd, i) == 0)
+			return (0);
 		i--;
 	}
+	return (1);
 }
 
 static int	get_heredoc_outfile(char **argv, t_input *cmd)
@@ -176,10 +185,18 @@ char	**check_apply_heredoc(char **argv, t_input *cmd)
 
 	i = 0;
 	cmd->heredoc.is_there_any = 0;
-	get_heredoc_infile(argv, cmd);
+	if (!get_heredoc_infile(argv, cmd))
+		return (free_tab(argv, ft_strlen_bis(argv)), NULL);
 	if (get_heredoc_outfile(argv, cmd) == 0)
-		return (NULL);
+	{
+		ft_free_double_tab(cmd->heredoc.file_infile);
+		return (free_tab(argv, ft_strlen_bis(argv)), NULL);
+	}
 	if (remove_and_stock_all_heredoc(argv, cmd, i) == 1)
-		return (NULL);
+	{
+		ft_free_double_tab(cmd->heredoc.file_infile);
+		free(cmd->heredoc.file_outfile);
+		return (free_tab(argv, ft_strlen_bis(argv)), NULL);
+	}
 	return (argv);
 }
