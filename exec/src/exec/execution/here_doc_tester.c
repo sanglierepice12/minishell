@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_here_doc_tester.c                               :+:      :+:    :+:   */
+/*   here_doc_tester.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gostr <gostr@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 17:34:52 by gostr             #+#    #+#             */
-/*   Updated: 2024/07/11 17:34:52 by gostr            ###   ########.fr       */
+/*   Updated: 2024/09/25 05:23:42 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ bool	ft_here_doc_tester(t_input *cmd)
 
 	if (ft_comp_str(cmd->heredoc.type_outfile, ">"))
 	{
-		cmd->fd = open(cmd->heredoc.file_outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		cmd->fd = open(cmd->heredoc.file_outfile, O_WRONLY \
+			| O_CREAT | O_TRUNC, 0644);
 		if (cmd->fd == -1)
 			return (ft_error(1), true);
 		if (dup2(cmd->fd, 1) == -1)
@@ -60,7 +61,8 @@ bool	ft_here_doc_tester(t_input *cmd)
 	}
 	if (ft_comp_str(cmd->heredoc.type_outfile, ">>"))
 	{
-		cmd->fd = open(cmd->heredoc.file_outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		cmd->fd = open(cmd->heredoc.file_outfile, O_WRONLY \
+			| O_CREAT | O_APPEND, 0644);
 		if (cmd->fd == -1)
 			return (ft_error(1), true);
 		if (dup2(cmd->fd, 1) == -1)

@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 17:44:23 by gostr             #+#    #+#             */
-/*   Updated: 2024/09/23 05:47:40 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/25 05:21:49 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ void	ft_exit(t_glob *glob, t_input *cmd)
 		if (glob->cmd->args > 2)
 			return (ft_derror("exit", cmd->argv[1], "too many arguments", 1));
 	}
-//		return (ft_err_printf("no cmd", 1));
 	exit_code = (unsigned char)(g_error_code % 256);
 	ft_free_all(glob);
 	exit(exit_code);

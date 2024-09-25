@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:48:37 by gsuter            #+#    #+#             */
-/*   Updated: 2024/09/23 05:39:12 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/25 05:46:27 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,24 +30,6 @@ bool	ft_export_is_printable(char *c)
 			return (1);
 		i++;
 	}
-	return (0);
-}
-
-bool	ft_is_minus(char *c)
-{
-	if (c[0] == '-' && c[1] == '=')
-	{
-		printf("minisHell: export: `%s': invalid option\n", c);
-		return (0);
-	}
-	return (1);
-}
-
-bool	ft_is_numbalpha(char c)
-{
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') \
-		|| (c == '_') || (c == '-'))
-		return (1);
 	return (0);
 }
 

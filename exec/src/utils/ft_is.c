@@ -1,46 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_follow.c                                      :+:      :+:    :+:   */
+/*   ft_is.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/17 12:28:30 by gostr             #+#    #+#             */
-/*   Updated: 2024/09/25 05:18:06 by arbenois         ###   ########.fr       */
+/*   Created: 2024/09/25 05:46:11 by arbenois          #+#    #+#             */
+/*   Updated: 2024/09/25 05:50:21 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	free_tab(char **tab, size_t lenght)
+bool	ft_is_minus(char *c)
 {
-	if (!tab)
-		return ;
-	if (lenght == 0)
+	if (c[0] == '-' && c[1] == '=')
 	{
-		free(tab[0]);
-		free(tab);
-		return ;
+		printf("minisHell: export: `%s': invalid option\n", c);
+		return (0);
 	}
-	while (lenght != 0)
-	{
-		lenght--;
-		free(tab[lenght]);
-	}
-	free(tab);
+	return (1);
 }
 
-void	ft_free_double_tab(char **tab)
+bool	ft_is_numbalpha(char c)
 {
-	int	i;
-
-	if (!tab)
-		return ;
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') \
+		|| (c == '_') || (c == '-'))
+		return (1);
+	return (0);
 }

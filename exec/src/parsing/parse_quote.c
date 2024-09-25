@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 00:22:35 by arbenois          #+#    #+#             */
-/*   Updated: 2024/09/24 06:50:16 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/25 04:55:31 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ char	*allocate_newtab(char *input, int i, int *lenght)
 		return (NULL);
 	if (temp >= 1)
 		*lenght -= temp * 2;
-	//printf("lenght quote newtab = %d\n", *lenght);
 	newtab = ft_cal_loc((*lenght + 1), sizeof(char));
 	if (newtab == NULL)
 		return (NULL);

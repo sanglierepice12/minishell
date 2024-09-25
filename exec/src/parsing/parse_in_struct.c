@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 03:30:09 by arbenois          #+#    #+#             */
-/*   Updated: 2024/09/25 04:38:21 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/25 08:01:55 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	get_length_num(char *input, unsigned long number)
 {
 	unsigned long	num_args;
-	int	i;
+	int				i;
 
 	num_args = 0;
 	i = 0;
@@ -31,46 +31,6 @@ int	get_length_num(char *input, unsigned long number)
 	}
 	return (i);
 }
-/*
-static char	*allocate_command(char *input, int length, int i)
-{
-	char	*tab;
-
-	tab = malloc((i + 1) * sizeof(char));
-	if (!tab)
-		return (NULL);
-	tab[i] = 0;
-	i = 0;
-	while (input[i + length])
-	{
-		if (input[i + length] == ' ' || input[i + length] == 0)
-			break ;
-		tab[i] = input[i + length];
-		i++;
-	}
-	return (tab);
-}
-
-static char	*set_command(char *input, int num_com)
-{
-	int		i;
-	int		length;
-
-	i = 0;
-	if (num_com != 0)
-		length = get_length_num(input, num_com);
-	else
-		length = 0;
-	while (input[i + length] == ' ')
-		length++;
-	while (input[i + length])
-	{
-		if (input[i + length] == ' ' || input[i + length] == 0)
-			break ;
-		i++;
-	}
-	return (allocate_command(input, length, i));
-}*/
 
 static int	get_num_args(char *input)
 {
@@ -95,7 +55,7 @@ static int	get_num_args(char *input)
 	return (num_args);
 }
 
-static void	initialize_command(t_input *cmd)
+static void	initialize_command(t_input *cmd, t_glob *glob)
 {
 	cmd->heredoc.type_outfile = NULL;
 	cmd->heredoc.type_infile = NULL;
@@ -104,6 +64,7 @@ static void	initialize_command(t_input *cmd)
 	cmd->argv = NULL;
 	cmd->command = NULL;
 	cmd->args = 0;
+	cmd->check_m = &glob->check_mes;
 }
 /*
 static void	print_command_info(t_input *cmd)
@@ -149,7 +110,7 @@ static void	print_command_info(t_input *cmd)
 
 static int	setup_command(t_glob *glob, char *input, int i)
 {
-	initialize_command(&glob->cmd[i]);
+	initialize_command(&glob->cmd[i], glob);
 	glob->cmd[i].args = count_args(input, i);
 	if ((ssize_t)glob->cmd[i].args == -1)
 		return (0);
@@ -186,13 +147,14 @@ int	parse_in_struct(t_glob *glob, char *input)
 		return (0);
 	glob->count_cmd = num_args;
 	glob->cmd = ft_cal_loc((num_args + 1), sizeof(t_input));
+	glob->check_mes = 0;
 	if (!glob->cmd)
 		return (0);
 	i = 0;
 	while (i != num_args)
 	{
 		if (!setup_command(glob, input, i))
-			return (free(glob->cmd), 0);
+			return (ft_free_cmd(glob), 0);
 		i++;
 	}
 	//print_command_info(glob->cmd);

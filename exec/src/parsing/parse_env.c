@@ -6,61 +6,11 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 04:21:46 by arbenois          #+#    #+#             */
-/*   Updated: 2024/08/29 19:54:59 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/25 06:28:08 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-static char	*allocate_special_char(char c)
-{
-	char	*tab;
-
-	tab = calloc(2, sizeof(char));
-	if (!tab)
-		return (NULL);
-	tab[0] = c;
-	return (tab);
-}
-
-static size_t	get_word_length(const char *input, size_t i)
-{
-	size_t	length;
-
-	length = 0;
-	while (input[i + length] && input[i + length] != ' ' && \
-		input[i + length] != 39 && input[i + length] != 34 && \
-		input[i + length] != '$')
-		length++;
-	return (length);
-}
-
-static char	*allocate_and_copy_word(const char *input, size_t i, size_t length)
-{
-	char	*tab;
-	size_t		j;
-
-	tab = calloc(length + 1, sizeof(char));
-	if (!tab)
-		return (NULL);
-	j = 0;
-	while (j < length)
-	{
-		tab[j] = input[i + j];
-		j++;
-	}
-	return (tab);
-}
-
-static char	*copy_word_env(char *input, size_t i)
-{
-	size_t	length;
-
-	if (input[i] == '?' || input[i] == '$')
-		return (allocate_special_char(input[i]));
-	length = get_word_length(input, i);
-	return (allocate_and_copy_word(input, i, length));
-}
 
 static char	*alloc_new_word(char *word, char *path, char *temp)
 {
@@ -156,16 +106,12 @@ static char	*find_env_var(char *word, t_glob *glob, size_t i, char *temp)
 	}
 	if (check_sup == 1)
 		word = replace_env_word(word, i, "\t", temp);
-//	dprintf(2, "je passe par ici\n");
 	if (!word)
-	{
-//		dprintf(2, "je passe par la\n");
 		return (NULL);
-	}
 	return (word);
 }
 
-static char	*expand_single_var(char *word, t_glob *glob, const size_t *i)
+char	*expand_single_var(char *word, t_glob *glob, const size_t *i)
 {
 	char	*temp;
 
@@ -176,32 +122,5 @@ static char	*expand_single_var(char *word, t_glob *glob, const size_t *i)
 	free(temp);
 	if (!word)
 		return (NULL);
-	return (word);
-}
-
-char	*expend_env_var(char *word, t_glob *glob)
-{
-	size_t		i;
-
-	i = 0;
-	while (word[i])
-	{
-		if (word[i] == '$' && (if_in_quote(word, i) == 1 \
-			|| if_in_quote(word, i) == 3))
-		{
-			if (ft_isspace(word[i + 1]) == 1 && \
-				word[i + 1] != '"' && word[i + 1] != 0)
-			{
-				word = expand_single_var(word, glob, &i);
-				if (!word)
-					return (NULL);
-				i++;
-			}
-			else
-				i++;
-		}
-		else
-			i++;
-	}
 	return (word);
 }

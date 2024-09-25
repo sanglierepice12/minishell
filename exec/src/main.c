@@ -3,32 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arbenois <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 03:29:57 by arbenois          #+#    #+#             */
-/*   Updated: 2024/05/29 09:53:42 by gsuter           ###   ########.fr       */
+/*   Updated: 2024/09/25 05:51:18 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
 int	g_error_code = 0;
-
-void	show_struct(t_input *command)
-{
-	size_t	i;
-
-	printf("ARGS = %zu\n", command->args);
-	printf("command = %s\n", command->command);
-	i = 0;
-	while (i != command->args)
-	{
-		printf("ARGV = %s\n", command->argv[i]);
-		free(command->argv[i]);
-		i++;
-	}
-	free(command->argv);
-}
 
 int	main(int arc, char **argv, char **env)
 {
@@ -50,9 +34,6 @@ int	main(int arc, char **argv, char **env)
 		if (input == NULL)
 		{
 			printf("exit\n");
-			//this call make a heap use after free
-			/*ft_free_all(&glob);
-			exit(g_error_code);*/
 			ft_exit(&glob, NULL);
 		}
 		parse_in_struct(&glob, input);

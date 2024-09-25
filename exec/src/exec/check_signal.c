@@ -1,18 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_signal.c                                    :+:      :+:    :+:   */
+/*   check_signal.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/23 17:47:22 by gostr             #+#    #+#             */
-/*   Updated: 2024/09/25 05:18:41 by arbenois         ###   ########.fr       */
+/*   Created: 2024/09/25 06:04:32 by arbenois          #+#    #+#             */
+/*   Updated: 2024/09/25 06:06:24 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static void	ft_sigint(int sig)
+void	handle_sigpipe(int sig)
+{
+	printf("%ssa_p = %d\n%s", YELLOW, sig, RESET);
+	if (sig == SIGPIPE)
+	{
+		g_error_code = 141;
+		write(STDERR_FILENO, "Broken pipe\n", 12);
+	}
+}
+
+void	handle_sigint(int sig)
 {
 	if (sig == SIGINT)
 	{
@@ -24,18 +34,7 @@ static void	ft_sigint(int sig)
 	}
 }
 
-static void	ft_handle_heredoc(int sig)
-{
-	if (sig == SIGINT)
-	{
-		g_error_code = 130;
-		ioctl(STDIN_FILENO, TIOCSTI, "\n");
-		rl_replace_line("", 0);
-		rl_on_new_line();
-	}
-}
-
-void	ft_sigint_child(int sig)
+void	handle_sigchild(int sig)
 {
 	if (sig == SIGINT)
 	{
@@ -51,23 +50,13 @@ void	ft_sigint_child(int sig)
 	}
 }
 
-void	ft_handle_signal(t_sig SIG)
+void	handle_sighere(int sig)
 {
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
-	if (SIG == PARENT)
+	if (sig == SIGINT)
 	{
-		signal(SIGQUIT, SIG_IGN);
-		signal(SIGINT, &ft_sigint);
-	}
-	if (SIG == CHILD)
-	{
-		signal(SIGINT, &ft_sigint_child);
-		signal(SIGQUIT, &ft_sigint_child);
-	}
-	if (SIG == HEREDOC)
-	{
-		signal(SIGQUIT, SIG_IGN);
-		signal(SIGINT, &ft_handle_heredoc);
+		g_error_code = 130;
+		ioctl(STDIN_FILENO, TIOCSTI, "\n");
+		rl_replace_line("", 0);
+		rl_on_new_line();
 	}
 }

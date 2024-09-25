@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 11:41:27 by gostr             #+#    #+#             */
-/*   Updated: 2024/09/25 04:02:41 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/25 07:46:45 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,7 @@ void	ft_children(t_glob *glob, int pipefd[2], const size_t *i)
 		ft_free_all(glob);
 		exit(g_error_code);
 	}
-	//dprintf(2, "globcmd = %s\n, globargv = %s, glob path = %s\n", glob->cmd[*i].argv[0], glob->cmd[*i].argv[0], glob->cmd[*i].path[59]);
 	execve(glob->cmd[*i].argv[0], glob->cmd[*i].argv, glob->cmd[*i].path);
-	printf("coucou");
 	ft_not_found(glob->cmd[*i].argv[0], ": Permission denied", 126);
 	ft_free_all(glob);
 	exit(g_error_code);

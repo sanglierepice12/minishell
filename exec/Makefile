@@ -33,10 +33,18 @@ SRCS =	main.c 										\
 		parsing/check_function/check_quote.c		\
 		parsing/parse_argv.c						\
 		parsing/parse_env.c							\
+		parsing/check_env.c							\
+		parsing/check_redir.c						\
+		parsing/parse_word.c						\
+		parsing/copy_word_env.c						\
 		parsing/heredoc/parse_heredoc.c				\
 		parsing/heredoc/remove_heredoc.c			\
+		parsing/heredoc/get_heredoc_infile.c		\
+		parsing/heredoc/get_heredoc_outfile.c		\
 		exec/built_in_calls.c						\
 		exec/handle_signal.c						\
+		exec/check_signal.c							\
+		exec/ft_update.c							\
 		exec/built_ins/pwd.c						\
 		exec/built_ins/cd.c							\
 		exec/built_ins/echo.c						\
@@ -53,12 +61,15 @@ SRCS =	main.c 										\
 		free/free_follow.c							\
 		utils/get_env.c								\
 		utils/copy.c								\
+		utils/ft_is.c								\
 		utils/ft_calloc.c							\
 		utils/compare.c								\
 		utils/linked_list.c							\
 		utils/linked_follow.c						\
 		utils/ft_split.c							\
 		utils/ft_lib.c								\
+		utils/print_env.c							\
+		utils/ft_strdup.c							\
 		utils/error.c								\
 		utils/itoa.c
 
