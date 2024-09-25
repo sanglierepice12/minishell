@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
 #include "../../include/minishell.h"
 
 void	handle_sigpipe(int sig)
@@ -61,3 +62,4 @@ void	handle_sighere(int sig)
 		rl_on_new_line();
 	}
 }
+*/

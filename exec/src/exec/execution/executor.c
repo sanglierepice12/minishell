@@ -12,18 +12,23 @@
 
 #include "../../../include/minishell.h"
 
-void	ft_wait(void)
+void	ft_wait(int pid)
 {
 	int	status;
+	int	i;
+	int	j;
 
-	while (waitpid(0, &status, 0) != -1)
-		;
-	if (WIFEXITED(status))
-		g_error_code = WEXITSTATUS(status);
-	else if (WIFSIGNALED(status))
-		g_error_code = 128 + WTERMSIG(status);
-	if (g_error_code == 141)
-		g_error_code = 0;
+	i = 0;
+	while (i != -1)
+	{
+		i = waitpid(0, &status, 0);
+		if (i == pid)
+			j = status;
+	}
+	if (WIFEXITED(j))
+		g_error_code = WEXITSTATUS(j);
+	else if (WIFSIGNALED(j))
+		g_error_code = 128 + WTERMSIG(j);
 }
 
 void	ft_executor(t_glob *glob)
@@ -50,7 +55,6 @@ void	ft_executor(t_glob *glob)
 		ft_handle_signal(CHILD);
 		if (pid == 0)
 			ft_children(glob, pipefd, &i);
-		printf("parent = %d\n", getpid());
 		if (pipefd[1] > 2)
 			close(pipefd[1]);
 		if (i < glob->count_cmd - 1)
@@ -63,7 +67,7 @@ void	ft_executor(t_glob *glob)
 			close(glob->cmd->fd);
 		i++;
 	}
-	ft_wait();
+	ft_wait(pid);
 	if (glob->cmd->fd != 0)
 		close(glob->cmd->fd);
 	ft_handle_signal(PARENT);

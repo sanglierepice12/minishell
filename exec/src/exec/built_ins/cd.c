@@ -97,7 +97,7 @@ void	ft_cd(t_glob *glob, t_input *cmd)
 		return (ft_err_printf("minisHell: cd: too many arguments", 1));
 	if (cmd->args == 1 || ft_comp_str(cmd->argv[1], "~") \
 		|| ft_comp_str(cmd->argv[1], "--"))
-		ft_cd_to_home(glob); //pas demande, tej moi ca il cree des leaks
+		ft_cd_to_home(glob);
 	else if (ft_comp_str(cmd->argv[1], "-"))
 		ft_cd_to_oldpwd(glob);
 	else if (cmd->argv[1][0] == '-' && (cmd->argv[1][1] != 'L' \

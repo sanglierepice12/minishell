@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+/*
 
 static void	handle_sigsegv(int code)
 {
@@ -65,3 +66,4 @@ void	ft_handle_signal(t_sig SIG)
 		sigaction(SIGQUIT, &sa_quit, NULL) == -1)
 		return (ft_error(1));
 }
+*/

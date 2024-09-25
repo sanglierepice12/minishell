@@ -63,7 +63,7 @@ void	ft_handle_signal(t_sig SIG)
 	if (SIG == CHILD)
 	{
 		signal(SIGINT, &ft_sigint_child);
-		//signal(SIGQUIT, &ft_sigint_child);
+		signal(SIGQUIT, &ft_sigint_child);
 	}
 	if (SIG == HEREDOC)
 	{

@@ -88,7 +88,7 @@ static void	ft_get_first_node(t_glob *glob, char **env)
 
 void	ft_get_env(t_glob *glob, char **env)
 {
-	t_env		*temp;
+/*	t_env		*temp;*/
 
 	ft_get_first_node(glob, env);
 	if (!glob->env)
@@ -96,9 +96,10 @@ void	ft_get_env(t_glob *glob, char **env)
 	if (!env)
 		return (ft_err_printf("no env", 1));
 	ft_get_env_follow(env, glob);
-	temp = glob->env;
-	if (!ft_find_thing_in_env(&temp, "PATH"))
-		ft_main_get_env(glob);
+
+	/*temp = glob->env;*/
+	/*if (!ft_find_thing_in_env(&temp, "PATH"))
+		ft_main_get_env(glob);*/
 }
 
 void	ft_env(t_glob *glob, t_input *cmd)

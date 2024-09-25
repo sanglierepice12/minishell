@@ -67,7 +67,6 @@ void	ft_exit(t_glob *glob, t_input *cmd)
 {
 	unsigned char	exit_code;
 
-	printf("exit = %d\n", getpid());
 	if (cmd)
 	{
 		if (glob->cmd->args == 1)
