@@ -31,7 +31,7 @@ void	ft_get_env_follow(char **env, t_glob *glob)
 	char		*value;
 	char		*path;
 
-	i = -1;
+	i = 0;
 	while (i++, env[i])
 	{
 		j = -1;
