@@ -170,14 +170,24 @@ void	ft_update_env_value(t_env *temp, char *path, t_env **env);
 
 /*----------EXECUTION----------*/
 void	ft_init_exec(t_glob *glob);
+bool	ft_init_begin(t_glob *glob, size_t *i);
+int		ft_open_dir(t_input *cmd);
+int		ft_test_access(char *temp_cmd, t_input *cmd);
 char	**ft_get_all_path(t_env	**env);
 void	ft_get_all_path_follow(t_env *temp, size_t *len);
 void	ft_reset_in_out(t_glob *glob);
 void	ft_unlink_cmd(t_glob *glob);
 bool	ft_here_doc_tester(t_input *cmd);
+void	ft_write_heredoc_to_file(char **lines, const char *filename);
+bool	ft_joiner_access(t_input *cmd);
+bool	ft_heredoc(t_input *cmd);
+bool	ft_left_operand(t_input *cmd);
+bool	ft_right_operand_double(t_input *cmd);
+bool	ft_right_operand(t_input *cmd);
 void	ft_executor(t_glob *glob);
 void	ft_exec_built_in(t_glob *glob);
 void	ft_children(t_glob *glob, int pipefd[2], const size_t *i);
+void	ft_dup_two(int fd, int std, t_glob *glob);
 
 /*----------SIGNALS----------*/
 void	ft_handle_signal(t_sig SIG);

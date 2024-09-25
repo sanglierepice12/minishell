@@ -54,9 +54,12 @@ SRCS =	main.c 										\
 		exec/built_ins/export.c						\
 		exec/built_ins/exit.c						\
 		exec/execution/init_exec.c					\
+		exec/execution/init_exec_follow.c			\
 		exec/execution/here_doc_tester.c			\
+		exec/execution/here_doc_opener.c			\
 		exec/execution/executor.c					\
 		exec/execution/children.c					\
+		exec/execution/dup_2_check.c				\
 		free/free.c									\
 		free/free_follow.c							\
 		utils/get_env.c								\

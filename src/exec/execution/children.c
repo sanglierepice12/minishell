@@ -43,41 +43,27 @@ void	ft_children(t_glob *glob, int pipefd[2], const size_t *i)
 {
 	if (*i > 0)
 	{
-		if (dup2(glob->cmd->fd, STDIN_FILENO) == -1)
-		{
-			perror("miniHell");
-			ft_free_all(glob);
-			exit(EXIT_FAILURE);
-		}
+		ft_dup_two(glob->cmd->fd, STDIN_FILENO, glob);
 		close(pipefd[0]);
 	}
 	if (*i < glob->count_cmd - 1)
 	{
 		close(pipefd[0]);
-		if (dup2(pipefd[1], STDOUT_FILENO) == -1)
-		{
-			perror("miniHell");
-			ft_free_all(glob);
-			exit(EXIT_FAILURE);
-		}
+		ft_dup_two(pipefd[1], STDOUT_FILENO, glob);
 	}
 	if (pipefd[1] > 2)
 		close(pipefd[1]);
 	if (ft_here_doc_tester(&glob->cmd[*i]))
 	{
 		close(glob->cmd->fd);
-		ft_free_all(glob);
-		exit(g_error_code);
+		ft_exit(glob, NULL);
 	}
 	if (ft_is_builtin(glob->cmd[*i].command))
 	{
 		ft_call_builtins(glob, glob->cmd[*i]);
 		close(glob->cmd->fd);
-		ft_free_all(glob);
-		exit(g_error_code);
+		ft_exit(glob, NULL);
 	}
 	execve(glob->cmd[*i].argv[0], glob->cmd[*i].argv, glob->cmd[*i].path);
-	//ft_not_found(glob->cmd[*i].argv[0], ": Permission denied", 126);
-	ft_free_all(glob);
-	exit(g_error_code);
+	ft_exit(glob, NULL);
 }

@@ -42,12 +42,9 @@ bool	ft_is_builtin(char *cmd)
 		return (0);
 }
 
-bool	ft_access(t_input *cmd)
+static bool	ft_access(t_input *cmd)
 {
-	size_t	i;
-	char	*temp_cmd;
 	char	*tempo;
-	//DIR		*dir;
 
 	if (!cmd)
 		return (ft_err_printf("no cmd", 1), 1);
@@ -55,62 +52,27 @@ bool	ft_access(t_input *cmd)
 	{
 		if (!access(cmd->command, F_OK | X_OK))
 			return (0);
+		if (ft_open_dir(cmd))
+			return (1);
 	}
 	if (ft_is_builtin(cmd->command))
 		return (0);
-	i = 0;
-	while (cmd->path[i])
-	{
-		/*dir = opendir(cmd->argv[0]);
-		if (dir)
-		{
-			printf("la\n");
-			return (closedir(dir), ft_error(1), 1);
-		}
-		else if (cmd->argv[0][0] == '/')
-		{
-			printf("ici\n");
-			return (ft_error_dir(cmd->argv[0]), 1);
-		}*/
-		temp_cmd = ft_str_join(cmd->command, cmd->path[i]);
-		if (!temp_cmd)
-			return (ft_err_printf("no cmd", 1), 1);
-		if (!access(temp_cmd, F_OK | X_OK))
-		{
-			if (cmd->argv[0])
-				free(cmd->argv[0]);
-			cmd->argv[0] = ft_dup(temp_cmd);
-			cmd->command = cmd->argv[0];
-			free(temp_cmd);
-			break ;
-		}
-		else
-		{
-			i++;
-			free(temp_cmd);
-		}
-	}
-
-	//printf("ici\n");
+	if (ft_joiner_access(cmd))
+		return (true);
 	tempo = ft_str_join(cmd->argv[0], "/");
 	if (access(tempo, X_OK))
 	{
 		free(tempo);
-		return (ft_not_found(cmd->argv[0], ": biche command not found", 127), 1);
+		return (ft_not_found(cmd->argv[0], ": baba command not found", 127), 1);
 	}
 	free(tempo);
-	//(void)tempo;
 	return (0);
 }
 
-bool	ft_init_path(t_glob *glob, t_env *temp)
+static bool	ft_init_path(t_glob *glob, t_env *temp)
 {
 	size_t	i;
-	size_t	j;
-	char	*temp_path;
 
-	if (!temp || !glob)
-		return (ft_err_printf("nothing in temp", 1), 1);
 	i = 0;
 	while (i < glob->count_cmd)
 	{
@@ -122,21 +84,8 @@ bool	ft_init_path(t_glob *glob, t_env *temp)
 		glob->cmd[i].path = ft_split(temp->value, ':');
 		if (!glob->cmd[i].path)
 			return (ft_err_printf("nothing in path", 1), 1);
-		j = 0;
-		while (glob->cmd[i].path[j])
-		{
-			temp_path = NULL;
-			temp_path = ft_str_join("/", glob->cmd[i].path[j]);
-			if (!temp_path)
-				return (ft_err_printf("nothing in temp path", 1), 1);
-			free(glob->cmd[i].path[j]);
-			glob->cmd[i].path[j] = ft_dup(temp_path);
-			if (!glob->cmd[i].path[j])
-				return (free(temp_path), \
-					ft_err_printf("glob->cmd->path empty", 1), 1);
-			free(temp_path);
-			j++;
-		}
+		if (ft_init_begin(glob, &i))
+			return (true);
 		if (ft_access(&glob->cmd[i]))
 			return (1);
 		i++;
