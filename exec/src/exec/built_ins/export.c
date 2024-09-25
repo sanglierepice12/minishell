@@ -88,9 +88,11 @@ static void	ft_create_env_nodes(t_env **env, t_input *cmd, int flag)
 	size_t	j_copy;
 	char	*value;
 	char	*path;
+	bool	equal;
 	t_env	*temp;
 
 	j = 1;
+	equal = 0;
 	while (j <= cmd->args - 1)
 	{
 		j_copy = j;
@@ -103,6 +105,7 @@ static void	ft_create_env_nodes(t_env **env, t_input *cmd, int flag)
 		temp = ft_find_thing_in_env(env, value);
 		if (ft_str_chr(cmd->argv[j], '='))
 		{
+			equal = 1;
 			if (temp)
 				path = ft_find_value(cmd->argv[j], 1, temp->value, &j);
 			else
@@ -110,8 +113,14 @@ static void	ft_create_env_nodes(t_env **env, t_input *cmd, int flag)
 		}
 		else
 			path = NULL;
-		if (temp)
+		if (temp && equal == 1)
 			ft_dell_node(&temp, env);
+		else if (temp)
+		{
+			if (value)
+				free(value);
+			return (free(path));
+		}
 		if (flag == 1 && j == 1)
 			ft_new_node(value, path, 1);
 		else if (!temp && !path)

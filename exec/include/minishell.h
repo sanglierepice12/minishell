@@ -198,6 +198,7 @@ void	ft_env_derror(char *cmd, char *variable, char *followed, int code);
 void	ft_err_printf(char *msg, int code);
 void	ft_not_found(char *cmd, char *msg, int code);
 void	ft_error(int code);
+void	ft_error_dir(char *cmd);
 
 /*----------LINKED_LIST----------*/
 void	ft_print_this_node(t_env **env, char *value);
