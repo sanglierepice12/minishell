@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 03:29:57 by arbenois          #+#    #+#             */
-/*   Updated: 2024/09/25 17:30:30 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/25 17:31:11 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	main(int arc, char **argv, char **env)
 	(void)argv;
 	if (arc > 1)
 		return (printf("To much args\n"), 1);
-	ft_handle_signal(PARENT);
 	if (env && *env)
 		ft_get_env(&glob, env);
 	else
