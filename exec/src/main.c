@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 03:29:57 by arbenois          #+#    #+#             */
-/*   Updated: 2024/09/25 15:39:48 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/25 17:30:30 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	main(int arc, char **argv, char **env)
 		ft_main_get_env(&glob);
 	while (1)
 	{
+		ft_handle_signal(PARENT);
 		input = readline("minisHell-1.0$ ");
 		if (input == NULL)
 		{
