@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 00:22:47 by arbenois          #+#    #+#             */
-/*   Updated: 2024/09/25 12:30:23 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/25 19:22:02 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,6 @@ char	**set_argv(char *input, unsigned long num, t_glob *glob)
 	if (check_redir(argv, glob, num) == 0)
 		return (free_tab(argv, glob->cmd[num].args), NULL);
 	if (check_env(argv, glob, num) == 0)
-		return (NULL);
+		return (free_tab(argv, glob->cmd[num].args), NULL);
 	return (check_apply_heredoc(argv, &glob->cmd[num]));
 }

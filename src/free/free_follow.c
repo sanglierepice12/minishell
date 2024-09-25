@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 12:28:30 by gostr             #+#    #+#             */
-/*   Updated: 2024/09/25 13:00:24 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/25 19:24:01 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	free_tab(char **tab, size_t lenght)
 		return ;
 	if (lenght == 0)
 	{
-		free(tab[0]);
 		free(tab);
 		return ;
 	}

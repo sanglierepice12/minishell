@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:47:22 by gostr             #+#    #+#             */
-/*   Updated: 2024/09/25 05:18:41 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/25 22:27:53 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,10 @@ static void	ft_sigint(int sig)
 
 static void	ft_handle_heredoc(int sig)
 {
-	if (sig == SIGINT)
-	{
-		g_error_code = 130;
-		ioctl(STDIN_FILENO, TIOCSTI, "\n");
-		rl_replace_line("", 0);
-		rl_on_new_line();
-	}
+	(void) sig;
+	rl_replace_line("", 0);
+	rl_redisplay();
+	rl_done = 1;
 }
 
 void	ft_sigint_child(int sig)

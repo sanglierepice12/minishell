@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 04:58:00 by arbenois          #+#    #+#             */
-/*   Updated: 2024/09/25 15:32:27 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/25 19:20:31 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	check_tab(char *tab)
 static void	remove_tab(char **argv, int size, t_glob *glob, unsigned long num)
 {
 	free(argv[size]);
-	while (argv[size +1])
+	while (argv[size + 1])
 	{
 		argv[size] = argv[size + 1];
 		size++;
@@ -66,5 +66,7 @@ int	check_env(char **argv, t_glob *glob, unsigned long num)
 		}
 		i++;
 	}
+	if (glob->cmd[num].initargs == -1)
+		return (0);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 05:14:16 by arbenois          #+#    #+#             */
-/*   Updated: 2024/09/25 17:19:11 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/25 22:24:50 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,12 @@ static char	**ft_write_infile(char *word)
 
 	size = 1;
 	tab = ft_cal_loc(1, sizeof(char *));
+	ft_handle_signal(HEREDOC);
 	while (1)
 	{
 		input = readline("> ");
 		if (input == NULL)
-			return (NULL);
+			return (tab);
 		if (ft_comp_str(input, word) == 1)
 		{
 			free(input);
