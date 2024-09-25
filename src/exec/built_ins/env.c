@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsuter <gsuter@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:39:13 by gsuter            #+#    #+#             */
-/*   Updated: 2024/09/25 15:12:24 by gsuter           ###   ########.fr       */
+/*   Updated: 2024/09/25 18:01:00 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ t_env	*ft_find_thing_in_env(t_env **env, char *value)
 
 static void	ft_get_first_node(t_glob *glob, char **env)
 {
-	char	*value;
-	char	*path;
 	int		j;
 
 	if (!env)
@@ -66,20 +64,7 @@ static void	ft_get_first_node(t_glob *glob, char **env)
 	{
 		if (env[0][j] == '=')
 		{
-			path = ft_dup(env[0] + j + 1);
-			if (!path)
-				return (ft_err_printf("error malloc", 1));
-			value = ft_str_copy_n(env[0], j);
-			if (!value)
-				return (ft_err_printf("error malloc", 1));
-			glob->env = ft_new_node(value, path, 0);
-			if (!glob->env)
-			{
-				glob->env = NULL;
-				return ;
-			}
-			free(path);
-			free(value);
+			ft_copy_env(j, env, glob);
 			break ;
 		}
 		j++;
@@ -88,18 +73,12 @@ static void	ft_get_first_node(t_glob *glob, char **env)
 
 void	ft_get_env(t_glob *glob, char **env)
 {
-/*	t_env		*temp;*/
-
 	ft_get_first_node(glob, env);
 	if (!glob->env)
 		return (ft_err_printf("error malloc", 1));
 	if (!env)
 		return (ft_err_printf("no env", 1));
 	ft_get_env_follow(env, glob);
-
-	/*temp = glob->env;*/
-	/*if (!ft_find_thing_in_env(&temp, "PATH"))
-		ft_main_get_env(glob);*/
 }
 
 void	ft_env(t_glob *glob, t_input *cmd)

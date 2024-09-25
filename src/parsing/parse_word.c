@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 05:00:41 by arbenois          #+#    #+#             */
-/*   Updated: 2024/09/25 11:20:22 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/25 17:53:33 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,33 @@ char	*parse_word(char *input, int *i)
 		return (word);
 	*i += ft_strlen_quote(input, *i, &temp);
 	return (word);
+}
+
+char	*replace_env_word(char *word, size_t i, char *path, char *temp)
+{
+	char		*tab;
+	char		*str;
+	size_t		size;
+
+	str = ft_strdup(path);
+	if (!str)
+		return (free(word), NULL);
+	check_tab_quote(str, 0);
+	tab = alloc_new_word(word, str, temp);
+	if (!tab)
+		return (free(word), free(str), NULL);
+	size = 0;
+	while (size != i)
+	{
+		tab[size] = word[size];
+		size++;
+	}
+	ft_add_tab(str, tab, size);
+	size += ft_strlen(str);
+	i += ft_strlen(temp) + 1;
+	while (word[i])
+		tab[size++] = word[i++];
+	free(word);
+	free(str);
+	return (tab);
 }

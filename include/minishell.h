@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 03:29:49 by arbenois          #+#    #+#             */
-/*   Updated: 2024/09/25 17:15:22 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/25 18:01:14 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,10 @@ int		has_quote(char *str);
 char	*expend_env_var(char *word, t_glob *glob);
 void	check_tab_quote(char *tab, int check);
 int		check_command_null(t_glob *glob, int num_args);
+char	*replace_env_word(char *word, size_t i, char *path, char *temp);
+char	*alloc_new_word(char *word, char *path, char *temp);
+void	ft_add_tab(char *str, char *tab, size_t size);
+void	ft_copy_env(int j, char **env, t_glob *glob);
 
 void	show_struct(t_input *command);
 

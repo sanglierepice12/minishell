@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_part2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gostr <gostr@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 18:18:44 by gostr             #+#    #+#             */
-/*   Updated: 2024/09/23 18:18:44 by gostr            ###   ########.fr       */
+/*   Updated: 2024/09/25 18:01:08 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,25 @@ void	ft_get_env_follow(char **env, t_glob *glob)
 		free(path);
 		free(value);
 	}
+}
+
+void	ft_copy_env(int j, char **env, t_glob *glob)
+{
+	char	*value;
+	char	*path;
+
+	path = ft_dup(env[0] + j + 1);
+	if (!path)
+		return (ft_err_printf("error malloc", 1));
+	value = ft_str_copy_n(env[0], j);
+	if (!value)
+		return (ft_err_printf("error malloc", 1));
+	glob->env = ft_new_node(value, path, 0);
+	if (!glob->env)
+	{
+		glob->env = NULL;
+		return ;
+	}
+	free(path);
+	free(value);
 }

@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:01:38 by gsuter            #+#    #+#             */
-/*   Updated: 2024/09/25 06:08:34 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/09/25 17:56:51 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,6 @@ void	ft_update_pwd(t_env **env, char *value, char *path)
 		ft_lst_add_back(env, ft_new_node("PWD", getcwd(NULL, 0), 0));
 }
 
-void	ft_cd_to_home(t_glob *glob)
-{
-	chdir("/");
-	ft_update_pwd(&glob->env, "PWD", getcwd(NULL, 0));
-}
-
 void	ft_cd_to_oldpwd(t_glob *glob)
 {
 	t_env	*temp;
@@ -97,7 +91,10 @@ void	ft_cd(t_glob *glob, t_input *cmd)
 		return (ft_err_printf("minisHell: cd: too many arguments", 1));
 	if (cmd->args == 1 || ft_comp_str(cmd->argv[1], "~") \
 		|| ft_comp_str(cmd->argv[1], "--"))
-		ft_cd_to_home(glob);
+	{
+		chdir("/");
+		ft_update_pwd(&glob->env, "PWD", getcwd(NULL, 0));
+	}
 	else if (ft_comp_str(cmd->argv[1], "-"))
 		ft_cd_to_oldpwd(glob);
 	else if (cmd->argv[1][0] == '-' && (cmd->argv[1][1] != 'L' \
