@@ -76,13 +76,13 @@ void	check_tab_quote(char *tab, int check)
 	{
 		if (check == 1)
 		{
-			if (tab[i] == -39)
-				tab[i] *= -1;
+			if (tab[i] == 13)
+				tab[i] = 39;
 		}
 		else
 		{
 			if (tab[i] == 39)
-				tab[i] *= -1;
+				tab[i] = 13;
 		}
 		i++;
 	}

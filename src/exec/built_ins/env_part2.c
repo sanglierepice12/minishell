@@ -14,6 +14,8 @@
 
 void	ft_get_all_path_follow(t_env *temp, size_t *len)
 {
+	if (!temp)
+		return ;
 	while (temp->next)
 	{
 		if (temp->value)

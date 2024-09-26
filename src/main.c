@@ -19,10 +19,10 @@ int	main(int arc, char **argv, char **env)
 	char		*input;
 	t_glob		glob;
 
-	(void)argv;
 	if (arc > 1)
-		return (printf("Too much args\n"), 1);
-	if (env && *env)
+		return (printf("%s: you don't need this\n", argv[1]), 1);
+	glob.env = NULL;
+	if (*env && env)
 		ft_get_env(&glob, env);
 	else
 		ft_main_get_env(&glob);
@@ -37,8 +37,7 @@ int	main(int arc, char **argv, char **env)
 			ft_exit(&glob, NULL);
 		}
 		parse_in_struct(&glob, input);
-		if (*input)
-			add_history(input);
+		add_history(input);
 		free(input);
 	}
 }

@@ -22,6 +22,8 @@ char	**ft_get_all_path(t_env	**env)
 	if (!env)
 		return (ft_err_printf("no env", 1), NULL);
 	temp = *env;
+	if (!temp)
+		return (NULL);
 	len = 0;
 	ft_get_all_path_follow(temp, &len);
 	test = ft_cal_loc(len + 1, sizeof(char *));

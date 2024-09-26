@@ -107,7 +107,8 @@ void	ft_init_exec(t_glob *glob)
 		if (ft_init_path(glob, temp))
 			return ;
 	}
-	else if (!ft_is_builtin(glob->cmd[0].command))
+	else if (!ft_is_builtin(glob->cmd[0].command) && \
+		access(glob->cmd[0].command, X_OK))
 		return (ft_error_dir(glob->cmd[0].command));
 
 	ft_free_double_tab(glob->cmd->path);
