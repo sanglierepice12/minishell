@@ -215,6 +215,7 @@ void	ft_executor(t_glob *glob);
 void	ft_exec_built_in(t_glob *glob);
 void	ft_children(t_glob *glob, int pipefd[2], const size_t *i);
 void	ft_dup_two(int fd, int std, t_glob *glob);
+char	**ft_env_to_tab(t_env **env, t_glob *glob);
 
 /*----------SIGNALS----------*/
 void	ft_handle_signal(t_sig SIG);

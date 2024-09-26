@@ -26,10 +26,14 @@ static void	ft_sigint(int sig)
 
 static void	ft_handle_heredoc(int sig)
 {
-	(void) sig;
-	rl_replace_line("", 0);
-	rl_redisplay();
-	rl_done = 1;
+	if (sig == SIGINT)
+	{
+		g_error_code = 130;
+		write(STDERR_FILENO, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
 }
 
 void	ft_sigint_child(int sig)
@@ -64,7 +68,7 @@ void	ft_handle_signal(t_sig SIG)
 	}
 	if (SIG == HEREDOC)
 	{
-		signal(SIGQUIT, SIG_IGN);
 		signal(SIGINT, &ft_handle_heredoc);
+		signal(SIGQUIT, SIG_IGN);
 	}
 }

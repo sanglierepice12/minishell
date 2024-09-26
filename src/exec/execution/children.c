@@ -41,6 +41,9 @@ void	ft_exec_built_in(t_glob *glob)
 
 void	ft_children(t_glob *glob, int pipefd[2], const size_t *i)
 {
+	char	**envp;
+
+	envp = ft_env_to_tab(&glob->env, glob);
 	if (*i > 0)
 	{
 		ft_dup_two(glob->cmd->fd, STDIN_FILENO, glob);
@@ -54,16 +57,13 @@ void	ft_children(t_glob *glob, int pipefd[2], const size_t *i)
 	if (pipefd[1] > 2)
 		close(pipefd[1]);
 	if (ft_here_doc_tester(&glob->cmd[*i]))
-	{
 		close(glob->cmd->fd);
-		ft_exit(glob, NULL);
-	}
-	if (ft_is_builtin(glob->cmd[*i].command))
+	else if (ft_is_builtin(glob->cmd[*i].command))
 	{
 		ft_call_builtins(glob, glob->cmd[*i]);
 		close(glob->cmd->fd);
-		ft_exit(glob, NULL);
 	}
-	execve(glob->cmd[*i].argv[0], glob->cmd[*i].argv, glob->cmd[*i].path);
-	ft_exit(glob, NULL);
+	else
+		execve(glob->cmd[*i].argv[0], glob->cmd[*i].argv, envp);
+	return (free(envp), ft_exit(glob, NULL));
 }

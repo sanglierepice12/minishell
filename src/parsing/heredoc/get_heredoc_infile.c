@@ -20,12 +20,15 @@ static char	**ft_write_infile(char *word)
 
 	size = 1;
 	tab = ft_cal_loc(1, sizeof(char *));
-	ft_handle_signal(HEREDOC);
 	while (1)
 	{
 		input = readline("> ");
 		if (input == NULL)
+		{
+			printf("minishell: warning: here-document"
+				   "delimited by end-of-file (wanted '%s')\n", word);
 			return (tab);
+		}
 		if (ft_comp_str(input, word) == 1)
 		{
 			free(input);
@@ -62,6 +65,7 @@ static int	handle_double_infile(char **argv, t_input *cmd, size_t i)
 	cmd->heredoc.type_infile = "<<";
 	if (cmd->heredoc.file_infile != NULL)
 		ft_free_double_tab(cmd->heredoc.file_infile);
+	ft_handle_signal(HEREDOC);
 	cmd->heredoc.file_infile = ft_write_infile(argv[i + 1]);
 	if (!cmd->heredoc.file_infile)
 		return (0);

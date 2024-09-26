@@ -22,7 +22,7 @@ int	main(int arc, char **argv, char **env)
 	if (arc > 1)
 		return (printf("%s: you don't need this\n", argv[1]), 1);
 	glob.env = NULL;
-	if (*env && env)
+	if (env && *env)
 		ft_get_env(&glob, env);
 	else
 		ft_main_get_env(&glob);
