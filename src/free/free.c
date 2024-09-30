@@ -29,7 +29,7 @@ void	ft_free_cmd(t_glob *glob)
 	if (!glob->cmd)
 		return ;
 	i = 0;
-	while (i < glob->count_cmd /*&& &glob->cmd[i]*/)
+	while (i < glob->count_cmd)
 	{
 		if (glob->cmd[i].args && glob->cmd[i].argv)
 			free_tab(glob->cmd[i].argv, glob->cmd[i].args);

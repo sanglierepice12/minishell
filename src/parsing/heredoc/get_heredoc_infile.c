@@ -20,17 +20,16 @@ static char	**ft_write_infile(char *word)
 
 	size = 1;
 	tab = ft_cal_loc(1, sizeof(char *));
-	while (1)
+	while (g_error_code != 130)
 	{
-		//ft_handle_signal(HEREDOC);
 		input = readline("> ");
 		if (input == NULL)
 		{
 			printf("minishell: warning: here-document"
-				   "delimited by end-of-file (wanted '%s')\n", word);
+				"delimited by end-of-file (wanted '%s')\n", word);
 			return (tab);
 		}
-		if (ft_comp_str(input, word) == 1 || g_error_code == 130)
+		if (ft_comp_str(input, word) == 1)
 		{
 			free(input);
 			break ;
