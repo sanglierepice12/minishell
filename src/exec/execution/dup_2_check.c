@@ -74,7 +74,7 @@ char	**ft_env_to_tab(t_env **env, t_glob *glob)
 	if (!env)
 		return (NULL);
 	temp = *env;
-	envp = ft_cal_loc(sizeof(char *), ft_lst_size(*env));
+	envp = ft_cal_loc(sizeof(char *), ft_lst_size(*env) + 1);
 	if (!envp)
 		return (NULL);
 	i = 0;

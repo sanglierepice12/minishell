@@ -26,6 +26,7 @@ static int	get_num_args(char *input)
 			if (input[i + 1] == '|')
 			{
 				printf("minisHell: syntax error near unexpected token `|'\n");
+				free(input);
 				return (-1);
 			}
 			num_args++;
@@ -125,7 +126,7 @@ int	parse_in_struct(t_glob *glob, char *input)
 	size_t		i;
 	char		*tab;
 
-	tab = ft_strdup(input);
+	tab = ft_dup(input);
 	tab = expend_env_var(tab, glob);
 	if (!initialize_glob(glob, tab))
 		return (0);

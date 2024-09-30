@@ -65,5 +65,5 @@ void	ft_children(t_glob *glob, int pipefd[2], const size_t *i)
 	}
 	else
 		execve(glob->cmd[*i].argv[0], glob->cmd[*i].argv, envp);
-	return (free(envp), ft_exit(glob, NULL));
+	return (ft_free_double_tab(envp), ft_exit(glob, NULL));
 }

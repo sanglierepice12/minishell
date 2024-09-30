@@ -22,6 +22,7 @@ static char	**ft_write_infile(char *word)
 	tab = ft_cal_loc(1, sizeof(char *));
 	while (1)
 	{
+		//ft_handle_signal(HEREDOC);
 		input = readline("> ");
 		if (input == NULL)
 		{
@@ -29,7 +30,7 @@ static char	**ft_write_infile(char *word)
 				   "delimited by end-of-file (wanted '%s')\n", word);
 			return (tab);
 		}
-		if (ft_comp_str(input, word) == 1)
+		if (ft_comp_str(input, word) == 1 || g_error_code == 130)
 		{
 			free(input);
 			break ;
