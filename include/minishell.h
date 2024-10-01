@@ -156,7 +156,7 @@ char	*ft_super_dup(char *src, char *msg);
 char	*ft_dup(const char *s);
 char	*ft_str_copy_n(const char *str, size_t n);
 t_env	*ft_find_thing_in_env(t_env **env, char *value);
-void	ft_find_value_init(t_valuef *var, int flag, char *env, t_export *export);
+void	ft_find_value_init(t_valuef *var, int flag, char *env, t_export *exprt);
 bool	ft_existant_key(t_export *export, t_env **env);
 void	ft_double_check_arg(t_valuef *var, char *env);
 void	ft_chk_expt_args(char *cmd, size_t	flag, t_valuef *var, char *env);

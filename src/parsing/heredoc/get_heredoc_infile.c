@@ -24,11 +24,7 @@ static char	**ft_write_infile(char *word)
 	{
 		input = readline("> ");
 		if (g_error_code == 130)
-		{
-			free(input);
-			ft_free_double_tab(tab);
-			return (NULL);
-		}
+			return (free(input), ft_free_double_tab(tab), NULL);
 		if (input == NULL)
 		{
 			printf("minishell: warning: here-document"
@@ -36,13 +32,11 @@ static char	**ft_write_infile(char *word)
 			return (tab);
 		}
 		if (ft_comp_str(input, word) == 1)
-		{
-			free(input);
 			break ;
-		}
 		tab = add_tab(input, tab, &size);
 		free(input);
 	}
+	free(input);
 	return (tab);
 }
 
