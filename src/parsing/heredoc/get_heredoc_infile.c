@@ -72,6 +72,7 @@ static int	handle_double_infile(char **argv, t_input *cmd, size_t i)
 	if (cmd->heredoc.file_infile != NULL)
 		ft_free_double_tab(cmd->heredoc.file_infile);
 	ft_handle_signal(HEREDOC);
+	g_error_code = 0;
 	cmd->heredoc.file_infile = ft_write_infile(argv[i + 1]);
 	if (!cmd->heredoc.file_infile)
 		return (0);
