@@ -256,6 +256,9 @@ void	ft_swap_nodes(t_env *a, t_env *b);
 t_env	*copy_node(t_env *head);
 t_env	*copy_list(t_env *head);
 
+/*-------STYLE-----*/
+void	ft_print_style(void);
+
 /*----------COLORS----------*/
 # define RESET   "\033[0m"
 # define BLACK   "\033[30m"      /* Black */

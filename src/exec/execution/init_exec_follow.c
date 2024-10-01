@@ -54,10 +54,13 @@ int	ft_open_dir(t_input *cmd)
 
 	dir = opendir(cmd->argv[0]);
 	if (dir)
-		return (closedir(dir), ft_error(1), 1);
-	else if (cmd->argv[0][0] == '/')
-		return (ft_error_dir(cmd->argv[0]), 1);
-	return (0);
+	{
+		closedir(dir);
+		printf("minisHell: %s: Is a directory\n", cmd->command);
+		return (g_error_code = 126, 0);
+	}
+	else
+		return (printf("\n"), 1);
 }
 
 bool	ft_init_begin(t_glob *glob, size_t *i)

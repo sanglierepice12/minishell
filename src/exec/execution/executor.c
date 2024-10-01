@@ -77,6 +77,7 @@ void	ft_executor(t_glob *glob)
 	glob->cmd->fd = 0;
 	if (glob->count_cmd == 1 && ft_is_builtin(glob->cmd[0].command))
 		return (ft_exec_built_in(glob));
+	g_error_code = 0;
 	ft_pipeline(glob);
 	if (glob->cmd->fd != 0)
 		close(glob->cmd->fd);

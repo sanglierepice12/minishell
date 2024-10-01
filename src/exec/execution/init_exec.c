@@ -50,10 +50,10 @@ static bool	ft_access(t_input *cmd)
 		return (ft_err_printf("no cmd", 1), 1);
 	if (cmd->command[0] == '/' || cmd->command[0] == '.')
 	{
-		if (!access(cmd->command, F_OK | X_OK))
-			return (0);
-		if (ft_open_dir(cmd))
+		if (!ft_open_dir(cmd))
 			return (1);
+		if (!access(cmd->command, X_OK))
+			return (0);
 	}
 	if (ft_is_builtin(cmd->command))
 		return (0);

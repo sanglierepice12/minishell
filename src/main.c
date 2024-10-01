@@ -19,6 +19,7 @@ int	main(int arc, char **argv, char **env)
 	char		*input;
 	t_glob		glob;
 
+	ft_print_style();
 	if (arc > 1)
 		return (printf("%s: you don't need this\n", argv[1]), 1);
 	glob.env = NULL;
