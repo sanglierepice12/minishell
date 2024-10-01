@@ -20,9 +20,15 @@ static char	**ft_write_infile(char *word)
 
 	size = 1;
 	tab = ft_cal_loc(1, sizeof(char *));
-	while (g_error_code != 130)
+	while (8)
 	{
 		input = readline("> ");
+		if (g_error_code == 130)
+		{
+			free(input);
+			ft_free_double_tab(tab);
+			return (NULL);
+		}
 		if (input == NULL)
 		{
 			printf("minishell: warning: here-document"

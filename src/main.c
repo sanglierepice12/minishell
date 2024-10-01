@@ -26,7 +26,7 @@ int	main(int arc, char **argv, char **env)
 		ft_get_env(&glob, env);
 	else
 		ft_main_get_env(&glob);
-	while (1)
+	while (8)
 	{
 		ft_handle_signal(PARENT);
 		input = readline("minisHell-1.0$ ");
