@@ -21,7 +21,7 @@ NC = \033[0m
 #LDFLAGS = -L/opt/homebrew/opt/readline/lib -I/opt/homebrew/opt/readline/include -lreadline
 
 CC = cc
-CFLAGS = -std=c99 -Wall -Wextra -Werror $(shell pkg-config --cflags readline) -fsanitize=leak -fsanitize=address
+CFLAGS = -std=c99 -Wall -Wextra -Werror $(shell pkg-config --cflags readline) #-fsanitize=leak -fsanitize=address
 LDFLAGS = $(shell pkg-config --libs readline)
 
 # Source and objet directories

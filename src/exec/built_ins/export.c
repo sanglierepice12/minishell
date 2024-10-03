@@ -41,7 +41,7 @@ char	*ft_find_value(char *env, int flag, char *temp, t_export *export)
 	ft_find_value_init(&var, flag, env, export);
 	while (var.i++, env[var.i])
 	{
-		if (var.len > 1 && env[var.i + 1] && env[var.i] == '=' && !var.flag)
+		if (var.len > 1 && env[var.i] == '=' && !var.flag)
 		{
 			if (env[var.i - 1] == '+')
 				var.value = ft_str_copy_n(env, var.i - 1);
@@ -52,7 +52,10 @@ char	*ft_find_value(char *env, int flag, char *temp, t_export *export)
 		}
 		else if (var.i != 0 && env[var.i] == '=')
 		{
-			ft_equal_value(&var, temp, env, export);
+			if (env[var.i + 1] == '\0')
+				var.value = ft_strdup("");
+			else
+				ft_equal_value(&var, temp, env, export);
 			break ;
 		}
 	}
