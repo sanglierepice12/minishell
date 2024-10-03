@@ -47,12 +47,15 @@ void	ft_update_pwd(t_env **env, char *value, char *path)
 		{
 			ft_update_env_value(temp, path, env);
 			free(path);
+			path = NULL;
 			break ;
 		}
 		temp = temp->next;
 	}
 	if (!ft_find_thing_in_env(env, "PWD"))
-		ft_lst_add_back(env, ft_new_node("PWD", getcwd(NULL, 0), 0));
+		ft_lst_add_back(env, ft_new_node("PWD", path, 0));
+	if (path)
+		free(path);
 }
 
 void	ft_cd_to_oldpwd(t_glob *glob)
@@ -84,6 +87,9 @@ void	ft_cd_handle_invalid_option(t_input *cmd)
 
 void	ft_cd(t_glob *glob, t_input *cmd)
 {
+	char	*get;
+
+	get = NULL;
 	g_error_code = 0;
 	if (!cmd->args)
 		return (printf("no argv\n"), (void)0);
@@ -92,8 +98,8 @@ void	ft_cd(t_glob *glob, t_input *cmd)
 	if (cmd->args == 1 || ft_comp_str(cmd->argv[1], "~") \
 		|| ft_comp_str(cmd->argv[1], "--"))
 	{
+		get = getcwd(NULL, 0);
 		chdir("/");
-		ft_update_pwd(&glob->env, "PWD", getcwd(NULL, 0));
 	}
 	else if (ft_comp_str(cmd->argv[1], "-"))
 		ft_cd_to_oldpwd(glob);
@@ -102,5 +108,5 @@ void	ft_cd(t_glob *glob, t_input *cmd)
 		ft_cd_handle_invalid_option(cmd);
 	else if (chdir(cmd->argv[1]) != 0)
 		ft_derror("cd", cmd->argv[1], "No such file or directory", 1);
-	ft_update_pwd(&glob->env, "PWD", getcwd(NULL, 0));
+	ft_update_pwd(&glob->env, "PWD", get);
 }
