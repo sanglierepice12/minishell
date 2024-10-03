@@ -27,7 +27,7 @@ void	ft_exec_built_in(t_glob *glob)
 			return (ft_error(1));
 	}
 	if (ft_here_doc_tester(glob->cmd) == false)
-		ft_call_builtins(glob, glob->cmd[0]);
+		ft_call_builtins(glob, glob->cmd[0], NULL);
 	if (glob->cmd->heredoc.is_there_any)
 	{
 		if (dup2(temp_fd_out, STDOUT_FILENO) == -1)
@@ -60,7 +60,7 @@ void	ft_children(t_glob *glob, int pipefd[2], const size_t *i)
 		close(glob->cmd->fd);
 	else if (ft_is_builtin(glob->cmd[*i].command))
 	{
-		ft_call_builtins(glob, glob->cmd[*i]);
+		ft_call_builtins(glob, glob->cmd[*i], envp);
 		close(glob->cmd->fd);
 	}
 	else

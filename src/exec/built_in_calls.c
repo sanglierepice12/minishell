@@ -12,7 +12,7 @@
 
 #include "../../include/minishell.h"
 
-void	ft_call_builtins(t_glob *glob, t_input cmd)
+void	ft_call_builtins(t_glob *glob, t_input cmd, char **envp)
 {
 	if (!cmd.args)
 		return ;
@@ -31,5 +31,9 @@ void	ft_call_builtins(t_glob *glob, t_input cmd)
 	if (ft_strncmp(cmd.command, "export", 6) == 0)
 		ft_export(&glob->env, &cmd);
 	if (ft_strncmp(cmd.command, "exit", 4) == 0)
-		return (ft_exit(glob, &cmd));
+	{
+		if (envp != NULL)
+			ft_free_double_tab(envp);
+		ft_exit(glob, &cmd);
+	}
 }

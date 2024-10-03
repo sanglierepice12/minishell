@@ -179,7 +179,7 @@ char	**ft_strstrdup(char **str);
 
 /*----------BUILT_INS_CALLS----------*/
 bool	ft_is_builtin(char *cmd);
-void	ft_call_builtins(t_glob *glob, t_input cmd);
+void	ft_call_builtins(t_glob *glob, t_input cmd, char **envp);
 
 /*----------BUILT_INS----------*/
 void	ft_pwd(t_input *cmd, t_env **env);

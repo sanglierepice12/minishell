@@ -16,9 +16,13 @@ RED = \033[0;31m
 NC = \033[0m
 
 # Compiler and flags
-CC = cc -std=gnu99
-CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=leak -fsanitize=address
-LDFLAGS = -L/opt/homebrew/opt/readline/lib -I/opt/homebrew/opt/readline/include -lreadline
+#CC = cc -std=gnu99
+#CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=leak -fsanitize=address
+#LDFLAGS = -L/opt/homebrew/opt/readline/lib -I/opt/homebrew/opt/readline/include -lreadline
+
+CC = cc
+CFLAGS = -std=c18 -Wall $(shell pkg-config --cflags readline)
+LDFLAGS = $(shell pkg-config --libs readline)
 
 # Source and objet directories
 SRC_DIR = ./src
