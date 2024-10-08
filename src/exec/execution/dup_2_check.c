@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 18:21:15 by gsuter            #+#    #+#             */
-/*   Updated: 2024/10/08 18:50:13 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/10/08 21:11:55 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,20 +76,19 @@ char	**ft_env_to_tab(t_env **env, t_glob *glob)
 	if (!envp)
 		return (NULL);
 	i = -1;
-	while (++i, temp->next)
+	while (++i, temp)
 	{
 		if (!temp->value)
+		{
+			temp = temp->next;
 			continue ;
+		}
 		envp[i] = ft_get_key(temp);
 		if (!envp[i])
 			return (ft_free_double_tab(envp), \
 			ft_exit(glob, NULL), NULL);
 		temp = temp->next;
 	}
-	envp[i] = ft_get_key(temp);
-	if (!envp[i])
-		return (ft_free_double_tab(envp), \
-		ft_exit(glob, NULL), NULL);
 	return (envp);
 }
 
