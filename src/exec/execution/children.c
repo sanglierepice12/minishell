@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 11:41:27 by gostr             #+#    #+#             */
-/*   Updated: 2024/10/08 19:40:40 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/10/08 19:48:47 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,5 @@ void	ft_children(t_glob *glob, int pipefd[2], size_t *i)
 	}
 	else
 		ft_exec_child(glob, i, envp);
-	return (/*g_error_code = 126*/ ft_free_double_tab(envp), ft_exit(glob, NULL));
+	return (ft_free_double_tab(envp), ft_exit(glob, NULL));
 }
