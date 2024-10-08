@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 00:22:35 by arbenois          #+#    #+#             */
-/*   Updated: 2024/09/25 15:34:54 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/10/08 18:58:59 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ char	*delete_quote(char *tab, int i)
 
 	newtab = allocate_newtab(tab, i, &lenght);
 	if (newtab == NULL)
-		return (NULL);
+		return (free(tab), NULL);
 	copy_without_quotes(tab, newtab, lenght);
 	free(tab);
 	return (newtab);

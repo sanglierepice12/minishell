@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 05:14:16 by arbenois          #+#    #+#             */
-/*   Updated: 2024/09/25 22:24:50 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/10/08 19:27:20 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,24 @@ static char	**ft_write_infile(char *word)
 
 	size = 1;
 	tab = ft_cal_loc(1, sizeof(char *));
+	if (!tab)
+		return (NULL);
 	while (8)
 	{
 		input = readline("> ");
 		if (g_error_code == 130)
 			return (free(input), ft_free_double_tab(tab), NULL);
 		if (input == NULL)
-		{
-			printf("minishell: warning: here-document"
-				"delimited by end-of-file (wanted '%s')\n", word);
-			return (tab);
-		}
+			return (printf("minishell: warning: here-document" \
+				"delimited by end-of-file (wanted '%s')\n", word), tab);
 		if (ft_comp_str(input, word) == 1)
 			break ;
 		tab = add_tab(input, tab, &size);
+		if (!tab)
+			return (free(input), NULL);
 		free(input);
 	}
-	free(input);
-	return (tab);
+	return (free(input), tab);
 }
 
 static int	handle_single_infile(char **argv, t_input *cmd, size_t i)

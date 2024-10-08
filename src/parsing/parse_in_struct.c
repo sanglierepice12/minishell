@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 03:30:09 by arbenois          #+#    #+#             */
-/*   Updated: 2024/09/25 17:19:42 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/10/08 19:16:22 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,48 +48,6 @@ static void	initialize_command(t_input *cmd, t_glob *glob)
 	cmd->check_m = &glob->check_mes;
 }
 
-/*
-static void	print_command_info(t_input *cmd)
-{
-	size_t	temp;
-	size_t	size;
-
-	printf("COMMAND = %s\n", cmd->command);
-	printf("ARGS = %zu\n", cmd->args);
-	temp = 0;
-	while (temp != cmd->args)
-	{
-		printf("ARGV = %s\n", cmd->argv[temp]);
-		temp++;
-	}
-	if (cmd->heredoc.rest_heredoc != 0)
-	{
-		size = 0;
-		temp = ft_strlen_bis(cmd->heredoc.rest_heredoc);
-		while (temp != size)
-		{
-			printf("HEREDOC INFO = %s\n", cmd->heredoc.rest_heredoc[size]);
-			size++;
-		}
-	}
-	if (cmd->heredoc.type_infile != 0)
-	{
-		printf("Heredoc type Infile = %s\n", cmd->heredoc.type_infile);
-		size = 0;
-		while (cmd->heredoc.file_infile[size] != 0)
-		{
-			printf("Heredoc file Infile = %s\n", cmd->heredoc.file_infile[size]);
-			size++;
-		}
-	}
-	if (cmd->heredoc.type_outfile != 0)
-	{
-		printf("Heredoc type Outfile = %s\n", cmd->heredoc.type_outfile);
-		printf("Heredoc file Outfile = %s\n", cmd->heredoc.file_outfile);
-	}
-	printf("\n");
-}*/
-
 static int	setup_command(t_glob *glob, char *input, int i)
 {
 	initialize_command(&glob->cmd[i], glob);
@@ -127,9 +85,13 @@ int	parse_in_struct(t_glob *glob, char *input)
 	char		*tab;
 
 	tab = ft_dup(input);
-	tab = expend_env_var(tab, glob);
-	if (!initialize_glob(glob, tab))
+	if (!tab)
 		return (0);
+	tab = expend_env_var(tab, glob);
+	if (!tab)
+		return (0);
+	if (!initialize_glob(glob, tab))
+		return (free(tab), 0);
 	i = 0;
 	while (i != glob->count_cmd)
 	{
@@ -137,7 +99,6 @@ int	parse_in_struct(t_glob *glob, char *input)
 			return (ft_free_cmd(glob), free(tab), 0);
 		i++;
 	}
-	//print_command_info(glob->cmd);
 	if (check_command_null(glob, glob->count_cmd) == 0)
 		return (ft_free_cmd(glob), free(tab), 0);
 	free(tab);

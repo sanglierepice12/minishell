@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 04:21:46 by arbenois          #+#    #+#             */
-/*   Updated: 2024/09/25 17:54:05 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/10/08 18:56:06 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ static int	handle_special_cases(char **word, size_t i, char *temp)
 	{
 		tab = ft_itoa(g_error_code);
 		*word = replace_env_word(*word, i, tab, temp);
+		if (!*word)
+			return (free(tab), ft_error(1), 0);
 		free(tab);
 		return (1);
 	}
@@ -60,6 +62,8 @@ static int	handle_special_cases(char **word, size_t i, char *temp)
 	{
 		tab = ft_itoa(getpid());
 		*word = replace_env_word(*word, i, tab, temp);
+		if (!*word)
+			return (free(tab), ft_error(1), 0);
 		free(tab);
 		return (1);
 	}

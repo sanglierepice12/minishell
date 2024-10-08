@@ -21,7 +21,7 @@ NC = \033[0m
 #LDFLAGS = -L/opt/homebrew/opt/readline/lib -I/opt/homebrew/opt/readline/include -lreadline
 
 CC = cc
-CFLAGS = -std=c99 -Wall -Wextra -Werror $(shell pkg-config --cflags readline) #-fsanitize=leak -fsanitize=address
+CFLAGS = -std=c99 -Wall -Wextra -Werror $(shell pkg-config --cflags readline) -g3 #-fsanitize=leak -fsanitize=address
 LDFLAGS = $(shell pkg-config --libs readline)
 
 # Source and objet directories
@@ -47,7 +47,6 @@ SRCS =	main.c 										\
 		parsing/heredoc/get_heredoc_outfile.c		\
 		exec/built_in_calls.c						\
 		exec/handle_signal.c						\
-		exec/check_signal.c							\
 		exec/ft_update.c							\
 		exec/built_ins/pwd.c						\
 		exec/built_ins/cd.c							\
@@ -101,7 +100,7 @@ $(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LDFLAGS)
 	@echo "$(GREEN)Linking completed!$(NC)"
 
-$(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
+$(OBJ_DIR)/%.o : $(SRC_DIR)/%.c Makefile
 	@mkdir -p $(OBJ_DIR) $(DEP_DIR)
 	@mkdir -p $(OBJ_DIR)/parsing $(DEP_DIR)/parsing
 	@mkdir -p $(OBJ_DIR)/parsing/heredoc $(DEP_DIR)/parsing/heredoc

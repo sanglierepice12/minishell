@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 18:18:44 by gostr             #+#    #+#             */
-/*   Updated: 2024/09/25 18:01:08 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/10/08 19:20:46 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,12 @@ void	ft_copy_env(int j, char **env, t_glob *glob)
 		return (ft_err_printf("error malloc", 1));
 	value = ft_str_copy_n(env[0], j);
 	if (!value)
-		return (ft_err_printf("error malloc", 1));
+		return (free(path), ft_err_printf("error malloc", 1));
 	glob->env = ft_new_node(value, path, 0);
 	if (!glob->env)
 	{
+		free(path);
+		free(value);
 		glob->env = NULL;
 		return ;
 	}

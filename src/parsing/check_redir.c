@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 05:00:34 by arbenois          #+#    #+#             */
-/*   Updated: 2024/09/25 16:28:23 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/10/08 18:58:12 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ static int	remove_all_quote(char **argv, t_glob *glob, unsigned long num)
 	{
 		if (has_quote(argv[i]) == 0)
 			argv[i] = delete_quote(argv[i], 0);
-		check_tab_quote(argv[i], 1);
 		if (!argv[i])
 			return (0);
+		check_tab_quote(argv[i], 1);
 		i++;
 	}
 	return (1);

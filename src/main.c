@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 03:29:57 by arbenois          #+#    #+#             */
-/*   Updated: 2024/09/25 17:31:11 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/10/08 19:40:51 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(int arc, char **argv, char **env)
 	char		*input;
 	t_glob		glob;
 
-	ft_print_style();
+	//ft_print_style();
 	if (arc > 1)
 		return (printf("%s: you don't need this\n", argv[1]), 1);
 	glob.env = NULL;

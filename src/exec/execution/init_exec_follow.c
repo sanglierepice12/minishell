@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_exec_follow.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsuter <gsuter@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 17:47:05 by gsuter            #+#    #+#             */
-/*   Updated: 2024/09/25 17:47:05 by gsuter           ###   ########.fr       */
+/*   Updated: 2024/10/08 19:34:28 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	ft_open_dir(t_input *cmd)
 		return (g_error_code = 126, 0);
 	}
 	else
-		return (printf("\n"), 1);
+		return (1);
 }
 
 bool	ft_init_begin(t_glob *glob, size_t *i)

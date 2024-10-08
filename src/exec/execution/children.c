@@ -6,11 +6,26 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 11:41:27 by gostr             #+#    #+#             */
-/*   Updated: 2024/09/25 07:46:45 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/10/08 19:40:40 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
+
+static void	ft_close_pipe(void)
+{
+	int	k;
+
+	k = 2;
+	while (k++, k < 1024)
+		close(k);
+}
+
+static void	ft_exec_child(t_glob *glob, size_t *i, char **envp)
+{
+	ft_close_pipe();
+	execve(glob->cmd[*i].argv[0], glob->cmd[*i].argv, envp);
+}
 
 void	ft_exec_built_in(t_glob *glob)
 {
@@ -39,7 +54,7 @@ void	ft_exec_built_in(t_glob *glob)
 	close(temp_fd_out);
 }
 
-void	ft_children(t_glob *glob, int pipefd[2], const size_t *i)
+void	ft_children(t_glob *glob, int pipefd[2], size_t *i)
 {
 	char	**envp;
 
@@ -64,6 +79,6 @@ void	ft_children(t_glob *glob, int pipefd[2], const size_t *i)
 		close(glob->cmd->fd);
 	}
 	else
-		execve(glob->cmd[*i].argv[0], glob->cmd[*i].argv, envp);
-	return (g_error_code = 126, ft_free_double_tab(envp), ft_exit(glob, NULL));
+		ft_exec_child(glob, i, envp);
+	return (/*g_error_code = 126*/ ft_free_double_tab(envp), ft_exit(glob, NULL));
 }

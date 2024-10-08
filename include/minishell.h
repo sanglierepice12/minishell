@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 03:29:49 by arbenois          #+#    #+#             */
-/*   Updated: 2024/09/25 18:01:14 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/10/08 19:17:48 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,6 @@ char	**ft_split(char const *s, char c);
 void	ft_main_get_env(t_glob *glob);
 bool	ft_is_minus(char *c);
 char	*ft_strdup(const char *str);
-char	**ft_strstrdup(char **str);
 
 /*----------BUILT_INS_CALLS----------*/
 bool	ft_is_builtin(char *cmd);
@@ -213,7 +212,7 @@ bool	ft_right_operand_double(t_input *cmd);
 bool	ft_right_operand(t_input *cmd);
 void	ft_executor(t_glob *glob);
 void	ft_exec_built_in(t_glob *glob);
-void	ft_children(t_glob *glob, int pipefd[2], const size_t *i);
+void	ft_children(t_glob *glob, int pipefd[2], size_t *i);
 void	ft_dup_two(int fd, int std, t_glob *glob);
 char	**ft_env_to_tab(t_env **env, t_glob *glob);
 

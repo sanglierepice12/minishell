@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dup_2_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsuter <gsuter@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 18:21:15 by gsuter            #+#    #+#             */
-/*   Updated: 2024/09/25 18:21:15 by gsuter           ###   ########.fr       */
+/*   Updated: 2024/10/08 18:50:13 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,24 +71,25 @@ char	**ft_env_to_tab(t_env **env, t_glob *glob)
 	ssize_t	i;
 	t_env	*temp;
 
-	if (!env)
-		return (NULL);
 	temp = *env;
 	envp = ft_cal_loc(sizeof(char *), ft_lst_size(*env) + 1);
 	if (!envp)
 		return (NULL);
-	i = 0;
-	while (temp->next)
+	i = -1;
+	while (++i, temp->next)
 	{
 		if (!temp->value)
 			continue ;
 		envp[i] = ft_get_key(temp);
 		if (!envp[i])
-			return (ft_exit(glob, NULL), NULL);
+			return (ft_free_double_tab(envp), \
+			ft_exit(glob, NULL), NULL);
 		temp = temp->next;
-		i++;
 	}
 	envp[i] = ft_get_key(temp);
+	if (!envp[i])
+		return (ft_free_double_tab(envp), \
+		ft_exit(glob, NULL), NULL);
 	return (envp);
 }
 

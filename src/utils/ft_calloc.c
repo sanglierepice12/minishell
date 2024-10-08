@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 17:41:41 by gsuter            #+#    #+#             */
-/*   Updated: 2024/09/25 06:00:12 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/10/08 19:13:21 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,9 @@ char	**rs_heredoc(char **argv, t_input *cmd, int i)
 	char	**tab;
 	char	**temp;
 
-	tab = calloc(3, sizeof(char *));
+	tab = ft_cal_loc(3, sizeof(char *));
+	if (!tab)
+		return (0);
 	if (argv[i + 1] != NULL)
 	{
 		tab[0] = ft_dup(argv[i]);

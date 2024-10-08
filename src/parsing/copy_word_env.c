@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 05:09:26 by arbenois          #+#    #+#             */
-/*   Updated: 2024/09/25 05:10:32 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/10/08 18:54:21 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static char	*allocate_special_char(char c)
 {
 	char	*tab;
 
-	tab = calloc(2, sizeof(char));
+	tab = ft_cal_loc(2, sizeof(char));
 	if (!tab)
 		return (NULL);
 	tab[0] = c;
@@ -40,7 +40,7 @@ static char	*allocate_and_copy_word(const char *input, size_t i, size_t length)
 	char		*tab;
 	size_t		j;
 
-	tab = calloc(length + 1, sizeof(char));
+	tab = ft_cal_loc(length + 1, sizeof(char));
 	if (!tab)
 		return (NULL);
 	j = 0;
