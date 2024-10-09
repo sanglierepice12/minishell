@@ -15,13 +15,8 @@ GREEN = \033[0;32m
 RED = \033[0;31m
 NC = \033[0m
 
-# Compiler and flags
-#CC = cc -std=gnu99
-#CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=leak -fsanitize=address
-#LDFLAGS = -L/opt/homebrew/opt/readline/lib -I/opt/homebrew/opt/readline/include -lreadline
-
 CC = cc
-CFLAGS = -std=c99 -Wall -Wextra -Werror $(shell pkg-config --cflags readline) -g3 -fsanitize=leak -fsanitize=address
+CFLAGS = -std=c99 -Wall -Wextra -Werror $(shell pkg-config --cflags readline)
 LDFLAGS = $(shell pkg-config --libs readline)
 
 # Source and objet directories

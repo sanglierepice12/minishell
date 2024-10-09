@@ -6,23 +6,37 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:03:59 by gsuter            #+#    #+#             */
-/*   Updated: 2024/09/25 15:52:47 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/10/09 13:59:08 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
+static void	ft_putstr_fd(char *s, int fd)
+{
+	int	i;
+
+	i = 0;
+	if (s == NULL)
+		return ;
+	while (s[i] != '\0')
+	{
+		write(fd, &s[i], 1);
+		i++;
+	}
+}
+
 static void	ft_print_echo(t_input *cmd, int flag, size_t *i)
 {
 	while (*i < cmd->args && cmd->argv[*i])
 	{
-		printf("%s", cmd->argv[*i]);
+		ft_putstr_fd(cmd->argv[*i], 1);
 		if (*i + 1 < cmd->args)
-			printf(" ");
+			write(1, " ", 1);
 		*i = *i + 1;
 	}
 	if (!flag)
-		printf("\n");
+		write(1, "\n", 1);
 }
 
 static int	ft_check_flag(t_input *cmd, size_t *i, int *flag)
