@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 18:21:15 by gsuter            #+#    #+#             */
-/*   Updated: 2024/10/08 21:11:55 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/10/09 15:26:08 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ char	**ft_env_to_tab(t_env **env, t_glob *glob)
 			temp = temp->next;
 			continue ;
 		}
+		if (ft_comp_str(temp->key, "SHLVL"))
+			temp->value = ft_itoa(ft_atoi_bis(temp->value) + 1);
 		envp[i] = ft_get_key(temp);
 		if (!envp[i])
 			return (ft_free_double_tab(envp), \

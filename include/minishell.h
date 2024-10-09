@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 03:29:49 by arbenois          #+#    #+#             */
-/*   Updated: 2024/10/08 19:17:48 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/10/09 15:25:06 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,6 +175,7 @@ char	**ft_split(char const *s, char c);
 void	ft_main_get_env(t_glob *glob);
 bool	ft_is_minus(char *c);
 char	*ft_strdup(const char *str);
+int		ft_atoi_bis(const char *str);
 
 /*----------BUILT_INS_CALLS----------*/
 bool	ft_is_builtin(char *cmd);

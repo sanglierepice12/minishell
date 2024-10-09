@@ -74,7 +74,8 @@ SRCS =	main.c 										\
 		utils/print_env.c							\
 		utils/ft_strdup.c							\
 		utils/error.c								\
-		utils/itoa.c
+		utils/itoa.c								\
+		utils/ft_atoi.c
 
 # Objet files
 OBJS =	$(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))

@@ -6,7 +6,7 @@
 /*   By: arbenois <arbenois@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:01:38 by gsuter            #+#    #+#             */
-/*   Updated: 2024/10/08 16:38:06 by arbenois         ###   ########.fr       */
+/*   Updated: 2024/10/09 15:07:26 by arbenois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,6 @@ void	ft_cd(t_glob *glob, t_input *cmd)
 
 	get = NULL;
 	g_error_code = 0;
-	if (!cmd->args)
-		return (printf("no argv\n"), (void)0);
 	if (cmd->args > 2)
 		return (ft_err_printf("minisHell: cd: too many arguments", 1));
 	if (cmd->args == 1 || ft_comp_str(cmd->argv[1], "~") \
@@ -106,7 +104,11 @@ void	ft_cd(t_glob *glob, t_input *cmd)
 	else if (cmd->argv[1][0] == '-' && (cmd->argv[1][1] != 'L' \
 		&& cmd->argv[1][1] != 'P'))
 		ft_cd_handle_invalid_option(cmd);
-	else if (chdir(cmd->argv[1]) != 0)
-		ft_derror("cd", cmd->argv[1], "No such file or directory", 1);
+	else
+	{
+		if (chdir(cmd->argv[1]) != 0)
+			ft_derror("cd", cmd->argv[1], "No such file or directory", 1);
+		get = getcwd(NULL, 0);
+	}
 	ft_update_pwd(&glob->env, "PWD", get);
 }
