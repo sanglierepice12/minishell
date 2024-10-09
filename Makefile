@@ -16,7 +16,7 @@ RED = \033[0;31m
 NC = \033[0m
 
 CC = cc
-CFLAGS = -std=c99 -Wall -Wextra -Werror $(shell pkg-config --cflags readline)
+CFLAGS = -Wall -Wextra -Werror $(shell pkg-config --cflags readline)
 LDFLAGS = $(shell pkg-config --libs readline)
 
 # Source and objet directories
